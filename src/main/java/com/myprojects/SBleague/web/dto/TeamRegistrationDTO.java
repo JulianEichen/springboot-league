@@ -25,6 +25,4 @@ public class TeamRegistrationDTO {
 	public void setCoach(String coach) {
 		this.coach = coach;
 	}
-	
-	
 }
