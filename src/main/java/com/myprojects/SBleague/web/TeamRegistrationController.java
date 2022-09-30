@@ -10,7 +10,7 @@ import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
 
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/teamregistration")
 public class TeamRegistrationController {
 
 	// injection
@@ -24,7 +24,7 @@ public class TeamRegistrationController {
 	// handler method for http-get-request
 	@GetMapping
 	public String showRegistrationForm() {
-		return "registration";
+		return "teamregistration";
 	}
 	
 	// input data from form will be stored in team then indirectly stored in URDto-Object
@@ -36,7 +36,7 @@ public class TeamRegistrationController {
 	@PostMapping
 	public String registerNewTeam(@ModelAttribute("team") TeamRegistrationDTO regDto) {
 		teamService.saveTeam(regDto);
-		return "redirect:/registration?success";
+		return "redirect:/teamregistration?success";
 	}
 
 }

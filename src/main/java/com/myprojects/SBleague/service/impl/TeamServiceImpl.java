@@ -36,7 +36,6 @@ public class TeamServiceImpl implements TeamService{
 	@Override
 	public Team saveTeam(TeamRegistrationDTO teamDto) {
 		Team team = new Team(teamDto.getName(), teamDto.getCoach());
-		System.out.println(teamDto.getName());
 		return teamRepository.save(team);
 	}
 

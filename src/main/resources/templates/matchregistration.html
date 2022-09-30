@@ -36,23 +36,40 @@
 				<!-- success message -->
 				<div th:if="${param.success}">
 					<div class="alert alert-info">You've successfully registered
-						to our awesome app!</div>
+						a new match!</div>
 				</div>
 
 				<!--  Sub Header -->
-				<h1>Registration</h1>
+				<h1>Match Registration</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/registration}" method="post" th:object="${team}">
+				<form th:action="@{/matchregistration}" method="post" th:object="${match}">
 					<div class="form-group">
-						<label class="control-label" for="name">Team Name</label> <input
-							id="name" class="form-control" th:field="*{name}" required
+						<label class="control-label" for="matchday">Matchday</label> <input
+							id="matchday" class="form-control" th:field="*{matchday}" required
 							autofocus="autofocus">
 					</div>
+					
 					<div class="form-group">
-						<label class="control-label" for="coach">Coach Name</label> <input
-							id="coach" class="form-control" th:field="*{coach}" required>
+						<label class="control-label" for="homeTeam">Home Team</label> <input
+							id="homeTeam" class="form-control" th:field="*{homeTeam}" required>
 					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="awayTeam">Away Team</label> <input
+							id="awayTeam" class="form-control" th:field="*{awayTeam}" required>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="homePoints">Home Team Points</label> <input
+							id="homePoints" class="form-control" th:field="*{homePoints}" required>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="awayPoints">Away Team Points</label> <input
+							id="awayPoints" class="form-control" th:field="*{awayPoints}" required>
+					</div>
+					
 					<button type="submit" class="btn btn-success">Submit</button>
 				</form>
 			</div>
