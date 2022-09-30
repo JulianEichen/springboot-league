@@ -22,6 +22,6 @@ public class MainTableController {
 	@GetMapping()
 	public String listTeams(Model model) {
 		model.addAttribute("teams", teamService.getAllTeamsOrdered());
-		return "maintable"; // template for view students is in resources/templates
+		return "maintable"; // template for view teams is in resources/templates
 	}
 }
