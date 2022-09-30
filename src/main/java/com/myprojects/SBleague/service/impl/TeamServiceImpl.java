@@ -21,8 +21,7 @@ public class TeamServiceImpl implements TeamService{
 	
 	@Override
 	public List<Team> getAllTeams() {
-		// TODO Auto-generated method stub
-		return null;
+		return teamRepository.findAll();
 	}
 
 	@Override
