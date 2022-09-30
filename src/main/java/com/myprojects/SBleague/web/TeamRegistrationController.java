@@ -1,6 +1,7 @@
 package com.myprojects.SBleague.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,18 @@ public class TeamRegistrationController {
 	public TeamRegistrationController(TeamService teamService) {
 		super();
 		this.teamService = teamService;
+	}
+
+	// handler method for http-get-request
+	@GetMapping
+	public String showRegistrationForm() {
+		return "registration";
+	}
+	
+	// input data from form will be stored in team then indirectly stored in URDto-Object
+	@ModelAttribute("team")
+	public TeamRegistrationDTO teamRegistrationDto() {
+		return new TeamRegistrationDTO();
 	}
 
 	@PostMapping
