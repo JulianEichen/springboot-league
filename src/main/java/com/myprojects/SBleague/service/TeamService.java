@@ -9,6 +9,8 @@ import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
 public interface TeamService {
 	List<Team> getAllTeams();
 	
+	List<Team> getAllTeamsOrdered();
+	
 	Team saveTeam(TeamRegistrationDTO teamDto);
 	
 	Team getTeamById(Long Id);

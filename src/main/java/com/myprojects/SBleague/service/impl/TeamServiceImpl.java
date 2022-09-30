@@ -11,7 +11,7 @@ import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
 
 @Service
 public class TeamServiceImpl implements TeamService{
-
+	
 	// inject repository
 	private TeamRepository teamRepository;
 	public TeamServiceImpl(TeamRepository teamRepository) {
@@ -24,6 +24,15 @@ public class TeamServiceImpl implements TeamService{
 		return teamRepository.findAll();
 	}
 
+	@Override
+	public List<Team> getAllTeamsOrdered() {
+		TeamChecker checker = new TeamChecker();
+		List<Team> teams = teamRepository.findAll();
+		teams.sort(checker);
+		return teams;
+	}
+	
+	
 	@Override
 	public Team saveTeam(TeamRegistrationDTO teamDto) {
 		Team team = new Team(teamDto.getName(), teamDto.getCoach());

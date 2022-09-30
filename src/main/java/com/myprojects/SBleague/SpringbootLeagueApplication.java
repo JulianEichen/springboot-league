@@ -9,5 +9,4 @@ public class SpringbootLeagueApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootLeagueApplication.class, args);
 	}
-
 }

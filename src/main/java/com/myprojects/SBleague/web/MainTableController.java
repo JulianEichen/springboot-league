@@ -21,7 +21,7 @@ public class MainTableController {
 	// handler method to handle list teams request and return mode and view
 	@GetMapping()
 	public String listTeams(Model model) {
-		model.addAttribute("teams", teamService.getAllTeams());
+		model.addAttribute("teams", teamService.getAllTeamsOrdered());
 		return "maintable"; // template for view students is in resources/templates
 	}
 }
