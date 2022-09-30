@@ -44,6 +44,16 @@ public class MatchServiceImpl implements MatchService{
 	}
 	
 	@Override
+	public List<Match> getAllMatchesByDay(int matchday) {
+		List<Match> filteredMatches = matchRepository.findAll()
+		List<Movie> filteredMovies = getMovieData()
+                .stream()
+                .filter(movie -> movie.getLength() < 150)
+                .collect(Collectors.toList());
+		return null;
+	}
+	
+	@Override
 	public List<Match> getAllMatches() {
 		// TODO Auto-generated method stub
 		return null;
