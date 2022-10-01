@@ -10,27 +10,27 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "matches")
 public class Match {
-	
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name="matchday")
+	@Column(name = "matchName", unique = true)
+	private String matchName;
+
+	@Column(name = "matchday")
 	private int matchday;
-	
-	@Column(name="homeTeam")
+
+	@Column(name = "homeTeam")
 	private String homeTeam;
-	
-	@Column(name="awayTeam")
+
+	@Column(name = "awayTeam")
 	private String awayTeam;
-	
-	@Column(name="homePoints")
+
+	@Column(name = "homePoints")
 	private int homePoints;
-	
-	@Column(name="awayPoints")
+
+	@Column(name = "awayPoints")
 	private int awayPoints;
-	
-	@Column(name="result")
+
+	@Column(name = "result")
 	private int result; // 1, -1, 0 -> home win, loss, draw
 
 	public Match(int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints, int result) {
@@ -43,12 +43,12 @@ public class Match {
 		this.result = result;
 	}
 
-	public Long getId() {
-		return id;
+	public String getMatchName() {
+		return matchName;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setMatchName(String matchName) {
+		this.matchName = matchName;
 	}
 
 	public int getMatchday() {

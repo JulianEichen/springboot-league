@@ -44,7 +44,6 @@ public class TeamRegistrationController {
 			return "teamregistration";
 		}
 		
-		
 		teamService.saveTeam(regDto);
 		return "redirect:/teamregistration?success";
 	}
