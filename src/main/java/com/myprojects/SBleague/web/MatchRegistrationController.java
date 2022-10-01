@@ -39,7 +39,8 @@ public class MatchRegistrationController {
 	@PostMapping
 	public String registerNewMatch(@ModelAttribute("match") MatchRegistrationDTO regDto) {
 		matchService.saveMatch(regDto);
-		teamService.updateByMatch(regDto);
+		teamService.updateHomeTeam(regDto);
+		teamService.updateAwayTeam(regDto);
 		return "redirect:/matchregistration?success";
 	}
 	

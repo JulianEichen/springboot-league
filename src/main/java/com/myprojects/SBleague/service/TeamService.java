@@ -14,13 +14,14 @@ public interface TeamService {
 	
 	Team saveTeam(TeamRegistrationDTO teamDto);
 	
-	Team updateByMatch(MatchRegistrationDTO regDto);
-	
 	Team getTeamById(Long Id);
 	
 	Team updateTeam(Team team);
 	
 	void deleteTeamById(Long Id);
 
+	Team updateHomeTeam(MatchRegistrationDTO regDto);
+
+	Team updateAwayTeam(MatchRegistrationDTO regDto);
 	
 }

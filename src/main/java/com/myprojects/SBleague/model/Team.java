@@ -19,7 +19,7 @@ public class Team {
 	*/
 	
 	@Id
-	@Column(name="name")
+	@Column(name="name",unique=true)
 	private String name;
 	
 	@Column(name="coach")

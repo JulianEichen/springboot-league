@@ -59,22 +59,49 @@ public class TeamServiceImpl implements TeamService{
 	}
 
 	@Override
-	public Team updateByMatch(MatchRegistrationDTO regDto) {
+	public Team updateHomeTeam(MatchRegistrationDTO regDto) {
 		String homeTeam = regDto.getHomeTeam();
-		String awayTeam = regDto.getAwayTeam();
 		int homePoints = regDto.getHomePoints();
 		int awayPoints = regDto.getAwayPoints();
-		int result = 0;
+		
+		Team existingHomeTeam = teamRepository.findById(homeTeam).get();
 
 		// determine result
 		if (homePoints > awayPoints) {
-			result = 1;
+			existingHomeTeam.setPoints(existingHomeTeam.getPoints()+2); // TODO: add league rules
+			existingHomeTeam.setWins(existingHomeTeam.getWins()+1);
 		} else if (homePoints < awayPoints) {
-			result = -1;
+			existingHomeTeam.setLosses(existingHomeTeam.getLosses()+1);
+		} else {
+			existingHomeTeam.setPoints(existingHomeTeam.getPoints()+1);
+			existingHomeTeam.setDraws(existingHomeTeam.getDraws()+1);
 		}
-		// Team team = new Team(homeTeam, teamDto.getCoach(),0,0,0,0,0);
 		
-		return null;
+		
+		return teamRepository.save(existingHomeTeam);
+	}
+
+	@Override
+	public Team updateAwayTeam(MatchRegistrationDTO regDto) {
+		String awayTeam = regDto.getAwayTeam();
+		int homePoints = regDto.getHomePoints();
+		int awayPoints = regDto.getAwayPoints();
+		
+		Team existingAwayTeam = teamRepository.findById(awayTeam).get();
+
+		// determine result
+		if (homePoints > awayPoints) {
+			existingAwayTeam.setLosses(existingAwayTeam.getLosses()+1)
+			;
+		} else if (homePoints < awayPoints) {
+			existingAwayTeam.setPoints(existingAwayTeam.getPoints()+2); 
+			existingAwayTeam.setWins(existingAwayTeam.getWins()+1);
+		} else {
+			existingAwayTeam.setPoints(existingAwayTeam.getPoints()+1);
+			existingAwayTeam.setDraws(existingAwayTeam.getDraws()+1);
+		}
+
+		return teamRepository.save(existingAwayTeam);
 	}
 
 }
