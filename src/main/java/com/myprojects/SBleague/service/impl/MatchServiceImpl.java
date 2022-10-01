@@ -21,10 +21,13 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
-	public Match saveMatch(MatchRegistrationDTO matchDTO) {
-
-		int homePoints = matchDTO.getHomePoints();
-		int awayPoints = matchDTO.getAwayPoints();
+	public Match saveMatch(MatchRegistrationDTO matchDto) {
+		
+		int matchday = matchDto.getMatchday();
+		String homeTeam = matchDto.getHomeTeam();
+		String awayTeam = matchDto.getAwayTeam();
+		int homePoints = matchDto.getHomePoints();
+		int awayPoints = matchDto.getAwayPoints();
 		int result = 0;
 
 		// determine result
@@ -33,8 +36,10 @@ public class MatchServiceImpl implements MatchService {
 		} else if (homePoints < awayPoints) {
 			result = -1;
 		}
-
-		Match match = new Match(matchDTO.getMatchday(), matchDTO.getHomeTeam(), matchDTO.getAwayTeam(), homePoints,
+		
+		String matchName = Integer.toString(matchday)+homeTeam+awayTeam;
+		
+		Match match = new Match(matchName, matchday, homeTeam, awayTeam, homePoints,
 				awayPoints, result);
 
 		return matchRepository.save(match);

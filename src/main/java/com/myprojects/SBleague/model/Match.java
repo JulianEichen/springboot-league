@@ -35,8 +35,9 @@ public class Match {
 
 	public Match(){};
 	
-	public Match(int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints, int result) {
+	public Match(String matchName, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints, int result) {
 		super();
+		this.matchName = matchName;
 		this.matchday = matchday;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
