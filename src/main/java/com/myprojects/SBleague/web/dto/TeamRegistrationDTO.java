@@ -1,6 +1,7 @@
 package com.myprojects.SBleague.web.dto;
 
 public class TeamRegistrationDTO {
+	
 	private String name;
 	private String coach;
 	

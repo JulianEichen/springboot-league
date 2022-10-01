@@ -1,17 +1,23 @@
 package com.myprojects.SBleague.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.myprojects.SBleague.service.MatchService;
+import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.web.dto.MatchRegistrationDTO;
 
 @Controller
 @RequestMapping("/matchregistration")
 public class MatchRegistrationController {
+	
+	@Autowired
+	private TeamService teamService;
 	
 	// injection
 	private MatchService matchService;
@@ -33,6 +39,7 @@ public class MatchRegistrationController {
 	@PostMapping
 	public String registerNewMatch(@ModelAttribute("match") MatchRegistrationDTO regDto) {
 		matchService.saveMatch(regDto);
+		teamService.updateByMatch(regDto);
 		return "redirect:/matchregistration?success";
 	}
 	

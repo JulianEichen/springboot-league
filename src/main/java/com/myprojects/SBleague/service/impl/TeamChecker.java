@@ -15,10 +15,6 @@ public class TeamChecker implements Comparator<Team> {
 			return -1;
 		}else if(team1.getName() != team2.getName()) {
 			team2.getName().compareTo(team1.getName());
-		}else if(team1.getCoach() != team2.getCoach()) {
-			team2.getCoach().compareTo(team1.getCoach());
-		}else if(team1.getId() > team2.getId()) {
-			return 1;
 		}
 		return 0;
 	}

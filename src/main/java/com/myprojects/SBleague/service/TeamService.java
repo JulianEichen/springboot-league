@@ -3,6 +3,7 @@ package com.myprojects.SBleague.service;
 import java.util.List;
 
 import com.myprojects.SBleague.model.Team;
+import com.myprojects.SBleague.web.dto.MatchRegistrationDTO;
 import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
 
 
@@ -13,9 +14,13 @@ public interface TeamService {
 	
 	Team saveTeam(TeamRegistrationDTO teamDto);
 	
+	Team updateByMatch(MatchRegistrationDTO regDto);
+	
 	Team getTeamById(Long Id);
 	
 	Team updateTeam(Team team);
 	
 	void deleteTeamById(Long Id);
+
+	
 }

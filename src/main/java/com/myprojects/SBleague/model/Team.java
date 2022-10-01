@@ -12,10 +12,13 @@ import javax.persistence.UniqueConstraint;
 @Table(name="teams",uniqueConstraints = @UniqueConstraint(columnNames="name"))
 public class Team {
 	
+	/*
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
+	*/
 	
+	@Id
 	@Column(name="name")
 	private String name;
 	
@@ -41,18 +44,15 @@ public class Team {
 	public Team() {}
 	
 	// param const
-	public Team(String name, String coach) {
+	public Team(String name, String coach, int matches, int wins, int draws, int losses, int points) {
 		super();
 		this.name = name;
 		this.coach = coach;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+		this.matches = matches;
+		this.wins = wins;
+		this.draws = draws;
+		this.losses = losses;
+		this.points = points;
 	}
 
 	public String getName() {

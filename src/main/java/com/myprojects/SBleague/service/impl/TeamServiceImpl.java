@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.myprojects.SBleague.model.Team;
 import com.myprojects.SBleague.repository.TeamRepository;
 import com.myprojects.SBleague.service.TeamService;
+import com.myprojects.SBleague.web.dto.MatchRegistrationDTO;
 import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
 
 @Service
@@ -35,7 +36,7 @@ public class TeamServiceImpl implements TeamService{
 	
 	@Override
 	public Team saveTeam(TeamRegistrationDTO teamDto) {
-		Team team = new Team(teamDto.getName(), teamDto.getCoach());
+		Team team = new Team(teamDto.getName(), teamDto.getCoach(),0,0,0,0,0);
 		return teamRepository.save(team);
 	}
 
@@ -55,6 +56,25 @@ public class TeamServiceImpl implements TeamService{
 	public void deleteTeamById(Long Id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Team updateByMatch(MatchRegistrationDTO regDto) {
+		String homeTeam = regDto.getHomeTeam();
+		String awayTeam = regDto.getAwayTeam();
+		int homePoints = regDto.getHomePoints();
+		int awayPoints = regDto.getAwayPoints();
+		int result = 0;
+
+		// determine result
+		if (homePoints > awayPoints) {
+			result = 1;
+		} else if (homePoints < awayPoints) {
+			result = -1;
+		}
+		// Team team = new Team(homeTeam, teamDto.getCoach(),0,0,0,0,0);
+		
+		return null;
 	}
 
 }
