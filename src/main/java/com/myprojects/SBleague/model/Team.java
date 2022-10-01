@@ -12,12 +12,6 @@ import javax.persistence.UniqueConstraint;
 @Table(name="teams",uniqueConstraints = @UniqueConstraint(columnNames="name"))
 public class Team {
 	
-	/*
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private Long id;
-	*/
-	
 	@Id
 	@Column(name="name",unique=true)
 	private String name;

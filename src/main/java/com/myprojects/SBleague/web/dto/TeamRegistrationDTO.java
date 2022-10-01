@@ -3,13 +3,17 @@ package com.myprojects.SBleague.web.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.myprojects.SBleague.annotations.UniqueTeam;
+
 public class TeamRegistrationDTO {
 	
+	@UniqueTeam
 	@NotNull
 	@Size(min=3, max=50)
 	private String name;
 	
 	@NotNull
+	@Size(min=3, max=50)
 	private String coach;
 	
 	// default const

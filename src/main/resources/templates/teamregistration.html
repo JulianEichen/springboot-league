@@ -47,7 +47,7 @@
 					th:object="${team}">
 					<div class="form-group">
 						<label class="control-label" for="name">Team Name</label> <input
-							id="name" class="form-control" th:field="*{name}"
+							id="name" class="form-control" th:field="*{name}" required
 							autofocus="autofocus">
 						<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
 							Error</div>
