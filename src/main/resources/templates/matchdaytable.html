@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>League App</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+</head>
+<body>
+	<!-- Import navbar fragment  -->
+	<div th:replace="navbar.html :: navbar"></div>
+	
+
+	<div class="container">
+		<div class="row">
+			<h1>The Table</h1>
+		</div>
+
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>Matchday</th>
+					<th>Home Team</th>
+					<th>Home Points</th>
+					<th>Away Team</th>
+					<th>Away Points</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="match: ${matches}">
+					<td th:text="${match.matchday}"></td>
+					<td th:text="${match.homeTeam}"></td>
+					<td th:text="${match.homePoints}"></td>
+					<td th:text="${match.awayTeam}"></td>
+					<td th:text="${match.awayPoints}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

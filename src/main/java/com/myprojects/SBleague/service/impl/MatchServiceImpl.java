@@ -50,8 +50,7 @@ public class MatchServiceImpl implements MatchService {
 
 	@Override
 	public List<Match> getAllMatches() {
-		// TODO Auto-generated method stub
-		return null;
+		return matchRepository.findAll();
 	}
 
 	@Override

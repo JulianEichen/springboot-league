@@ -33,6 +33,8 @@ public class Match {
 	@Column(name = "result")
 	private int result; // 1, -1, 0 -> home win, loss, draw
 
+	public Match(){};
+	
 	public Match(int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints, int result) {
 		super();
 		this.matchday = matchday;

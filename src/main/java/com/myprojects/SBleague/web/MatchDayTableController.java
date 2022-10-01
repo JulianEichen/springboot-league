@@ -22,7 +22,7 @@ public class MatchDayTableController {
 	@GetMapping()
 	public String listMatches(Model model) {
 		model.addAttribute("matches", matchService.getAllMatches());
-		return "matchday";
+		return "matchdaytable";
 	}
 	
 }
