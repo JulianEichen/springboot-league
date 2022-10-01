@@ -1,10 +1,17 @@
 package com.myprojects.SBleague.web.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class MatchRegistrationDTO {
+	@NotNull
 	private int matchday;
+	@NotNull
 	private String homeTeam;
+	@NotNull
 	private String awayTeam; 
+	@NotNull
 	private int homePoints;
+	@NotNull
 	private int awayPoints;
 	
 	// default const

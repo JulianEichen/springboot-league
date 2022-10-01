@@ -43,15 +43,20 @@
 				<h1>Team Registration</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/teamregistration}" method="post" th:object="${team}">
+				<form th:action="@{/teamregistration}" method="post"
+					th:object="${team}">
 					<div class="form-group">
 						<label class="control-label" for="name">Team Name</label> <input
-							id="name" class="form-control" th:field="*{name}" required
+							id="name" class="form-control" th:field="*{name}"
 							autofocus="autofocus">
+						<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+							Error</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="coach">Coach Name</label> <input
 							id="coach" class="form-control" th:field="*{coach}" required>
+						<div th:if="${#fields.hasErrors('coach')}" th:errors="*{coach}">Coach
+							Error</div>
 					</div>
 					<button type="submit" class="btn btn-success">Submit</button>
 				</form>

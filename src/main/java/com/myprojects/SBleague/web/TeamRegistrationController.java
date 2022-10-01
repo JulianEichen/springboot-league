@@ -1,6 +1,10 @@
 package com.myprojects.SBleague.web;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +38,13 @@ public class TeamRegistrationController {
 	}
 
 	@PostMapping
-	public String registerNewTeam(@ModelAttribute("team") TeamRegistrationDTO regDto) {
+	public String registerNewTeam(@Valid @ModelAttribute("team") TeamRegistrationDTO regDto,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "teamregistration";
+		}
+		
+		
 		teamService.saveTeam(regDto);
 		return "redirect:/teamregistration?success";
 	}
