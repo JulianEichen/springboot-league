@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.myprojects.SBleague.model.Match;
 import com.myprojects.SBleague.repository.MatchRepository;
 import com.myprojects.SBleague.service.MatchService;
-import com.myprojects.SBleague.web.dto.MatchRegistrationDTO;
+import com.myprojects.SBleague.web.dto.MatchDto;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -21,11 +21,11 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
-	public Match saveMatch(MatchRegistrationDTO matchDto) {
+	public Match saveMatch(MatchDto matchDto) {
 		
 		int matchday = matchDto.getMatchday();
-		String homeTeam = matchDto.getHomeTeam();
-		String awayTeam = matchDto.getAwayTeam();
+		String homeTeam = matchDto.getHomeTeam().replace(' ', '_');
+		String awayTeam = matchDto.getAwayTeam().replace(' ', '_');
 		int homePoints = matchDto.getHomePoints();
 		int awayPoints = matchDto.getAwayPoints();
 		int result = 0;
@@ -59,8 +59,13 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
-	public void deleteMatch(Long Id) {
-		// TODO Auto-generated method stub
-
+	public void deleteMatch(MatchDto matchDto) {
+		int matchday = matchDto.getMatchday();
+		String homeTeam = matchDto.getHomeTeam().replace(' ', '_');
+		String awayTeam = matchDto.getAwayTeam().replace(' ', '_');
+		String matchName = Integer.toString(matchday)+homeTeam+awayTeam;
+		matchRepository.deleteById(matchName);
 	}
+
+	
 }

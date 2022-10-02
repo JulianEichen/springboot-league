@@ -36,7 +36,8 @@ public class TeamServiceImpl implements TeamService{
 	
 	@Override
 	public Team saveTeam(TeamRegistrationDTO teamDto) {
-		Team team = new Team(teamDto.getName(), teamDto.getCoach(),0,0,0,0,0);
+		String teamName = teamDto.getName().replace(' ', '_');
+		Team team = new Team(teamName, teamDto.getCoach(),0,0,0,0,0);
 		return teamRepository.save(team);
 	}
 

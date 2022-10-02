@@ -23,9 +23,7 @@
 				<tr>
 					<th>Matchday</th>
 					<th>Home Team</th>
-					<th>Home Points</th>
 					<th>Away Team</th>
-					<th>Away Points</th>
 				</tr>
 			</thead>
 
@@ -33,9 +31,7 @@
 				<tr th:each="match: ${matches}">
 					<td th:text="${match.matchday}"></td>
 					<td th:text="${match.homeTeam}"></td>
-					<td th:text="${match.homePoints}"></td>
 					<td th:text="${match.awayTeam}"></td>
-					<td th:text="${match.awayPoints}"></td>
 				</tr>
 			</tbody>
 		</table>
