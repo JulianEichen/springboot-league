@@ -65,12 +65,15 @@ public class MatchServiceImpl implements MatchService {
 
 		// get existing match
 		Match existingMatch = matchRepository.findById(matchName).get();
-
+		
+		// if the match has been played, delete its results
+		if (existingMatch.getResult() >= 0) {
 		// modify dto to send it to the teamService
 		matchDto.setHomePoints(existingMatch.getHomePoints());
 		matchDto.setAwayPoints(existingMatch.getAwayPoints());
 		teamService.deleteStatistics(matchDto);
-
+		}
+		
 		matchRepository.deleteById(matchName);
 	}
 
