@@ -35,18 +35,10 @@ public class MatchServiceImpl implements MatchService {
 		String awayTeam = matchDto.getAwayTeam().replace(' ', '_');
 		int homePoints = matchDto.getHomePoints();
 		int awayPoints = matchDto.getAwayPoints();
-		int result = 0;
-
-		// determine result
-		if (homePoints > awayPoints) {
-			result = 1;
-		} else if (homePoints < awayPoints) {
-			result = -1;
-		}
 
 		String matchName = Integer.toString(matchday) + homeTeam + awayTeam;
 
-		Match match = new Match(matchName, matchday, homeTeam, awayTeam, homePoints, awayPoints, result);
+		Match match = new Match(matchName, matchday, homeTeam, awayTeam, homePoints, awayPoints);
 
 		return matchRepository.save(match);
 	}
@@ -92,22 +84,9 @@ public class MatchServiceImpl implements MatchService {
 		// get existing match
 		Match existingMatch = matchRepository.findById(matchName).get();
 
-		int homePoints = matchDto.getHomePoints();
-		int awayPoints = matchDto.getAwayPoints();
-
-		int result = 0;
-
-		// determine result
-		if (homePoints > awayPoints) {
-			result = 1;
-		} else if (homePoints < awayPoints) {
-			result = -1;
-		}
-
 		// update values
 		existingMatch.setHomePoints(matchDto.getHomePoints());
 		existingMatch.setAwayPoints(matchDto.getAwayPoints());
-		existingMatch.setResult(result);
 
 		// send dto to the teamService
 		teamService.updateResults(matchDto);

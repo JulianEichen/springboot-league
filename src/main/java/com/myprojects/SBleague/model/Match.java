@@ -30,12 +30,9 @@ public class Match {
 	@Column(name = "awayPoints")
 	private int awayPoints;
 
-	@Column(name = "result")
-	private int result; // 1, -1, 0 -> home win, loss, draw
-
 	public Match(){};
 	
-	public Match(String matchName, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints, int result) {
+	public Match(String matchName, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints) {
 		super();
 		this.matchName = matchName;
 		this.matchday = matchday;
@@ -43,7 +40,6 @@ public class Match {
 		this.awayTeam = awayTeam;
 		this.homePoints = homePoints;
 		this.awayPoints = awayPoints;
-		this.result = result;
 	}
 
 	public String getMatchName() {
@@ -92,13 +88,5 @@ public class Match {
 
 	public void setAwayPoints(int awayPoints) {
 		this.awayPoints = awayPoints;
-	}
-
-	public int getResult() {
-		return result;
-	}
-
-	public void setResult(int result) {
-		this.result = result;
 	}
 }
