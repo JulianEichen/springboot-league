@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myprojects.SBleague.service.MatchService;
 
@@ -19,7 +20,8 @@ public class MatchDayTableController {
 	}
 	
 	@GetMapping()
-	public String listMatches(Model model) {
+	public String listMatches(@RequestParam(value="matchday", required=false) String matchday,Model model) {
+		System.out.println(matchday);
 		model.addAttribute("matches", matchService.getAllMatches());
 		return "matchdaytable";
 	}
