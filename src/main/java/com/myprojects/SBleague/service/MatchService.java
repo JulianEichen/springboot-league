@@ -12,5 +12,7 @@ public interface MatchService {
 	
 	Match saveMatch(MatchDto matchDto);
 	
+	Match updateMatch(MatchDto matchDto);
+	
 	void deleteMatch(MatchDto matchDto);
 }

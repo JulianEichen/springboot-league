@@ -2,6 +2,7 @@ package com.myprojects.SBleague.web;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,7 +13,7 @@ import com.myprojects.SBleague.web.dto.MatchDto;
 
 @Controller
 public class MatchController {
-
+	
 	// injection
 	private MatchService matchService;
 
@@ -53,5 +54,10 @@ public class MatchController {
 		matchService.deleteMatch(matchDto);
 		return "redirect:matchdeletion?success";
 	}
-
+	
+	@PostMapping("/matchupdate")
+	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto) {
+		matchService.updateMatch(matchDto);
+		return "redirect:matchupdate?success";
+	}
 }
