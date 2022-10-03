@@ -2,8 +2,6 @@ package com.myprojects.SBleague.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -107,6 +105,14 @@ public class Match {
 
 	public void setResult(int result) {
 		this.result = result;
+	}
+	
+	public String showHomeTeamName() {
+		return homeTeam.replace("_", " ");
+	}
+	
+	public String showAwayTeamName() {
+		return awayTeam.replace("_", " ");
 	}
 	
 }

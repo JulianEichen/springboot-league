@@ -30,8 +30,8 @@
 			<tbody>
 				<tr th:each="match: ${matches}">
 					<td th:text="${match.matchday}"></td>
-					<td th:text="${match.homeTeam}"></td>
-					<td th:text="${match.awayTeam}"></td>
+					<td th:text="${match.showHomeTeamName()}"></td>
+					<td th:text="${match.showAwayTeamName()}"></td>
 				</tr>
 			</tbody>
 		</table>

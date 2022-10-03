@@ -1,7 +1,6 @@
 package com.myprojects.SBleague.web;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

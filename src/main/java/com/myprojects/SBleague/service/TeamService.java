@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.myprojects.SBleague.model.Team;
 import com.myprojects.SBleague.web.dto.MatchDto;
-import com.myprojects.SBleague.web.dto.MatchRegistrationDTO;
 import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
 
 

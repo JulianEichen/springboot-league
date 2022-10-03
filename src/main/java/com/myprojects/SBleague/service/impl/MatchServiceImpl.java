@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myprojects.SBleague.model.Match;
-import com.myprojects.SBleague.model.Team;
 import com.myprojects.SBleague.repository.MatchRepository;
-import com.myprojects.SBleague.repository.TeamRepository;
 import com.myprojects.SBleague.service.MatchService;
 import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.web.dto.MatchDto;
