@@ -11,7 +11,7 @@
 <body>
 	<!-- Import navbar fragment  -->
 	<div th:replace="navbar.html :: navbar"></div>
-	
+
 
 	<div class="container">
 		<div class="row">
@@ -23,7 +23,9 @@
 				<tr>
 					<th>Matchday</th>
 					<th>Home Team</th>
+					<th>Home Team Points</th>
 					<th>Away Team</th>
+					<th>Away Team Points</th>
 				</tr>
 			</thead>
 
@@ -31,7 +33,15 @@
 				<tr th:each="match: ${matches}">
 					<td th:text="${match.matchday}"></td>
 					<td th:text="${match.showHomeTeamName()}"></td>
+					<td>
+						<span th:if="${match.result < 0}">TBA</span>
+						<span th:unless="${match.result < 0}" th:text="${match.homePoints}"></span>
+					</td>
 					<td th:text="${match.showAwayTeamName()}"></td>
+					<td>
+						<span th:if="${match.result < 0}">TBA</span>
+						<span th:unless="${match.result < 0}" th:text="${match.awayPoints}"></span>
+					</td>
 				</tr>
 			</tbody>
 		</table>
