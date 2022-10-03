@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "matches")
@@ -14,13 +17,17 @@ public class Match {
 	@Id
 	@Column(name = "matchName", unique = true)
 	private String matchName;
-
+	
+	@NotNull(message="Matchday cannot be null.")
+	@Min(value=1)
 	@Column(name = "matchday")
 	private int matchday;
 
+	@NotEmpty(message="Home team cannot be empty")
 	@Column(name = "homeTeam")
 	private String homeTeam;
 
+	@NotEmpty(message="Away team cannot be empty")
 	@Column(name = "awayTeam")
 	private String awayTeam;
 

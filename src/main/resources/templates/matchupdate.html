@@ -17,17 +17,16 @@
 			<div class="col-md-6 col-md-offset-3">
 				<!-- success message -->
 				<div th:if="${param.success}">
-					<div class="alert alert-info">You've successfully updated
-						a match!</div>
+					<div class="alert alert-info">You've successfully updated a
+						match!</div>
 				</div>
 
 				<!--  Sub Header -->
-				<h1>Match Registration</h1>
+				<h1>Match Update</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/matchupdate}" method="post"
-					th:object="${match}" >
-		
+				<form th:action="@{/matchupdate}" method="post" th:object="${match}">
+
 					<div class="form-group">
 						<label class="control-label" for="matchday">Matchday</label> <input
 							id="matchday" class="form-control" th:field="*{matchday}"
@@ -45,7 +44,7 @@
 							id="awayTeam" class="form-control" th:field="*{awayTeam}"
 							required>
 					</div>
-					
+
 					<div class="form-group">
 						<label class="control-label" for="homePoints">Home Team
 							Points</label> <input id="homePoints" class="form-control"
@@ -58,7 +57,12 @@
 							th:field="*{awayPoints}" required>
 					</div>
 
-					
+					<div th:if="${#fields.hasAnyErrors()}">
+						<ul>
+							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+						</ul>
+					</div>
+
 					<button type="submit" class="btn btn-success">Submit</button>
 				</form>
 			</div>

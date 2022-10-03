@@ -44,7 +44,13 @@
 							id="awayTeam" class="form-control" th:field="*{awayTeam}"
 							required>
 					</div>
-									
+					
+					<div th:if="${#fields.hasAnyErrors()}">
+						<ul>
+							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+						</ul>
+					</div>
+						
 					<button type="submit" class="btn btn-success">Submit</button>
 				</form>
 			</div>

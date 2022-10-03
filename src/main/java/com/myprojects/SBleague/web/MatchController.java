@@ -4,17 +4,23 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.myprojects.SBleague.service.MatchService;
+import com.myprojects.SBleague.validation.MatchDtoValidationService;
 import com.myprojects.SBleague.web.dto.MatchDto;
 
 @Controller
 public class MatchController {
 	
 	// injection
+	@Autowired
+	private MatchDtoValidationService matchDtoValidationService;
+	
 	private MatchService matchService;
 
 	public MatchController(MatchService matchService) {
@@ -44,19 +50,42 @@ public class MatchController {
 	}
 	
 	@PostMapping("/matchregistration")
-	public String registerNewMatch(@Valid @ModelAttribute("match") MatchDto matchDto) {
+	public String registerNewMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
+		if(result.hasErrors()) {
+			return "matchregistration";
+		}
 		matchService.saveMatch(matchDto);
 		return "redirect:matchregistration?success";
 	}
 	
 	@PostMapping("/matchdeletion")
-	public String deleteMatch(@Valid @ModelAttribute("match") MatchDto matchDto) {
+	public String deleteMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
+		String err = matchDtoValidationService.validateMatchDto(matchDto);
+	    if (!err.isEmpty()) {
+	        ObjectError error = new ObjectError("globalError", err);
+	        result.addError(error);
+	    }
+	    
+	    if(result.hasErrors()) {
+			return "matchdeletion";
+		}
+	    
 		matchService.deleteMatch(matchDto);
 		return "redirect:matchdeletion?success";
 	}
 	
 	@PostMapping("/matchupdate")
-	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto) {
+	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
+		String err = matchDtoValidationService.validateMatchDto(matchDto);
+	    if (!err.isEmpty()) {
+	        ObjectError error = new ObjectError("globalError", err);
+	        result.addError(error);
+	    }
+	    
+	    if(result.hasErrors()) {
+			return "matchupdate";
+		}
+		
 		matchService.updateMatch(matchDto);
 		return "redirect:matchupdate?success";
 	}
