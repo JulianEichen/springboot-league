@@ -69,7 +69,7 @@ public class MatchServiceImpl implements MatchService {
 		// modify dto to send it to the teamService
 		matchDto.setHomePoints(existingMatch.getHomePoints());
 		matchDto.setAwayPoints(existingMatch.getAwayPoints());
-		teamService.deleteResults(matchDto);
+		teamService.deleteStatistics(matchDto);
 
 		matchRepository.deleteById(matchName);
 	}
@@ -83,15 +83,31 @@ public class MatchServiceImpl implements MatchService {
 
 		// get existing match
 		Match existingMatch = matchRepository.findById(matchName).get();
+		
+		// if match has been played, delete old results
+		if (existingMatch.getResult() >= 0) {
+		// delete results of existing match
+		MatchDto existingMatchDto = new MatchDto(existingMatch.getMatchday(), existingMatch.getHomeTeam(),
+				existingMatch.getAwayTeam(), existingMatch.getHomePoints(), existingMatch.getAwayPoints());
+		teamService.deleteStatistics(existingMatchDto);
+		}
+		
+		// write new statistics
+		if(matchDto.getHomePoints() > matchDto.getAwayPoints()) {
+			existingMatch.setResult(2);
+		}else if(matchDto.getHomePoints() > matchDto.getAwayPoints()) {
+			existingMatch.setResult(0);
+		}else if(matchDto.getHomePoints()==matchDto.getAwayPoints()) {
+			existingMatch.setResult(1);
+		}
+		teamService.updateStatistics(matchDto);
+
+		// delete old match
+		matchRepository.deleteById(matchName);
 
 		// update values
 		existingMatch.setHomePoints(matchDto.getHomePoints());
 		existingMatch.setAwayPoints(matchDto.getAwayPoints());
-
-		// send dto to the teamService
-		teamService.updateResults(matchDto);
-
-		matchRepository.deleteById(matchName);
 
 		return matchRepository.save(existingMatch);
 	}

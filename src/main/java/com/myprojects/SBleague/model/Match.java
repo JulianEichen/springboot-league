@@ -29,6 +29,9 @@ public class Match {
 
 	@Column(name = "awayPoints")
 	private int awayPoints;
+	
+	@Column(name = "result")
+	private int result; // -1, match not played, 0 home loss, 1 draw, 2 home win
 
 	public Match(){};
 	
@@ -40,6 +43,7 @@ public class Match {
 		this.awayTeam = awayTeam;
 		this.homePoints = homePoints;
 		this.awayPoints = awayPoints;
+		this.result = -1;
 	}
 
 	public String getMatchName() {
@@ -89,4 +93,13 @@ public class Match {
 	public void setAwayPoints(int awayPoints) {
 		this.awayPoints = awayPoints;
 	}
+
+	public int getResult() {
+		return result;
+	}
+
+	public void setResult(int result) {
+		this.result = result;
+	}
+	
 }

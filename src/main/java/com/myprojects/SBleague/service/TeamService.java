@@ -21,8 +21,8 @@ public interface TeamService {
 	
 	void deleteTeamById(String Id);
 	
-	void deleteResults(MatchDto matchDto);
+	void deleteStatistics(MatchDto matchDto);
 
-	void updateResults(MatchDto matchDto);
+	void updateStatistics(MatchDto matchDto);
 	
 }
