@@ -20,9 +20,15 @@ public class MatchDayTableController {
 	}
 	
 	@GetMapping()
-	public String listMatches(@RequestParam(value="matchday", required=false) String matchday,Model model) {
-		System.out.println(matchday);
-		model.addAttribute("matches", matchService.getAllMatches());
+	public String listMatches(@RequestParam(value="matchday", required=false) Integer matchday, Model model) {
+
+		if(matchday != null && matchday > 0) {
+			model.addAttribute("matches", matchService.getAllMatchesByDay(matchday.intValue()));
+		}else if(matchday == null || matchday < 0) {
+			model.addAttribute("matches", matchService.getAllMatches());
+		}
+		
+		model.addAttribute("matchday",matchday);
 		return "matchdaytable";
 	}
 	

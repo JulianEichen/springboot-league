@@ -15,4 +15,6 @@ public interface MatchService {
 	Match updateMatch(MatchDto matchDto);
 	
 	void deleteMatch(MatchDto matchDto);
+
+	
 }

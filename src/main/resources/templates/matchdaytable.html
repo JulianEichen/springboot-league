@@ -15,7 +15,7 @@
 
 	<div class="container">
 		<div class="row">
-			<h1>The Table</h1>
+			<h1>The Matches</h1>
 		</div>
 
 		<!--  
@@ -29,12 +29,11 @@
 			</select>
 -->
 		<form th:action="@{/matchdaytable}" method="get">
-
+			<label th:text="Matchday"> </label>
 			<select onchange="this.form.submit()" th:name="matchday">
-				<option value="de">Germany</option>
-				<option value="nl">Netherlands</option>
-				<option value="pl">Poland</option>
-				<option value="lv">Latvia</option>
+				<option th:value=-1>All Matches</option>
+				<option th:each="i : ${#numbers.sequence(1, 16)}" th:value="${i}"
+					th:text="${i}" th:selected="${i.equals(matchday)}"></option>
 			</select>
 
 			<table class="table table-striped table-bordered">

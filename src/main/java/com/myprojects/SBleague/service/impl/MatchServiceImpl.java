@@ -46,7 +46,7 @@ public class MatchServiceImpl implements MatchService {
 		List<Match> filteredMatches = matchRepository.findAll();
 		filteredMatches = filteredMatches.stream().filter(match -> match.getMatchday() == matchday)
 				.collect(Collectors.toList());
-		return null;
+		return filteredMatches;
 	}
 
 	@Override
