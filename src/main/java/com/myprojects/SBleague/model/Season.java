@@ -10,60 +10,57 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="season")
+@Table(name = "seasons")
 public class Season {
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "season name")
+
+	@NotNull(message = "Season name cannot be null.")
+	@Column(name = "season_name")
 	private String seasonName;
-	
-	@NotNull(message="Number of teams cannot be null.")
-	@Min(value=2)
-	@Column(name = "number of Teams")
+
+	@NotNull(message = "Number of teams cannot be null.")
+	@Min(value = 2)
+	@Column(name = "number_of_teams")
 	private int numberOfTeams;
-	
-	@NotNull(message="Number of matches cannot be null.")
-	@Min(value=1)
-	@Column(name = "number of matches")
+
+	@NotNull(message = "Number of matches cannot be null.")
+	@Min(value = 1)
+	@Column(name = "number_of_matches")
 	private int numberOfMatches;
-	
+
 	@Column(name = "matchdays")
 	private int numberOfMatchdays;
-	
+
 	// private int numberOfGamesPerMatch;
-	@NotNull(message="Points per win cannot be null.")
-	@Column(name = "points per win")
+	@NotNull(message = "Points per win cannot be null.")
+	@Column(name = "points_per_win")
 	private int leaguePointsPerWin;
-	
-	@NotNull(message="Points per draw cannot be null.")
-	@Column(name = "points per draw")
+
+	@NotNull(message = "Points per draw cannot be null.")
+	@Column(name = "points_per_draw")
 	private int leaguePointsPerDraw;
-	
-	@NotNull(message="Points per loss cannot be null.")
-	@Column(name = "points per loss")
+
+	@NotNull(message = "Points per loss cannot be null.")
+	@Column(name = "points_per_loss")
 	private int leaguePointsPerLoss;
 
 	// default const.
-	public Season(){}
-	
+	public Season() {
+	}
+
 	// param. const.
-	public Season(Long id, String seasonName,
-			@NotNull(message = "Number of teams cannot be null.") @Min(2) int numberOfTeams,
-			@NotNull(message = "Number of matches cannot be null.") @Min(1) int numberOfMatches,
-			@NotNull(message = "Points per win cannot be null.") int leaguePointsPerWin,
-			@NotNull(message = "Points per draw cannot be null.") int leaguePointsPerDraw,
-			@NotNull(message = "Points per loss cannot be null.") int leaguePointsPerLoss) {
+	public Season(String seasonName, int numberOfTeams, int numberOfMatches, int leaguePointsPerWin,
+			int leaguePointsPerDraw, int leaguePointsPerLoss) {
 		super();
-		this.id = id;
 		this.seasonName = seasonName;
 		this.numberOfTeams = numberOfTeams;
 		this.numberOfMatches = numberOfMatches;
 		this.leaguePointsPerWin = leaguePointsPerWin;
 		this.leaguePointsPerDraw = leaguePointsPerDraw;
 		this.leaguePointsPerLoss = leaguePointsPerLoss;
-		this.numberOfMatchdays = (numberOfTeams-1)*numberOfMatches;
+		this.numberOfMatchdays = (numberOfTeams - 1) * numberOfMatches;
 	}
 
 	public Long getId() {
@@ -129,8 +126,5 @@ public class Season {
 	public void setLeaguePointsPerLoss(int leaguePointsPerLoss) {
 		this.leaguePointsPerLoss = leaguePointsPerLoss;
 	}
-	
-	
-	
-}
 
+}

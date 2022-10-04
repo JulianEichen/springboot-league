@@ -25,12 +25,11 @@
 				<h1>Match Registration</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/matchregistration}" method="post"
-					th:object="${match}">
+				<form th:action="@{/matchregistration}" method="post" th:object="${match}">
 
 					<div class="form-group">
-						<label class="control-label" for="matchday">Matchday</label> <input
-							id="matchday" class="form-control" th:field="*{matchday}"
+						<label class="control-label" for="matchday">Matchday</label>
+						<input id="matchday" class="form-control" th:field="*{matchday}"
 							required autofocus="autofocus">
 					</div>
 

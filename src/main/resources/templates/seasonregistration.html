@@ -2,10 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>League App</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
 </head>
 <body>
-<!-- Import navbar fragment  -->
+	<!-- Import navbar fragment  -->
 	<div th:replace="navbar.html :: navbar"></div>
 
 	<div class="container">
@@ -14,27 +18,49 @@
 				<!-- success message -->
 				<div th:if="${param.success}">
 					<div class="alert alert-info">You've successfully registered
-						a new team!</div>
+						a new season!</div>
 				</div>
 
 				<!--  Sub Header -->
-				<h1>Team Registration</h1>
+				<h1>Season Registration</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/teamregistration}" method="post"
-					th:object="${team}">
+				<form th:action="@{/seasonregistration}" method="post" th:object="${season}">
+				
 					<div class="form-group">
-						<label class="control-label" for="name">Team Name</label> <input
-							id="name" class="form-control" th:field="*{name}" required
-							autofocus="autofocus">
-						<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
-							Error</div>
+						<label class="control-label" for="seasonName">Season Name</label>
+						<input id="seasonName" class="form-control" th:field="*{seasonName}"
+							required autofocus="autofocus">
 					</div>
+					
 					<div class="form-group">
-						<label class="control-label" for="coach">Coach Name</label> <input
-							id="coach" class="form-control" th:field="*{coach}" required>
-						<div th:if="${#fields.hasErrors('coach')}" th:errors="*{coach}">Coach
-							Error</div>
+						<label class="control-label" for="numberOfTeams">Number Of Matches</label>
+						<input id="numberOfMatches" class="form-control" th:field="*{numberOfTeams}" required>
+						
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="numberOfMatches">Number Of Matches</label>
+						<input id="numberOfMatches" class="form-control" th:field="*{numberOfMatches}" required>
+						
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="leaguePointsPerWin">Points per Win</label>
+						<input id="leaguePointsPerWin" class="form-control" th:field="*{leaguePointsPerWin}" required>
+						
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="leaguePointsPerDraw">Points per Draw</label>
+						<input id="leaguePointsPerDraw" class="form-control" th:field="*{leaguePointsPerDraw}" required>
+						
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="leaguePointsPerLoss">Points per Loss</label>
+						<input id="leaguePointsPerLoss" class="form-control" th:field="*{leaguePointsPerLoss}" required>
+						
 					</div>
 					<button type="submit" class="btn btn-success">Submit</button>
 				</form>
