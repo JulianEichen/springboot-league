@@ -13,8 +13,8 @@
 		</div>
 
 		<form th:action="@{/matchdaytable}" method="get">
-			<label th:text="Matchday"> </label>
-			<select onchange="this.form.submit()" th:name="matchday">
+			<label th:text="Matchday"> </label> <select
+				onchange="this.form.submit()" th:name="matchday">
 				<option th:value=-1>All Matches</option>
 				<option th:each="i : ${#numbers.sequence(1, 16)}" th:value="${i}"
 					th:text="${i}" th:selected="${i.equals(matchday)}"></option>
@@ -47,6 +47,8 @@
 			</table>
 		</form>
 	</div>
-
+	
+	<div th:replace="footerfiles.html :: footerfiles"></div>
+	
 </body>
 </html>
