@@ -12,7 +12,7 @@ import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
 
 @Service
 public class TeamServiceImpl implements TeamService {
-
+	
 	// inject repository
 	private TeamRepository teamRepository;
 

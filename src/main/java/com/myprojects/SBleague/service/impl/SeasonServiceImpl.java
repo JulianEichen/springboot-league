@@ -1,5 +1,7 @@
 package com.myprojects.SBleague.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.myprojects.SBleague.model.Season;
@@ -27,5 +29,10 @@ public class SeasonServiceImpl implements SeasonService{
 		int leaguePointsPerLoss = seasonDto.getLeaguePointsPerLoss();
 		Season season = new Season(seasonName,numberOfTeams,numberOfMatches,leaguePointsPerWin,leaguePointsPerDraw,leaguePointsPerLoss);
 		return seasonRepository.save(season);
+	}
+
+	@Override
+	public List<Season> getAllSeasons() {
+		return seasonRepository.findAll();
 	}
 }

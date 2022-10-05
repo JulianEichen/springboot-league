@@ -16,15 +16,22 @@ import com.myprojects.SBleague.web.dto.MatchDto;
 
 @Controller
 public class MatchController {
-	
+
 	// injection
 	@Autowired
 	private MatchDtoValidationService matchDtoValidationService;
-	
+
 	private MatchService matchService;
 
 	public MatchController(MatchService matchService) {
 		this.matchService = matchService;
+	}
+
+	// input data from form will be stored in team then indirectly stored in
+	// MatchDto-Object
+	@ModelAttribute("match")
+	public MatchDto matchDto() {
+		return new MatchDto();
 	}
 
 	// Show forms
@@ -43,49 +50,43 @@ public class MatchController {
 		return "matchdeletion";
 	}
 
-	// input data from form will be stored in team then indirectly stored in MatchDto-Object
-	@ModelAttribute("match")
-	public MatchDto matchDto() {
-		return new MatchDto();
-	}
-	
 	@PostMapping("/matchregistration")
 	public String registerNewMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "matchregistration";
 		}
 		matchService.saveMatch(matchDto);
 		return "redirect:matchregistration?success";
 	}
-	
+
 	@PostMapping("/matchdeletion")
 	public String deleteMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
 		String err = matchDtoValidationService.validateMatchDto(matchDto);
-	    if (!err.isEmpty()) {
-	        ObjectError error = new ObjectError("globalError", err);
-	        result.addError(error);
-	    }
-	    
-	    if(result.hasErrors()) {
+		if (!err.isEmpty()) {
+			ObjectError error = new ObjectError("globalError", err);
+			result.addError(error);
+		}
+
+		if (result.hasErrors()) {
 			return "matchdeletion";
 		}
-	    
+
 		matchService.deleteMatch(matchDto);
 		return "redirect:matchdeletion?success";
 	}
-	
+
 	@PostMapping("/matchupdate")
 	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
 		String err = matchDtoValidationService.validateMatchDto(matchDto);
-	    if (!err.isEmpty()) {
-	        ObjectError error = new ObjectError("globalError", err);
-	        result.addError(error);
-	    }
-	    
-	    if(result.hasErrors()) {
+		if (!err.isEmpty()) {
+			ObjectError error = new ObjectError("globalError", err);
+			result.addError(error);
+		}
+
+		if (result.hasErrors()) {
 			return "matchupdate";
 		}
-		
+
 		matchService.updateMatch(matchDto);
 		return "redirect:matchupdate?success";
 	}

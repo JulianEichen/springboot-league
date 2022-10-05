@@ -3,6 +3,7 @@ package com.myprojects.SBleague.web;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,14 @@ public class SeasonController {
 		return new SeasonDto();
 	}
 
+	// Season table
+	@GetMapping("/seasontable")
+	public String listSeasons(Model model) {
+		model.addAttribute("seasons", seasonService.getAllSeasons());
+		return "seasontable";
+	}
+	
+	// Registration form
 	@GetMapping("/seasonregistration")
 	public String showRegistrationForm() {
 		return "seasonregistration";
