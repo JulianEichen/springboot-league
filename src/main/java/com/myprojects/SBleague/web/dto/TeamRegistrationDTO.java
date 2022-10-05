@@ -16,14 +16,18 @@ public class TeamRegistrationDTO {
 	@Size(min=3, max=50)
 	private String coach;
 	
+	@NotNull
+	private Long seasonId;
+	
 	// default const
 	public TeamRegistrationDTO(){}
 	
 	// param const
-	public TeamRegistrationDTO(String name, String coach) {
+	public TeamRegistrationDTO(String name, String coach, Long seasonId) {
 		super();
 		this.name = name;
 		this.coach = coach;
+		this.seasonId = seasonId;
 	}
 	public String getName() {
 		return name;
@@ -37,4 +41,14 @@ public class TeamRegistrationDTO {
 	public void setCoach(String coach) {
 		this.coach = coach;
 	}
+
+	public Long getSeasonId() {
+		return seasonId;
+	}
+
+	public void setSeasonId(Long seasonId) {
+		this.seasonId = seasonId;
+	}
+	
+	
 }

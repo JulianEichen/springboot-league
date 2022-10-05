@@ -42,7 +42,7 @@ public class TeamRegistrationController {
 		if (bindingResult.hasErrors()) {
 			return "teamregistration";
 		}
-		
+		System.out.println(regDto.getSeasonId());
 		teamService.saveTeam(regDto);
 		return "redirect:/teamregistration?success";
 	}

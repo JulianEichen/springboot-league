@@ -22,6 +22,13 @@
 				<form th:action="@{/teamregistration}" method="post"
 					th:object="${team}">
 					<div class="form-group">
+						<label class="control-label" for="seasonId">Season ID</label> <input
+							id="seasonId" class="form-control" th:field="*{seasonId}" required
+							autofocus="autofocus">
+						<div th:if="${#fields.hasErrors('seasonId')}" th:errors="*{seasonId}">Season
+							Error</div>
+					</div>
+					<div class="form-group">
 						<label class="control-label" for="name">Team Name</label> <input
 							id="name" class="form-control" th:field="*{name}" required
 							autofocus="autofocus">

@@ -35,4 +35,19 @@ public class SeasonServiceImpl implements SeasonService{
 	public List<Season> getAllSeasons() {
 		return seasonRepository.findAll();
 	}
+
+	@Override
+	public int getPointsPerWinById(Long seasonId) {
+		return seasonRepository.findById(seasonId).get().getLeaguePointsPerWin();
+	}
+
+	@Override
+	public int getPointsPerDrawById(Long seasonId) {
+		return seasonRepository.findById(seasonId).get().getLeaguePointsPerDraw();
+	}
+
+	@Override
+	public int getPointsPerLossById(Long seasonId) {
+		return seasonRepository.findById(seasonId).get().getLeaguePointsPerLoss();
+	}
 }

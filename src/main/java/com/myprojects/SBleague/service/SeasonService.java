@@ -7,6 +7,12 @@ import com.myprojects.SBleague.web.dto.SeasonDto;
 
 public interface SeasonService {
 	List<Season> getAllSeasons();
-	
+
 	Season saveSeason(SeasonDto seasonDto);
+
+	int getPointsPerWinById(Long seasonId);
+
+	int getPointsPerDrawById(Long seasonId);
+
+	int getPointsPerLossById(Long seasonId);
 }
