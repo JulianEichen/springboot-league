@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>League App</title>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+<head th:insert="headerfiles.html :: headerfiles">
 </head>
 <body>
 	<!-- Import navbar fragment  -->
@@ -18,16 +12,6 @@
 			<h1>The Matches</h1>
 		</div>
 
-		<!--  
-		<form  id="selectMatchday" th:action="@{/matchdaytable}" method="get" >
-
-			<label th:text="Matchday"> </label>
-			<input type="text" th:name="matchday">
-			<select onchange="this.form.submit()" id="matchday" name="matchday">
-				<option th:each="i : ${#numbers.sequence(1, 16)}" th:value="${i}"
-					th:text="${i}" th:selected="${i==16}"></option>
-			</select>
--->
 		<form th:action="@{/matchdaytable}" method="get">
 			<label th:text="Matchday"> </label>
 			<select onchange="this.form.submit()" th:name="matchday">
