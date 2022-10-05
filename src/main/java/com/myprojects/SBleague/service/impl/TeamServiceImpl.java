@@ -40,7 +40,7 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public Team saveTeam(TeamRegistrationDTO teamDto) {
 		String teamName = teamDto.getName().replace(' ', '_');
-		Team team = new Team(teamName, teamDto.getCoach(), teamDto.getSeasonId(), 0, 0, 0, 0, 0);
+		Team team = new Team(teamName, teamDto.getCoach(), 0, 0, 0, 0, 0);
 		return teamRepository.save(team);
 	}
 
@@ -76,28 +76,28 @@ public class TeamServiceImpl implements TeamService {
 			homeTeam.setWins(homeTeam.getWins()-1);
 			awayTeam.setLosses(awayTeam.getLosses()-1);
 			// league points
-			homeTeam.setPoints(homeTeam.getPoints()-seasonService.getPointsPerWinById(homeTeam.getSeasonId()));
-			awayTeam.setPoints(awayTeam.getPoints()-seasonService.getPointsPerLossById(awayTeam.getSeasonId()));
+			homeTeam.setPoints(homeTeam.getPoints()-seasonService.getActivePointsPerWin());
+			awayTeam.setPoints(awayTeam.getPoints()-seasonService.getActivePointsPerLoss());
 		// home loss
 		}else if(matchDto.getHomePoints() < matchDto.getAwayPoints()) {
 			// result statistics
 			homeTeam.setLosses(homeTeam.getLosses()-1);
 			awayTeam.setWins(awayTeam.getWins()-1);
 			// league points
-			homeTeam.setPoints(homeTeam.getPoints()-seasonService.getPointsPerLossById(homeTeam.getSeasonId()));
-			awayTeam.setPoints(awayTeam.getPoints()-seasonService.getPointsPerWinById(awayTeam.getSeasonId()));
+			homeTeam.setPoints(homeTeam.getPoints()-seasonService.getActivePointsPerLoss());
+			awayTeam.setPoints(awayTeam.getPoints()-seasonService.getActivePointsPerWin());
 		// draw
 		}else if(matchDto.getHomePoints() == matchDto.getAwayPoints()){
 			// result statistics
 			homeTeam.setDraws(homeTeam.getDraws()-1);
 			awayTeam.setDraws(awayTeam.getDraws()-1);
 			// league points
-			homeTeam.setPoints(homeTeam.getPoints()-seasonService.getPointsPerDrawById(homeTeam.getSeasonId()));
-			awayTeam.setPoints(awayTeam.getPoints()-seasonService.getPointsPerWinById(awayTeam.getSeasonId()));
+			homeTeam.setPoints(homeTeam.getPoints()-seasonService.getActivePointsPerDraw());
+			awayTeam.setPoints(awayTeam.getPoints()-seasonService.getActivePointsPerDraw());
 		}
 		
-		teamRepository.deleteById(homeTeamName);
-		teamRepository.deleteById(awayTeamName);
+		// teamRepository.deleteById(homeTeamName);
+		// teamRepository.deleteById(awayTeamName);
 		
 		teamRepository.save(homeTeam);
 		teamRepository.save(awayTeam);
@@ -116,25 +116,25 @@ public class TeamServiceImpl implements TeamService {
 			homeTeam.setWins(homeTeam.getWins()+1);
 			awayTeam.setLosses(awayTeam.getLosses()+1);
 			// league points
-			homeTeam.setPoints(homeTeam.getPoints()+seasonService.getPointsPerWinById(homeTeam.getSeasonId()));
-			awayTeam.setPoints(awayTeam.getPoints()+seasonService.getPointsPerLossById(awayTeam.getSeasonId()));
+			homeTeam.setPoints(homeTeam.getPoints()+seasonService.getActivePointsPerWin());
+			awayTeam.setPoints(awayTeam.getPoints()+seasonService.getActivePointsPerLoss());
 		}else if(matchDto.getHomePoints() < matchDto.getAwayPoints()) {
 			// result statistics
 			homeTeam.setLosses(homeTeam.getLosses()+1);
 			awayTeam.setWins(awayTeam.getWins()+1);
 			// league points
-			homeTeam.setPoints(homeTeam.getPoints()+seasonService.getPointsPerLossById(homeTeam.getSeasonId()));
-			awayTeam.setPoints(awayTeam.getPoints()+seasonService.getPointsPerWinById(awayTeam.getSeasonId()));
+			homeTeam.setPoints(homeTeam.getPoints()+seasonService.getActivePointsPerLoss());
+			awayTeam.setPoints(awayTeam.getPoints()+seasonService.getActivePointsPerWin());
 		}else if(matchDto.getHomePoints() == matchDto.getAwayPoints()){
 			// result statistics
 			homeTeam.setDraws(homeTeam.getDraws()+1);
 			awayTeam.setDraws(awayTeam.getDraws()+1);
 			// league points
-			homeTeam.setPoints(homeTeam.getPoints()+seasonService.getPointsPerDrawById(homeTeam.getSeasonId()));
-			awayTeam.setPoints(awayTeam.getPoints()+seasonService.getPointsPerDrawById(awayTeam.getSeasonId()));
+			homeTeam.setPoints(homeTeam.getPoints()+seasonService.getActivePointsPerDraw());
+			awayTeam.setPoints(awayTeam.getPoints()+seasonService.getActivePointsPerDraw());
 		}
-		teamRepository.deleteById(homeTeamName);
-		teamRepository.deleteById(awayTeamName);
+		// teamRepository.deleteById(homeTeamName);
+		// teamRepository.deleteById(awayTeamName);
 		
 		teamRepository.save(homeTeam);
 		teamRepository.save(awayTeam);

@@ -45,6 +45,10 @@ public class Season {
 	@NotNull(message = "Points per loss cannot be null.")
 	@Column(name = "points_per_loss")
 	private int leaguePointsPerLoss;
+	
+	@NotNull
+	@Column(name = "active_season")
+	private boolean active;
 
 	// default const.
 	public Season() {
@@ -61,6 +65,7 @@ public class Season {
 		this.leaguePointsPerDraw = leaguePointsPerDraw;
 		this.leaguePointsPerLoss = leaguePointsPerLoss;
 		this.numberOfMatchdays = (numberOfTeams - 1) * numberOfMatches;
+		this.active = false;
 	}
 
 	public Long getId() {
@@ -127,4 +132,12 @@ public class Season {
 		this.leaguePointsPerLoss = leaguePointsPerLoss;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
 }

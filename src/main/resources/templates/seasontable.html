@@ -23,6 +23,7 @@
 					<th>Points Per Win</th>
 					<th>Points Per Draw</th>
 					<th>Points Per Loss</th>
+					<th>Active</th>
 				</tr>
 			</thead>
 
@@ -36,11 +37,14 @@
 					<td th:text="${season.leaguePointsPerWin}"></td>
 					<td th:text="${season.leaguePointsPerDraw}"></td>
 					<td th:text="${season.leaguePointsPerLoss}"></td>
+					<td th:text="${season.active}"></td>
+					<td><a th:href="@{/seasontable/{id}(id=${season.id})}"
+						class="btn btn-danger">Activate</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div th:replace="footerfiles.html :: footerfiles"></div>
 </body>
 </html>

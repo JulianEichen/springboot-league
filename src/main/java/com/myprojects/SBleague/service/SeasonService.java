@@ -15,4 +15,10 @@ public interface SeasonService {
 	int getPointsPerDrawById(Long seasonId);
 
 	int getPointsPerLossById(Long seasonId);
+	
+	int getActivePointsPerWin();
+	int getActivePointsPerDraw();
+	int getActivePointsPerLoss();
+	
+	void setActive(Long seasonId);
 }

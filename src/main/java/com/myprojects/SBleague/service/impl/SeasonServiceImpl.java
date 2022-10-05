@@ -27,7 +27,12 @@ public class SeasonServiceImpl implements SeasonService{
 		int leaguePointsPerWin = seasonDto.getLeaguePointsPerWin();
 		int leaguePointsPerDraw = seasonDto.getLeaguePointsPerDraw();
 		int leaguePointsPerLoss = seasonDto.getLeaguePointsPerLoss();
-		Season season = new Season(seasonName,numberOfTeams,numberOfMatches,leaguePointsPerWin,leaguePointsPerDraw,leaguePointsPerLoss);
+		Season season = new Season(seasonName,
+				numberOfTeams,
+				numberOfMatches,
+				leaguePointsPerWin,
+				leaguePointsPerDraw,
+				leaguePointsPerLoss);
 		return seasonRepository.save(season);
 	}
 
@@ -50,4 +55,31 @@ public class SeasonServiceImpl implements SeasonService{
 	public int getPointsPerLossById(Long seasonId) {
 		return seasonRepository.findById(seasonId).get().getLeaguePointsPerLoss();
 	}
+
+	@Override
+	public void setActive(Long seasonId) {
+		List<Season> seasons = seasonRepository.findAll();
+		seasons.forEach(season -> season.setActive(false));
+		seasons.forEach(season -> seasonRepository.save(season));
+		
+		Season activeSeason = seasonRepository.findById(seasonId).get();
+		activeSeason.setActive(true);
+		seasonRepository.save(activeSeason);
+	}
+
+	@Override
+	public int getActivePointsPerWin() {
+		return seasonRepository.findByActive(true).getLeaguePointsPerWin();
+	}
+
+	@Override
+	public int getActivePointsPerDraw() {
+		return seasonRepository.findByActive(true).getLeaguePointsPerDraw();
+	}
+	
+	@Override
+	public int getActivePointsPerLoss() {
+		return seasonRepository.findByActive(true).getLeaguePointsPerLoss();
+	}
+
 }

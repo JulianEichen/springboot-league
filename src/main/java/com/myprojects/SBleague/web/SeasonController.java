@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.myprojects.SBleague.service.SeasonService;
@@ -47,6 +48,13 @@ public class SeasonController {
 	public String registerNewSeason(@ModelAttribute("season") SeasonDto seasonDto) {
 		seasonService.saveSeason(seasonDto);
 		return "redirect:seasonregistration?success";
+	}
+	
+	// handler method to handle delete request
+	@GetMapping("/seasontable/{id}")
+	public String setActive(@PathVariable Long id) {
+		seasonService.setActive(id);
+		return "redirect:/seasontable";
 	}
 
 }

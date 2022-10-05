@@ -16,9 +16,7 @@ public class Team {
 	
 	@Column(name="coach")
 	private String coach;
-	
-	@Column(name="season_id")
-	private Long seasonId;
+
 	
 	@Column(name="matches")
 	private int matches = 0;
@@ -39,11 +37,10 @@ public class Team {
 	public Team() {}
 	
 	// param const
-	public Team(String name, String coach, Long seasonId, int matches, int wins, int draws, int losses, int points) {
+	public Team(String name, String coach, int matches, int wins, int draws, int losses, int points) {
 		super();
 		this.name = name;
 		this.coach = coach;
-		this.seasonId = seasonId;
 		this.matches = matches;
 		this.wins = wins;
 		this.draws = draws;
@@ -107,13 +104,7 @@ public class Team {
 		this.points = points;
 	}
 	
-	public Long getSeasonId() {
-		return seasonId;
-	}
 
-	public void setSeasonId(Long seasonId) {
-		this.seasonId = seasonId;
-	}
 
 	public String showTeamName() {
 		return name.replace("_", " ");
