@@ -82,4 +82,9 @@ public class SeasonServiceImpl implements SeasonService{
 		return seasonRepository.findByActive(true).getLeaguePointsPerLoss();
 	}
 
+	@Override
+	public int getActiveNumberOfTeams() {
+		return seasonRepository.findByActive(true).getNumberOfTeams();
+	}
+
 }

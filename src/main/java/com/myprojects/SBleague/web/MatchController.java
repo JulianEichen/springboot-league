@@ -18,13 +18,13 @@ import com.myprojects.SBleague.web.dto.MatchDto;
 public class MatchController {
 
 	// injection
-	@Autowired
 	private MatchDtoValidationService matchDtoValidationService;
 
 	private MatchService matchService;
 
-	public MatchController(MatchService matchService) {
+	public MatchController(MatchService matchService,MatchDtoValidationService matchDtoValidationService) {
 		this.matchService = matchService;
+		this.matchDtoValidationService = matchDtoValidationService;
 	}
 
 	// input data from form will be stored in team then indirectly stored in
