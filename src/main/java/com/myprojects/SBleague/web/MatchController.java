@@ -1,5 +1,9 @@
 package com.myprojects.SBleague.web;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myprojects.SBleague.service.MatchService;
+import com.myprojects.SBleague.service.SeasonService;
 import com.myprojects.SBleague.validation.MatchDtoValidationService;
 import com.myprojects.SBleague.web.dto.MatchDto;
 
@@ -22,10 +27,15 @@ public class MatchController {
 	private MatchDtoValidationService matchDtoValidationService;
 
 	private MatchService matchService;
+	private SeasonService seasonService;
 
-	public MatchController(MatchService matchService,MatchDtoValidationService matchDtoValidationService) {
-		this.matchService = matchService;
+	public MatchController(MatchDtoValidationService matchDtoValidationService,
+			MatchService matchService,
+			SeasonService seasonService) {
+		
 		this.matchDtoValidationService = matchDtoValidationService;
+		this.matchService = matchService;
+		this.seasonService = seasonService;
 	}
 
 	// input data from form will be stored in team then indirectly stored in
@@ -50,7 +60,8 @@ public class MatchController {
 	public String showDeleteForm() {
 		return "matchdeletion";
 	}
-
+	
+	// registration controlling
 	@PostMapping("/matchregistration")
 	public String registerNewMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
 		if (result.hasErrors()) {
@@ -60,13 +71,19 @@ public class MatchController {
 		return "redirect:matchregistration?success";
 	}
 	
+	// show matchdaytable with select functionality
 	@GetMapping("matchdaytable")
 	public String listMatches(@RequestParam(value="matchday", required=false) Integer matchday, Model model) {
+		System.out.println(matchday);
 		if(matchday != null && matchday > 0) {
 			model.addAttribute("matches", matchService.getAllMatchesByDay(matchday.intValue()));
 		}else if(matchday == null || matchday < 0) {
 			model.addAttribute("matches", matchService.getAllMatches());
 		}
+		
+		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays()+1)
+				.mapToObj(i->i).collect(Collectors.toList());
+		model.addAttribute("matchdaynumbers", matchdayNumbers);
 		
 		model.addAttribute("matchday",matchday);
 		return "matchdaytable";
