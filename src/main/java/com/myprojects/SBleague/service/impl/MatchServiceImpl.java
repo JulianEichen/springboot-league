@@ -15,13 +15,13 @@ import com.myprojects.SBleague.web.dto.MatchDto;
 @Service
 public class MatchServiceImpl implements MatchService {
 
-	@Autowired
-	private TeamService teamService;
 
+	private TeamService teamService;
 	private MatchRepository matchRepository;
 
-	public MatchServiceImpl(MatchRepository matchRepository) {
+	public MatchServiceImpl(TeamService teamService,MatchRepository matchRepository) {
 		super();
+		this.teamService = teamService;
 		this.matchRepository = matchRepository;
 	}
 
