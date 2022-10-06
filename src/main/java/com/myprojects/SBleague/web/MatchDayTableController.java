@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.myprojects.SBleague.service.MatchService;
 
 
-@Controller
-@RequestMapping("matchdaytable")
+// @Controller
+// @RequestMapping("matchdaytable")
 public class MatchDayTableController {
 	
 	private MatchService matchService;
@@ -21,7 +21,6 @@ public class MatchDayTableController {
 	
 	@GetMapping()
 	public String listMatches(@RequestParam(value="matchday", required=false) Integer matchday, Model model) {
-
 		if(matchday != null && matchday > 0) {
 			model.addAttribute("matches", matchService.getAllMatchesByDay(matchday.intValue()));
 		}else if(matchday == null || matchday < 0) {

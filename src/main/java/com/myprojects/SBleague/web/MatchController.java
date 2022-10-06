@@ -2,13 +2,14 @@ package com.myprojects.SBleague.web;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myprojects.SBleague.service.MatchService;
 import com.myprojects.SBleague.validation.MatchDtoValidationService;
@@ -57,6 +58,18 @@ public class MatchController {
 		}
 		matchService.saveMatch(matchDto);
 		return "redirect:matchregistration?success";
+	}
+	
+	@GetMapping("matchdaytable")
+	public String listMatches(@RequestParam(value="matchday", required=false) Integer matchday, Model model) {
+		if(matchday != null && matchday > 0) {
+			model.addAttribute("matches", matchService.getAllMatchesByDay(matchday.intValue()));
+		}else if(matchday == null || matchday < 0) {
+			model.addAttribute("matches", matchService.getAllMatches());
+		}
+		
+		model.addAttribute("matchday",matchday);
+		return "matchdaytable";
 	}
 
 	@PostMapping("/matchdeletion")
