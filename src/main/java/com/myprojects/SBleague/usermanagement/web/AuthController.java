@@ -24,6 +24,12 @@ public class AuthController {
 		this.userService = userService;
 	}
 	
+	// handler for login
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+	
 	// handler for user table
 	@GetMapping("/usertable")
 	public String userTable(Model model) {
@@ -38,7 +44,7 @@ public class AuthController {
 	public String showRegistrationForm(Model model) {
 		UserDto userDto = new UserDto();
 		model.addAttribute("user", userDto);
-		return "register";
+		return "userregistration";
 	}
 
 	// handler for user registration form submit
@@ -56,6 +62,7 @@ public class AuthController {
 			return "/userregistration";
 		}
 		
+		userService.saveUser(userDto);
 		return "redirect:/userregistration?success";
 	}
 
