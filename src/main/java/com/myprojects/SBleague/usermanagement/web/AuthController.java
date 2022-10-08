@@ -17,27 +17,32 @@ import com.myprojects.SBleague.usermanagement.web.dto.UserDto;
 
 @Controller
 public class AuthController {
-	
+
 	private UserService userService;
-	
+
 	public AuthController(UserService userService) {
 		this.userService = userService;
 	}
-	
+
 	// handler for login
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
-	
+
+	// handler for login
+	@GetMapping("/userprofile")
+	public String profle() {
+		return "userprofile";
+	}
+
 	// handler for user table
 	@GetMapping("/usertable")
 	public String userTable(Model model) {
 		List<UserDto> users = userService.findAllUsers();
-		model.addAttribute("users",users);
+		model.addAttribute("users", users);
 		return "/usertable";
 	}
-	
 
 	// handler for user registration requests
 	@GetMapping("/userregistration")
@@ -50,18 +55,18 @@ public class AuthController {
 	// handler for user registration form submit
 	@PostMapping("/userregistration/save")
 	public String registration(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result, Model model) {
-		
-		User existingUser= userService.findUserByEmail(userDto.getEmail());
-		
-		if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
+
+		User existingUser = userService.findUserByEmail(userDto.getEmail());
+
+		if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
 			result.rejectValue("email", null, "There is already an account registered with the same email");
 		}
-		
-		if(result.hasErrors()) {
-			model.addAttribute("user",userDto);
+
+		if (result.hasErrors()) {
+			model.addAttribute("user", userDto);
 			return "/userregistration";
 		}
-		
+
 		userService.saveUser(userDto);
 		return "redirect:/userregistration?success";
 	}

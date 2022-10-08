@@ -13,11 +13,22 @@
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-
+		
+		<!-- Authenticated -->
+		
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
+				
+				<!-- Not Authenticated -->
+				
+				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link"
+					href="userregistration">Register</a></li>
 
-				<li class="nav-item dropdown"><a
+				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" href="login">Login</a></li>
+				
+				<!-- Authenticated -->
+				
+				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown1"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Teams</a>
@@ -27,7 +38,7 @@
 								Teams</a></li>
 					</ul></li>
 
-				<li class="nav-item dropdown"><a
+				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown2"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Matches</a>
@@ -42,7 +53,7 @@
 								Matches</a></li>
 					</ul></li>
 
-				<li class="nav-item dropdown"><a
+				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown3"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Seasons</a>
@@ -53,7 +64,7 @@
 								Seasons</a></li>
 					</ul></li>
 
-				<li class="nav-item dropdown"><a
+				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown4"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						User</a>
@@ -62,13 +73,16 @@
 						<li><a class="dropdown-item" href="userupdate">Edit
 								Details</a></li>
 					</ul></li>
+					
+	
 			</ul>
 			
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+					<li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/logout}">Logout</a></li>
 				</ul>
 			</div>
+			
 		</div>
 	</nav>
 
