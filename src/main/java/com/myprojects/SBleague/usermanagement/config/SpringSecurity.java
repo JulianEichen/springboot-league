@@ -37,7 +37,7 @@ public class SpringSecurity {
 					form -> form
 					.loginPage("/login")
 					.loginProcessingUrl("/login")
-					.defaultSuccessUrl("/index")
+					.defaultSuccessUrl("/maintable")
 					.permitAll()
 				).logout(
 					logout -> logout

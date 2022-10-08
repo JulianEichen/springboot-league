@@ -7,4 +7,5 @@ import com.myprojects.SBleague.usermanagement.model.Role;
 public interface RoleRepository extends JpaRepository<Role, Long>{
 	
 	Role findByName(String name);
+	boolean existsByName(String name);
 }
