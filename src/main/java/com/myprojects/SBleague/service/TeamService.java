@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.myprojects.SBleague.model.Team;
 import com.myprojects.SBleague.web.dto.MatchDto;
-import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
+import com.myprojects.SBleague.web.dto.TeamRegistrationDto;
 
 
 public interface TeamService {
@@ -12,7 +12,7 @@ public interface TeamService {
 	
 	List<Team> getAllTeamsOrdered();
 	
-	Team saveTeam(TeamRegistrationDTO teamDto);
+	Team saveTeam(TeamRegistrationDto teamDto);
 	
 	Team getTeamById(String Id);
 	

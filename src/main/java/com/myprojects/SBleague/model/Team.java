@@ -14,10 +14,9 @@ public class Team {
 	@Column(name="name",unique=true)
 	private String name;
 	
-	@Column(name="coach")
-	private String coach;
+	@Column(name="owner",unique=true)
+	private String owner;
 
-	
 	@Column(name="matches")
 	private int matches = 0;
 	
@@ -37,10 +36,10 @@ public class Team {
 	public Team() {}
 	
 	// param const
-	public Team(String name, String coach, int matches, int wins, int draws, int losses, int points) {
+	public Team(String name, String owner, int matches, int wins, int draws, int losses, int points) {
 		super();
 		this.name = name;
-		this.coach = coach;
+		this.owner = owner;
 		this.matches = matches;
 		this.wins = wins;
 		this.draws = draws;
@@ -56,12 +55,12 @@ public class Team {
 		this.name = name;
 	}
 
-	public String getCoach() {
-		return coach;
+	public String getOwner() {
+		return owner;
 	}
 
-	public void setCoach(String coach) {
-		this.coach = coach;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 	public int getMatches() {

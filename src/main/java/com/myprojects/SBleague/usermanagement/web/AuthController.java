@@ -1,5 +1,6 @@
 package com.myprojects.SBleague.usermanagement.web;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -32,7 +33,8 @@ public class AuthController {
 
 	// handler for login
 	@GetMapping("/userprofile")
-	public String profle() {
+	public String showUserProfile(Principal principal) {
+		String userMail = principal.getName();
 		return "userprofile";
 	}
 

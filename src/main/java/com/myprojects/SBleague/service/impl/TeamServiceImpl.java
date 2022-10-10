@@ -9,7 +9,7 @@ import com.myprojects.SBleague.repository.TeamRepository;
 import com.myprojects.SBleague.service.SeasonService;
 import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.web.dto.MatchDto;
-import com.myprojects.SBleague.web.dto.TeamRegistrationDTO;
+import com.myprojects.SBleague.web.dto.TeamRegistrationDto;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -38,9 +38,9 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public Team saveTeam(TeamRegistrationDTO teamDto) {
+	public Team saveTeam(TeamRegistrationDto teamDto) {
 		String teamName = teamDto.getName().replace(' ', '_');
-		Team team = new Team(teamName, teamDto.getCoach(), 0, 0, 0, 0, 0);
+		Team team = new Team(teamName, teamDto.getOwner(), 0, 0, 0, 0, 0);
 		return teamRepository.save(team);
 	}
 

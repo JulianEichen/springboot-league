@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 
 import com.myprojects.SBleague.annotations.UniqueTeam;
 
-public class TeamRegistrationDTO {
+public class TeamRegistrationDto {
 	
 	@UniqueTeam
 	@NotNull
@@ -14,17 +14,17 @@ public class TeamRegistrationDTO {
 	
 	@NotNull
 	@Size(min=3, max=50)
-	private String coach;
+	private String owner;
 
 	
 	// default const
-	public TeamRegistrationDTO(){}
+	public TeamRegistrationDto(){}
 	
 	// param const
-	public TeamRegistrationDTO(String name, String coach) {
+	public TeamRegistrationDto(String name, String owner) {
 		super();
 		this.name = name;
-		this.coach = coach;
+		this.owner = owner;
 	}
 	public String getName() {
 		return name;
@@ -32,11 +32,11 @@ public class TeamRegistrationDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getCoach() {
-		return coach;
+	public String getOwner() {
+		return owner;
 	}
-	public void setCoach(String coach) {
-		this.coach = coach;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	
 }

@@ -16,7 +16,7 @@
 			<thead class="table-dark">
 				<tr>
 					<th>Team</th>
-					<th>Coach</th>
+					<th>Owner</th>
 					<th>Matches</th>
 					<th>Wins</th>
 					<th>Draws</th>
@@ -28,7 +28,7 @@
 			<tbody>
 				<tr th:each="team: ${teams}">
 					<td th:text="${team.showTeamName()}"></td>
-					<td th:text="${team.coach}"></td>
+					<td th:text="${team.owner}"></td>
 					<td th:text="${team.matches}"></td>
 					<td th:text="${team.wins}"></td>
 					<td th:text="${team.draws}"></td>
