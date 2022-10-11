@@ -10,15 +10,15 @@ import com.myprojects.SBleague.service.SeasonService;
 import com.myprojects.SBleague.web.dto.SeasonDto;
 
 @Service
-public class SeasonServiceImpl implements SeasonService{
-	
+public class SeasonServiceImpl implements SeasonService {
+
 	private SeasonRepository seasonRepository;
-	
+
 	public SeasonServiceImpl(SeasonRepository seasonRepository) {
 		super();
 		this.seasonRepository = seasonRepository;
 	}
-	
+
 	@Override
 	public Season saveSeason(SeasonDto seasonDto) {
 		String seasonName = seasonDto.getSeasonName();
@@ -28,14 +28,9 @@ public class SeasonServiceImpl implements SeasonService{
 		int leaguePointsPerDraw = seasonDto.getLeaguePointsPerDraw();
 		int leaguePointsPerLoss = seasonDto.getLeaguePointsPerLoss();
 		boolean active = seasonDto.isActive();
-	
-		Season season = new Season(seasonName,
-				numberOfTeams,
-				numberOfMatches,
-				leaguePointsPerWin,
-				leaguePointsPerDraw,
-				leaguePointsPerLoss,
-				active);
+
+		Season season = new Season(seasonName, numberOfTeams, numberOfMatches, leaguePointsPerWin, leaguePointsPerDraw,
+				leaguePointsPerLoss, active);
 		return seasonRepository.save(season);
 	}
 
@@ -64,7 +59,7 @@ public class SeasonServiceImpl implements SeasonService{
 		List<Season> seasons = seasonRepository.findAll();
 		seasons.forEach(season -> season.setActive(false));
 		seasons.forEach(season -> seasonRepository.save(season));
-		
+
 		Season activeSeason = seasonRepository.findById(seasonId).get();
 		activeSeason.setActive(true);
 		seasonRepository.save(activeSeason);
@@ -72,37 +67,72 @@ public class SeasonServiceImpl implements SeasonService{
 
 	@Override
 	public int getActivePointsPerWin() {
-		return seasonRepository.findByActive(true).getLeaguePointsPerWin();
+		Season activeSeason = seasonRepository.findByActive(true);
+		if (activeSeason == null) {
+			return 0;
+		} else {
+			return seasonRepository.findByActive(true).getLeaguePointsPerWin();
+		}
 	}
 
 	@Override
 	public int getActivePointsPerDraw() {
-		return seasonRepository.findByActive(true).getLeaguePointsPerDraw();
+		Season activeSeason = seasonRepository.findByActive(true);
+		if (activeSeason == null) {
+			return 0;
+		} else {
+			return seasonRepository.findByActive(true).getLeaguePointsPerDraw();
+		}
 	}
-	
+
 	@Override
 	public int getActivePointsPerLoss() {
-		return seasonRepository.findByActive(true).getLeaguePointsPerLoss();
+		Season activeSeason = seasonRepository.findByActive(true);
+		if (activeSeason == null) {
+			return 0;
+		} else {
+			return seasonRepository.findByActive(true).getLeaguePointsPerLoss();
+		}
 	}
 
 	@Override
 	public int getActiveNumberOfTeams() {
-		return seasonRepository.findByActive(true).getNumberOfTeams();
+		Season activeSeason = seasonRepository.findByActive(true);
+		if (activeSeason == null) {
+			return 0;
+		} else {
+			return seasonRepository.findByActive(true).getNumberOfTeams();
+		}
 	}
 
 	@Override
 	public int getActiveNumberOfMatchdays() {
-		return seasonRepository.findByActive(true).getNumberOfMatchdays();
+		Season activeSeason = seasonRepository.findByActive(true);
+		if (activeSeason == null) {
+			return 0;
+		} else {
+			return seasonRepository.findByActive(true).getNumberOfMatchdays();
+		}
 	}
 
 	@Override
 	public String getActiveName() {
-		return seasonRepository.findByActive(true).getSeasonName();
+		Season activeSeason = seasonRepository.findByActive(true);
+		if (activeSeason == null) {
+			return "No Season available";
+		} else {
+			return seasonRepository.findByActive(true).getSeasonName();
+		}
 	}
 
 	@Override
 	public int getActiveNumberOfMatches() {
-		return seasonRepository.findByActive(true).getNumberOfMatches();
+		Season activeSeason = seasonRepository.findByActive(true);
+		if (activeSeason == null) {
+			return 0;
+		} else {
+			return seasonRepository.findByActive(true).getNumberOfMatches();
+		}
 	}
 
 }
