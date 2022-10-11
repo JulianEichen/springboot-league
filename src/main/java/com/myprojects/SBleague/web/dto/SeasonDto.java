@@ -9,16 +9,19 @@ public class SeasonDto {
 	private int numberOfTeams;
 	@NotNull
 	private int numberOfMatches;
-	
+
 	private int numberOfMatchdays;
 	@NotNull
 	private int leaguePointsPerWin;
 	@NotNull
-	private int leaguePointsPerDraw; 
+	private int leaguePointsPerDraw;
 	@NotNull
 	private int leaguePointsPerLoss;
-	
-	public SeasonDto(){}
+
+	private boolean active;
+
+	public SeasonDto() {
+	}
 
 	public SeasonDto(@NotNull String seasonName, @NotNull int numberOfTeams, @NotNull int numberOfMatches,
 			@NotNull int leaguePointsPerWin, @NotNull int leaguePointsPerDraw, @NotNull int leaguePointsPerLoss) {
@@ -81,9 +84,18 @@ public class SeasonDto {
 
 	public void setNumberOfMatchdays(int numberOfMatchdays) {
 		this.numberOfMatchdays = numberOfMatchdays;
-	} 
-	
+	}
+
 	public int getNumberOfMatchdays() {
 		return numberOfMatchdays;
 	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 }

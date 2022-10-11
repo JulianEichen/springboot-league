@@ -56,7 +56,7 @@ public class Season {
 
 	// param. const.
 	public Season(String seasonName, int numberOfTeams, int numberOfMatches, int leaguePointsPerWin,
-			int leaguePointsPerDraw, int leaguePointsPerLoss) {
+			int leaguePointsPerDraw, int leaguePointsPerLoss,boolean active) {
 		super();
 		this.seasonName = seasonName;
 		this.numberOfTeams = numberOfTeams;
@@ -65,7 +65,7 @@ public class Season {
 		this.leaguePointsPerDraw = leaguePointsPerDraw;
 		this.leaguePointsPerLoss = leaguePointsPerLoss;
 		this.numberOfMatchdays = (numberOfTeams - 1) * numberOfMatches;
-		this.active = false;
+		this.active = active;
 	}
 
 	public Long getId() {

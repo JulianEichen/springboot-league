@@ -1,5 +1,7 @@
 package com.myprojects.SBleague.web;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.myprojects.SBleague.model.Season;
 import com.myprojects.SBleague.service.SeasonService;
 import com.myprojects.SBleague.web.dto.SeasonDto;
 
@@ -58,6 +61,14 @@ public class SeasonController {
 
 	@PostMapping("/seasonregistration")
 	public String registerNewSeason(@ModelAttribute("season") SeasonDto seasonDto) {
+		List<Season> seasons = seasonService.getAllSeasons();
+		if (seasons.isEmpty()) {
+			seasonDto.setActive(true);
+			System.out.println("Auto activate!");
+		}else {
+			seasonDto.setActive(false);
+			System.out.println("Auto NOT activate!");
+		}
 		seasonService.saveSeason(seasonDto);
 		return "redirect:seasonregistration?success";
 	}

@@ -27,12 +27,15 @@ public class SeasonServiceImpl implements SeasonService{
 		int leaguePointsPerWin = seasonDto.getLeaguePointsPerWin();
 		int leaguePointsPerDraw = seasonDto.getLeaguePointsPerDraw();
 		int leaguePointsPerLoss = seasonDto.getLeaguePointsPerLoss();
+		boolean active = seasonDto.isActive();
+	
 		Season season = new Season(seasonName,
 				numberOfTeams,
 				numberOfMatches,
 				leaguePointsPerWin,
 				leaguePointsPerDraw,
-				leaguePointsPerLoss);
+				leaguePointsPerLoss,
+				active);
 		return seasonRepository.save(season);
 	}
 
