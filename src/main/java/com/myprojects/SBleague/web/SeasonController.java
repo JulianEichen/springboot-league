@@ -33,15 +33,19 @@ public class SeasonController {
 	// Active Season for users
 	@GetMapping("/seasonrules")
 	public String showActiveSeason(Model model) {
-		SeasonDto activeSeason = new SeasonDto();
-		activeSeason.setSeasonName(seasonService.getActiveName());
-		activeSeason.setNumberOfTeams(seasonService.getActiveNumberOfTeams());
-		activeSeason.setNumberOfMatches(seasonService.getActiveNumberOfMatches());
-		activeSeason.setNumberOfMatchdays(seasonService.getActiveNumberOfMatchdays());
-		activeSeason.setLeaguePointsPerWin(seasonService.getActivePointsPerWin());
-		activeSeason.setLeaguePointsPerDraw(seasonService.getActivePointsPerDraw());
-		activeSeason.setLeaguePointsPerLoss(seasonService.getActivePointsPerLoss());
-		
+
+		SeasonDto activeSeason = new SeasonDto("TBA", 0, 0, 0, 0, 0);
+
+		if (!seasonService.getAllSeasons().isEmpty()) {
+			activeSeason.setSeasonName(seasonService.getActiveName());
+			activeSeason.setNumberOfTeams(seasonService.getActiveNumberOfTeams());
+			activeSeason.setNumberOfMatches(seasonService.getActiveNumberOfMatches());
+			activeSeason.setNumberOfMatchdays(seasonService.getActiveNumberOfMatchdays());
+			activeSeason.setLeaguePointsPerWin(seasonService.getActivePointsPerWin());
+			activeSeason.setLeaguePointsPerDraw(seasonService.getActivePointsPerDraw());
+			activeSeason.setLeaguePointsPerLoss(seasonService.getActivePointsPerLoss());
+		}
+
 		model.addAttribute("activeseason", activeSeason);
 		return "seasonrules";
 	}
@@ -64,10 +68,8 @@ public class SeasonController {
 		List<Season> seasons = seasonService.getAllSeasons();
 		if (seasons.isEmpty()) {
 			seasonDto.setActive(true);
-			System.out.println("Auto activate!");
-		}else {
+		} else {
 			seasonDto.setActive(false);
-			System.out.println("Auto NOT activate!");
 		}
 		seasonService.saveSeason(seasonDto);
 		return "redirect:seasonregistration?success";

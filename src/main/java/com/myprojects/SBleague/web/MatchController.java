@@ -74,7 +74,6 @@ public class MatchController {
 	// show matchdaytable with select functionality
 	@GetMapping("matchdaytable")
 	public String listMatches(@RequestParam(value="matchday", required=false) Integer matchday, Model model) {
-		System.out.println(matchday);
 		if(matchday != null && matchday > 0) {
 			model.addAttribute("matches", matchService.getAllMatchesByDay(matchday.intValue()));
 		}else if(matchday == null || matchday < 0) {
