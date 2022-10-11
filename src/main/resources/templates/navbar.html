@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="headerfiles.html :: headerfiles">
 </head>
 
@@ -13,38 +14,55 @@
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		
+
 		<!-- Authenticated -->
-		
+
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
-				
-				<!-- Not Authenticated -->
-				
-				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link"
-					href="userregistration">Register</a></li>
 
-				<li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" href="login">Login</a></li>
-				
+				<!-- Not Authenticated -->
+
+				<li sec:authorize="!isAuthenticated()" class="nav-item"><a
+					class="nav-link" href="userregistration">Register</a></li>
+
+				<li sec:authorize="!isAuthenticated()" class="nav-item"><a
+					class="nav-link" href="login">Login</a></li>
+
 				<!-- Authenticated -->
-				
+
 				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown1"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Teams</a>
+						Season</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="maintable">Team Table</a></li>
-						<li><a class="dropdown-item" href="teamregistration">Register
-								Teams</a></li>
+						<li><a class="dropdown-item" href="maintable">The Table</a></li>
+						<li><a class="dropdown-item" href="matchdaytable">Matchday
+								Table</a></li>
+						<li><a class="dropdown-item" href="seasonrules">Season Rules</a></li>
 					</ul></li>
+
 
 				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown2"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Matches</a>
+						User</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="matchdaytable">Matchday
+						<li><a class="dropdown-item" href="teamregistration">Register
+								Team</a></li>
+						<li><a class="dropdown-item" href="userprofile">Profile</a></li>
+						<li><a class="dropdown-item" href="userupdate">Edit
+								Details</a></li>
+					</ul></li>
+
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown3"
+					role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Admin Actions</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="seasontable">Seasons
 								Table</a></li>
+						<li><a class="dropdown-item" href="seasonregistration">Register
+								Seasons</a></li>
 						<li><a class="dropdown-item" href="matchregistration">Register
 								Matches</a></li>
 						<li><a class="dropdown-item" href="matchupdate">Update
@@ -53,36 +71,16 @@
 								Matches</a></li>
 					</ul></li>
 
-				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown3"
-					role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Seasons</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="seasontable">Seasons
-								Table</a></li>
-						<li><a class="dropdown-item" href="seasonregistration">Register
-								Seasons</a></li>
-					</ul></li>
 
-				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown4"
-					role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						User</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="userprofile">Profile</a></li>
-						<li><a class="dropdown-item" href="userupdate">Edit
-								Details</a></li>
-					</ul></li>
-					
-	
 			</ul>
-			
+
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/logout}">Logout</a></li>
+					<li sec:authorize="isAuthenticated()" class="nav-item"><a
+						th:href="@{/logout}">Logout</a></li>
 				</ul>
 			</div>
-			
+
 		</div>
 	</nav>
 

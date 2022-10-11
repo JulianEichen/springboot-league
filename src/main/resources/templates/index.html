@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="headerfiles.html :: headerfiles">
 </head>
 <body>
@@ -10,7 +11,14 @@
 	<div class="container">
 		<h1>Welcome to the League App, please use the Navbar for now!</h1>
 	</div>
-	
+
+	<div sec:authorize="isAuthenticated()">This content is only shown
+		to authenticated users.</div>
+	<div sec:authorize="hasRole('ROLE_ADMIN')">This content is only
+		shown to administrators.</div>
+	<div sec:authorize="hasRole('ROLE_USER')">This content is only
+		shown to users.</div>
+
 	<div th:replace="footerfiles.html :: footerfiles"></div>
 </body>
 </html>

@@ -16,11 +16,15 @@ public interface SeasonService {
 
 	int getPointsPerLossById(Long seasonId);
 	
+	
+	String getActiveName();
+	int getActiveNumberOfTeams();
+	int getActiveNumberOfMatches();
+	int getActiveNumberOfMatchdays();
 	int getActivePointsPerWin();
 	int getActivePointsPerDraw();
 	int getActivePointsPerLoss();
-	int getActiveNumberOfTeams();
-	int getActiveNumberOfMatchdays();
 	
 	void setActive(Long seasonId);
+
 }

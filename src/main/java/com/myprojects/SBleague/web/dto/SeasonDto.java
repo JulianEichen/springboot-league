@@ -9,6 +9,8 @@ public class SeasonDto {
 	private int numberOfTeams;
 	@NotNull
 	private int numberOfMatches;
+	
+	private int numberOfMatchdays;
 	@NotNull
 	private int leaguePointsPerWin;
 	@NotNull
@@ -75,5 +77,13 @@ public class SeasonDto {
 
 	public void setLeaguePointsPerLoss(int leaguePointsPerLoss) {
 		this.leaguePointsPerLoss = leaguePointsPerLoss;
+	}
+
+	public void setNumberOfMatchdays(int numberOfMatchdays) {
+		this.numberOfMatchdays = numberOfMatchdays;
 	} 
+	
+	public int getNumberOfMatchdays() {
+		return numberOfMatchdays;
+	}
 }

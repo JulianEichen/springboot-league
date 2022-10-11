@@ -92,4 +92,14 @@ public class SeasonServiceImpl implements SeasonService{
 		return seasonRepository.findByActive(true).getNumberOfMatchdays();
 	}
 
+	@Override
+	public String getActiveName() {
+		return seasonRepository.findByActive(true).getSeasonName();
+	}
+
+	@Override
+	public int getActiveNumberOfMatches() {
+		return seasonRepository.findByActive(true).getNumberOfMatches();
+	}
+
 }

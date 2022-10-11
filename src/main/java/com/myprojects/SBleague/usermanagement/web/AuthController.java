@@ -24,7 +24,7 @@ public class AuthController {
 	public AuthController(UserService userService) {
 		this.userService = userService;
 	}
-
+	
 	// handler for login
 	@GetMapping("/login")
 	public String login() {
@@ -33,8 +33,12 @@ public class AuthController {
 
 	// handler for login
 	@GetMapping("/userprofile")
-	public String showUserProfile(Principal principal) {
-		String userMail = principal.getName();
+	public String showUserProfile(Model model,Principal principal) {
+		UserDto currentUser = new UserDto();
+		
+		String userName = principal.getName();
+		
+		
 		return "userprofile";
 	}
 

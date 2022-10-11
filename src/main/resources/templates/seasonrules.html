@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="headerfiles.html :: headerfiles">
+</head>
+<body>
+	<!-- Import navbar fragment  -->
+	<div th:replace="navbar.html :: navbar"></div>
+
+	<div class="col-lg-8">
+		<div class="card mb-4">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-3">
+						<p class="mb-0">Season Name</p>
+					</div>
+					<div class="col-sm-9">
+						<p class="text-muted mb-0" th:text="${activeseason.seasonName}">
+						
+						</p>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-sm-3">
+						<p class="mb-0">Number Of Teams</p>
+					</div>
+					<div class="col-sm-9">
+						<p class="text-muted mb-0" th:text="${activeseason.numberOfTeams}"></p>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-sm-3">
+						<p class="mb-0">Number Of Matches</p>
+					</div>
+					<div class="col-sm-9">
+						<p class="text-muted mb-0" th:text="${activeseason.numberOfMatches}"></p>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-sm-3">
+						<p class="mb-0">Number Of Matchdays</p>
+					</div>
+					<div class="col-sm-9">
+						<p class="text-muted mb-0" th:text="${activeseason.numberOfMatchdays}"></p>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-sm-3">
+						<p class="mb-0">Points Per Win</p>
+					</div>
+					<div class="col-sm-9">
+						<p class="text-muted mb-0" th:text="${activeseason.leaguePointsPerWin}"></p>
+					</div>
+				</div>
+				
+				<hr>
+				<div class="row">
+					<div class="col-sm-3">
+						<p class="mb-0">Points Per Draw</p>
+					</div>
+					<div class="col-sm-9">
+						<p class="text-muted mb-0" th:text="${activeseason.leaguePointsPerDraw}"></p>
+					</div>
+				</div>
+				
+				<hr>
+				<div class="row">
+					<div class="col-sm-3">
+						<p class="mb-0">Points Per Loss</p>
+					</div>
+					<div class="col-sm-9">
+						<p class="text-muted mb-0" th:text="${activeseason.leaguePointsPerLoss}"></p>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+	<div th:replace="footerfiles.html :: footerfiles"></div>
+</body>
+</html>

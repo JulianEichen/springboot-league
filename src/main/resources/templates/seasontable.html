@@ -9,7 +9,7 @@
 
 	<div class="container">
 		<div class="row">
-			<h1>The Table</h1>
+			<h1>Seasons</h1>
 		</div>
 
 		<table class="table table-striped table-bordered">
@@ -24,6 +24,7 @@
 					<th>Points Per Draw</th>
 					<th>Points Per Loss</th>
 					<th>Active</th>
+					<th></th>
 				</tr>
 			</thead>
 
@@ -38,7 +39,7 @@
 					<td th:text="${season.leaguePointsPerDraw}"></td>
 					<td th:text="${season.leaguePointsPerLoss}"></td>
 					<td th:text="${season.active}"></td>
-					<td><a th:href="@{/seasontable/{id}(id=${season.id})}"
+					<td ><a th:href="@{/seasontable/{id}(id=${season.id})}"
 						class="btn btn-danger">Activate</a></td>
 				</tr>
 			</tbody>
