@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.myprojects.SBleague.model.Team;
+import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.usermanagement.model.User;
 import com.myprojects.SBleague.usermanagement.service.UserService;
 import com.myprojects.SBleague.usermanagement.web.dto.UserDto;
@@ -20,9 +22,11 @@ import com.myprojects.SBleague.usermanagement.web.dto.UserDto;
 public class AuthController {
 
 	private UserService userService;
+	private TeamService teamService;
 
-	public AuthController(UserService userService) {
+	public AuthController(UserService userService, TeamService teamService) {
 		this.userService = userService;
+		this.teamService = teamService;
 	}
 	
 	// handler for login
@@ -37,8 +41,6 @@ public class AuthController {
 		UserDto currentUser = new UserDto();
 		
 		String userName = principal.getName();
-		
-		
 		return "userprofile";
 	}
 
@@ -76,5 +78,11 @@ public class AuthController {
 		userService.saveUser(userDto);
 		return "redirect:/userregistration?success";
 	}
-
+	
+	@GetMapping("/userteams")
+	public String showUserTeams(Model model,Principal principal) {
+		String currentUserName = userService.findUserByEmail(principal.getName()).getName();
+		model.addAttribute("teams",teamService.getAllTeamsByOwner(currentUserName));
+		return "userteams";
+	}
 }

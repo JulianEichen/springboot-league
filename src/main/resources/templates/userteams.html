@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="headerfiles.html :: headerfiles">
+</head>
+<body>
+	<!-- Import navbar fragment  -->
+	<div th:replace="navbar.html :: navbar"></div>
+
+
+	<div class="container">
+		<div class="row">
+			<h1>My Teams</h1>
+		</div>
+
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>Team</th>
+					<th>Matches</th>
+					<th>Wins</th>
+					<th>Draws</th>
+					<th>Losses</th>
+					<th>Points</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="team: ${teams}">
+					<td th:text="${team.showTeamName()}"></td>
+					<td th:text="${team.matches}"></td>
+					<td th:text="${team.wins}"></td>
+					<td th:text="${team.draws}"></td>
+					<td th:text="${team.losses}"></td>
+					<td th:text="${team.points}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div th:replace="footerfiles.html :: footerfiles"></div>
+
+</body>
+</html>

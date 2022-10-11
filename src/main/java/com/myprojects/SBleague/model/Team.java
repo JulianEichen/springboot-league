@@ -14,7 +14,7 @@ public class Team {
 	@Column(name="name",unique=true)
 	private String name;
 	
-	@Column(name="owner",unique=true)
+	@Column(name="owner")
 	private String owner;
 
 	@Column(name="matches")

@@ -36,11 +36,18 @@ public class TeamServiceImpl implements TeamService {
 		teams.sort(checker);
 		return teams;
 	}
+	
+	@Override
+	public List<Team> getAllTeamsByOwner(String owner) {
+		List<Team> teams = teamRepository.findAllByOwner(owner.replace(" ", "_"));
+		return teams;
+	}
 
 	@Override
 	public Team saveTeam(TeamRegistrationDto teamDto) {
 		String teamName = teamDto.getName().replace(' ', '_');
-		Team team = new Team(teamName, teamDto.getOwner(), 0, 0, 0, 0, 0);
+		String ownerName = teamDto.getOwner().replace(" ", "_");
+		Team team = new Team(teamName, ownerName, 0, 0, 0, 0, 0);
 		return teamRepository.save(team);
 	}
 
@@ -139,5 +146,4 @@ public class TeamServiceImpl implements TeamService {
 		teamRepository.save(homeTeam);
 		teamRepository.save(awayTeam);
 	}
-
 }
