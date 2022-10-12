@@ -82,7 +82,7 @@ public class AuthController {
 	@GetMapping("/userteams")
 	public String showUserTeams(Model model,Principal principal) {
 		String currentUserName = userService.findUserByEmail(principal.getName()).getName();
-		model.addAttribute("teams",teamService.getAllTeamsByOwner(currentUserName));
+		model.addAttribute("teams",teamService.getAllTeamDtoByOwner(currentUserName));
 		return "userteams";
 	}
 }

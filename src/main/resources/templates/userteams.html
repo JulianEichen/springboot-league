@@ -26,7 +26,7 @@
 
 			<tbody>
 				<tr th:each="team: ${teams}">
-					<td th:text="${team.showTeamName()}"></td>
+					<td th:text="${team.name}"></td>
 					<td th:text="${team.matches}"></td>
 					<td th:text="${team.wins}"></td>
 					<td th:text="${team.draws}"></td>

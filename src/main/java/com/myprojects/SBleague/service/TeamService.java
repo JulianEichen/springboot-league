@@ -9,10 +9,13 @@ import com.myprojects.SBleague.web.dto.TeamDto;
 
 public interface TeamService {
 	List<Team> getAllTeams();
+	List<TeamDto>getAllTeamDto();
 	
 	List<Team> getAllTeamsOrdered();
+	List<TeamDto>getAllTeamDtoOrdered();
 	
 	List<Team> getAllTeamsByOwner(String owner);
+	List<TeamDto>getAllTeamDtoByOwner(String owner);
 	
 	Team saveTeam(TeamDto teamDto);
 	
