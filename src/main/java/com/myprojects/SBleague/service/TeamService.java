@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.myprojects.SBleague.model.Team;
 import com.myprojects.SBleague.web.dto.MatchDto;
-import com.myprojects.SBleague.web.dto.TeamRegistrationDto;
+import com.myprojects.SBleague.web.dto.TeamDto;
 
 
 public interface TeamService {
@@ -14,7 +14,7 @@ public interface TeamService {
 	
 	List<Team> getAllTeamsByOwner(String owner);
 	
-	Team saveTeam(TeamRegistrationDto teamDto);
+	Team saveTeam(TeamDto teamDto);
 	
 	Team getTeamById(String Id);
 	

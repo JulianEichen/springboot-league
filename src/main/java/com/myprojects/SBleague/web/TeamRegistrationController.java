@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.myprojects.SBleague.service.TeamService;
-import com.myprojects.SBleague.usermanagement.model.User;
 import com.myprojects.SBleague.usermanagement.service.UserService;
-import com.myprojects.SBleague.web.dto.TeamRegistrationDto;
+import com.myprojects.SBleague.web.dto.TeamDto;
 
 @Controller
 @RequestMapping("/teamregistration")
@@ -40,17 +39,17 @@ public class TeamRegistrationController {
 	
 	// input data from form will be stored in team then indirectly stored in URDto-Object
 	@ModelAttribute("team")
-	public TeamRegistrationDto teamRegistrationDto() {
-		return new TeamRegistrationDto();
+	public TeamDto teamDto() {
+		return new TeamDto();
 	}
 
 	@PostMapping
-	public String registerNewTeam(@Valid @ModelAttribute("team") TeamRegistrationDto regDto,
+	public String registerNewTeam(@Valid @ModelAttribute("team") TeamDto teamDto,
 			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "teamregistration";
 		}
-		teamService.saveTeam(regDto);
+		teamService.saveTeam(teamDto);
 		return "redirect:/teamregistration?success";
 	}
 
