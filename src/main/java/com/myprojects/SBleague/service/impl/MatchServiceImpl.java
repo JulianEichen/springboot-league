@@ -1,10 +1,8 @@
 package com.myprojects.SBleague.service.impl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myprojects.SBleague.model.Match;
@@ -35,9 +33,9 @@ public class MatchServiceImpl implements MatchService {
 		int homePoints = matchDto.getHomePoints();
 		int awayPoints = matchDto.getAwayPoints();
 
-		String matchName = Integer.toString(matchday) + homeTeam + awayTeam;
+		String matchId = Integer.toString(matchday) + homeTeam + awayTeam;
 
-		Match match = new Match(matchName, matchday, homeTeam, awayTeam, homePoints, awayPoints);
+		Match match = new Match(matchId, matchday, homeTeam, awayTeam, homePoints, awayPoints);
 
 		return matchRepository.save(match);
 	}
@@ -77,20 +75,20 @@ public class MatchServiceImpl implements MatchService {
 		int matchday = matchDto.getMatchday();
 		String homeTeamName = matchDto.getHomeTeam().replace(' ', '_');
 		String awayTeamName = matchDto.getAwayTeam().replace(' ', '_');
-		String matchName = Integer.toString(matchday) + homeTeamName + awayTeamName;
+		String matchId = Integer.toString(matchday) + homeTeamName + awayTeamName;
 
 		// get existing match
-		Match existingMatch = matchRepository.findById(matchName).get();
+		Match existingMatch = matchRepository.findById(matchId).get();
 
 		// if the match has been played, delete its results
-		if (existingMatch.getResult() >= 0) {
+		if (existingMatch.getResult().getValue() >= 0) {
 			// modify dto to send it to the teamService
 			matchDto.setHomePoints(existingMatch.getHomePoints());
 			matchDto.setAwayPoints(existingMatch.getAwayPoints());
 			teamService.deleteStatistics(matchDto);
 		}
 
-		matchRepository.deleteById(matchName);
+		matchRepository.deleteById(matchId);
 	}
 
 	@Override
@@ -98,13 +96,13 @@ public class MatchServiceImpl implements MatchService {
 		int matchday = matchDto.getMatchday();
 		String homeTeamName = matchDto.getHomeTeam().replace(' ', '_');
 		String awayTeamName = matchDto.getAwayTeam().replace(' ', '_');
-		String matchName = Integer.toString(matchday) + homeTeamName + awayTeamName;
+		String matchId = Integer.toString(matchday) + homeTeamName + awayTeamName;
 
 		// get existing match
-		Match existingMatch = matchRepository.findById(matchName).get();
+		Match existingMatch = matchRepository.findById(matchId).get();
 
 		// if match has been played, delete old results
-		if (existingMatch.getResult() >= 0) {
+		if (existingMatch.getResult().getValue() >= 0) {
 			// delete results of existing match
 			MatchDto existingMatchDto = new MatchDto(existingMatch.getMatchday(), existingMatch.getHomeTeam(),
 					existingMatch.getAwayTeam(), existingMatch.getHomePoints(), existingMatch.getAwayPoints());
@@ -113,16 +111,16 @@ public class MatchServiceImpl implements MatchService {
 
 		// write new statistics
 		if (matchDto.getHomePoints() > matchDto.getAwayPoints()) {
-			existingMatch.setResult(2);
+			existingMatch.getResult().setValue(2);
 		} else if (matchDto.getHomePoints() > matchDto.getAwayPoints()) {
-			existingMatch.setResult(0);
+			existingMatch.getResult().setValue(0);
 		} else if (matchDto.getHomePoints() == matchDto.getAwayPoints()) {
-			existingMatch.setResult(1);
+			existingMatch.getResult().setValue(1);
 		}
 		teamService.updateStatistics(matchDto);
 
 		// delete old match
-		matchRepository.deleteById(matchName);
+		matchRepository.deleteById(matchId);
 
 		// update values
 		existingMatch.setHomePoints(matchDto.getHomePoints());
@@ -137,7 +135,7 @@ public class MatchServiceImpl implements MatchService {
 				,match.getAwayTeam().replace("_", " ")
 				,match.getHomePoints()
 				,match.getAwayPoints()
-				,match.getResult());
+				,match.getResult().getValue());
 	}
 
 }

@@ -1,8 +1,11 @@
 package com.myprojects.SBleague.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -13,8 +16,8 @@ import javax.validation.constraints.NotNull;
 public class Match {
 
 	@Id
-	@Column(name = "matchName", unique = true)
-	private String matchName;
+	@Column(name = "match_id", unique = true)
+	private String id;
 	
 	@NotNull(message="Matchday cannot be null.")
 	@Min(value=1)
@@ -35,28 +38,30 @@ public class Match {
 	@Column(name = "awayPoints")
 	private int awayPoints;
 	
-	@Column(name = "result")
-	private int result; // -1, match not played, 0 home loss, 1 draw, 2 home win
-
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "result_id", referencedColumnName = "result_id")
+	private Result result;
+	
 	public Match(){};
 	
-	public Match(String matchName, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints) {
+	public Match(String id, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints) {
 		super();
-		this.matchName = matchName;
+		this.id = id;
 		this.matchday = matchday;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
 		this.homePoints = homePoints;
 		this.awayPoints = awayPoints;
-		this.result = -1;
+		this.result = new Result();
+		this.result.setValue(-1);
 	}
 
-	public String getMatchName() {
-		return matchName;
+	public String getId() {
+		return id;
 	}
 
-	public void setMatchName(String matchName) {
-		this.matchName = matchName;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public int getMatchday() {
@@ -99,11 +104,11 @@ public class Match {
 		this.awayPoints = awayPoints;
 	}
 
-	public int getResult() {
+	public Result getResult() {
 		return result;
 	}
 
-	public void setResult(int result) {
+	public void setResult(Result result) {
 		this.result = result;
 	}
 	
