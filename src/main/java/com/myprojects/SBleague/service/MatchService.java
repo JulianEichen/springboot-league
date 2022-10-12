@@ -7,8 +7,10 @@ import com.myprojects.SBleague.web.dto.MatchDto;
 
 public interface MatchService {
 	List<Match> getAllMatches();
+	List<MatchDto> getAllMatchDto();
 	
 	List<Match> getAllMatchesByDay(int matchday);
+	List<MatchDto> getAllMatchDtoByDay(int matchday);
 	
 	Match saveMatch(MatchDto matchDto);
 	

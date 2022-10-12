@@ -9,10 +9,10 @@
 
 	<div class="container">
 		<div class="row">
-			<h1>The Matchdays</h1>
+			<h1>My Matches</h1>
 		</div>
 
-		<form th:action="@{/matchdaytable}" method="get">
+		<form th:action="@{/usermatches}" method="get">
 			<label th:text="Matchday"> </label> <select
 				onchange="this.form.submit()" th:name="matchday">
 				<option th:value=-1>All Matches</option>

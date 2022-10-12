@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="headerfiles.html :: headerfiles">
+</head>
+<body>
+	<!-- Import navbar fragment  -->
+	<div th:replace="navbar.html :: navbar"></div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<!-- success message -->
+				<div th:if="${param.success}">
+					<div class="alert alert-info">You've successfully registered
+						a new match!</div>
+				</div>
+
+				<!--  Sub Header -->
+				<h1>Match Registration</h1>
+
+				<!-- Input Form -->
+				<form th:action="@{/matchregistration}" method="post" th:object="${match}">
+
+					<div class="form-group">
+						<label class="control-label" for="matchday">Matchday</label>
+						<input id="matchday" class="form-control" th:field="*{matchday}"
+							required autofocus="autofocus">
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="homeTeam">Home Team</label> <input
+							id="homeTeam" class="form-control" th:field="*{homeTeam}"
+							required>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="awayTeam">Away Team</label> <input
+							id="awayTeam" class="form-control" th:field="*{awayTeam}"
+							required>
+					</div>
+
+					<div th:if="${#fields.hasAnyErrors()}">
+						<ul>
+							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+						</ul>
+					</div>
+					
+					<button type="submit" class="btn btn-success">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="footerfiles.html :: footerfiles"></div>
+</body>
+</html>

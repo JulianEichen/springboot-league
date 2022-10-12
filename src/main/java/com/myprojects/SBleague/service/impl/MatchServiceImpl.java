@@ -1,5 +1,6 @@
 package com.myprojects.SBleague.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,10 +49,27 @@ public class MatchServiceImpl implements MatchService {
 				.collect(Collectors.toList());
 		return filteredMatches;
 	}
+	
+	@Override
+	public List<MatchDto> getAllMatchDtoByDay(int matchday) {
+		List<Match> filteredMatches = matchRepository.findAll();
+		filteredMatches = filteredMatches.stream().filter(match -> match.getMatchday() == matchday)
+				.collect(Collectors.toList());
+		return filteredMatches.stream()
+				.map(match -> matchToDto(match))
+				.collect(Collectors.toList());
+	}
 
 	@Override
 	public List<Match> getAllMatches() {
 		return matchRepository.findAll();
+	}
+	
+	@Override
+	public List<MatchDto> getAllMatchDto() {
+		return matchRepository.findAll().stream()
+				.map(match -> matchToDto(match))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -111,6 +129,15 @@ public class MatchServiceImpl implements MatchService {
 		existingMatch.setAwayPoints(matchDto.getAwayPoints());
 
 		return matchRepository.save(existingMatch);
+	}
+	
+	private MatchDto matchToDto(Match match) {
+		return new MatchDto(match.getMatchday()
+				,match.getHomeTeam().replace("_", " ")
+				,match.getAwayTeam().replace("_", " ")
+				,match.getHomePoints()
+				,match.getAwayPoints()
+				,match.getResult());
 	}
 
 }
