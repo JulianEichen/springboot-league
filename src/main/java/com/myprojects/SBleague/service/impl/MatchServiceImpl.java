@@ -33,9 +33,9 @@ public class MatchServiceImpl implements MatchService {
 		int homePoints = matchDto.getHomePoints();
 		int awayPoints = matchDto.getAwayPoints();
 
-		String matchId = Integer.toString(matchday) + homeTeam + awayTeam;
+		String matchName = Integer.toString(matchday) + homeTeam + awayTeam;
 
-		Match match = new Match(matchId, matchday, homeTeam, awayTeam, homePoints, awayPoints);
+		Match match = new Match(matchName, matchday, homeTeam, awayTeam, homePoints, awayPoints);
 
 		return matchRepository.save(match);
 	}
@@ -75,10 +75,10 @@ public class MatchServiceImpl implements MatchService {
 		int matchday = matchDto.getMatchday();
 		String homeTeamName = matchDto.getHomeTeam().replace(' ', '_');
 		String awayTeamName = matchDto.getAwayTeam().replace(' ', '_');
-		String matchId = Integer.toString(matchday) + homeTeamName + awayTeamName;
+		String matchName = Integer.toString(matchday) + homeTeamName + awayTeamName;
 
 		// get existing match
-		Match existingMatch = matchRepository.findById(matchId).get();
+		Match existingMatch = matchRepository.findByName(matchName);
 
 		// if the match has been played, delete its results
 		if (existingMatch.getResult().getValue() >= 0) {
@@ -88,7 +88,7 @@ public class MatchServiceImpl implements MatchService {
 			teamService.deleteStatistics(matchDto);
 		}
 
-		matchRepository.deleteById(matchId);
+		matchRepository.deleteByName(matchName);
 	}
 
 	@Override
@@ -96,10 +96,10 @@ public class MatchServiceImpl implements MatchService {
 		int matchday = matchDto.getMatchday();
 		String homeTeamName = matchDto.getHomeTeam().replace(' ', '_');
 		String awayTeamName = matchDto.getAwayTeam().replace(' ', '_');
-		String matchId = Integer.toString(matchday) + homeTeamName + awayTeamName;
+		String matchName = Integer.toString(matchday) + homeTeamName + awayTeamName;
 
 		// get existing match
-		Match existingMatch = matchRepository.findById(matchId).get();
+		Match existingMatch = matchRepository.findByName(matchName);
 
 		// if match has been played, delete old results
 		if (existingMatch.getResult().getValue() >= 0) {
@@ -120,7 +120,7 @@ public class MatchServiceImpl implements MatchService {
 		teamService.updateStatistics(matchDto);
 
 		// delete old match
-		matchRepository.deleteById(matchId);
+		matchRepository.deleteByName(matchName);
 
 		// update values
 		existingMatch.setHomePoints(matchDto.getHomePoints());

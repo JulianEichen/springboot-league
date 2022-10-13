@@ -31,9 +31,8 @@ public class Result {
 	
 	public Result() {}
 	
-	public Result(Long id, int value, boolean verifiedHome, boolean verifiedAway) {
+	public Result(int value, boolean verifiedHome, boolean verifiedAway) {
 		super();
-		this.id = id;
 		this.value = value;
 		this.verifiedHome = verifiedHome;
 		this.verifiedAway = verifiedAway;

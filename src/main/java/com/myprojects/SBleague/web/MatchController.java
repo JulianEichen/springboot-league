@@ -22,7 +22,6 @@ import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.usermanagement.service.UserService;
 import com.myprojects.SBleague.validation.MatchDtoValidationService;
 import com.myprojects.SBleague.web.dto.MatchDto;
-import com.myprojects.SBleague.web.dto.TeamDto;
 
 @Controller
 public class MatchController {
