@@ -61,30 +61,11 @@ public class MatchController {
 		return "matchregistration";
 	}
 	
-	@GetMapping("/usertable/edit/{id}") // {id} is called a template variable
+	@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
 	public String editResultForm(@PathVariable Long id, Model model, Principal principal) {
 		model.addAttribute("matchdto", matchService.getMatchDtoById(id));
-		return "userresultedit";
+		return "userresultedit"; // move to userresultedit template
 	}
-	
-	/*
-	@PostMapping("/usertable/{id}")
-	public String updateStudent(@PathVariable Long id,
-								@ModelAttribute ("student") MatchDto matchDto,
-								Model model) {
-		
-		// get student from DB by id
-		Student existingStudent = studentService.getStudentById(id);
-		existingStudent.setId(id);
-		existingStudent.setFirstName(student.getFirstName());
-		existingStudent.setLastName(student.getLastName());
-		existingStudent.setEmail(student.getEmail());
-		
-		// save update student to object
-		studentService.updateStudent(existingStudent);
-		return "redirect:/students";
-	}
-	*/
 	
 	@GetMapping("/matchupdate")
 	public String showUpdateForm() {
@@ -154,8 +135,10 @@ public class MatchController {
 	}
 
 	@PostMapping("/matchdeletion")
-	public String deleteMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
-		String err = matchDtoValidationService.validateMatchDto(matchDto);
+	public String deleteMatch(@PathVariable Long id,
+			@Valid @ModelAttribute("match") MatchDto matchDto, 
+			BindingResult result) {
+		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
 		if (!err.isEmpty()) {
 			ObjectError error = new ObjectError("globalError", err);
 			result.addError(error);
@@ -171,7 +154,7 @@ public class MatchController {
 
 	@PostMapping("/matchupdate")
 	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
-		String err = matchDtoValidationService.validateMatchDto(matchDto);
+		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
 		if (!err.isEmpty()) {
 			ObjectError error = new ObjectError("globalError", err);
 			result.addError(error);
@@ -183,5 +166,25 @@ public class MatchController {
 
 		matchService.updateMatch(matchDto);
 		return "redirect:matchupdate?success";
+	}
+	
+	@PostMapping("/usermatches/{id}")
+	public String userUpdateMatch(@PathVariable Long id,@Valid @ModelAttribute("match") MatchDto matchDto, Principal principal, BindingResult result) {
+		matchDto.setId(id);
+		String userName = userService.findUserByEmail(principal.getName()).getName(); 
+		
+		
+		String err = "";
+		if(!err.isEmpty()) {
+			ObjectError error = new ObjectError("globalError", err);
+			result.addError(error);
+			if(result.hasErrors()) {
+				return "usermatches";
+			}
+		}
+		
+		
+		
+		return "redirect:usermatches";
 	}
 }

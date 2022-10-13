@@ -9,6 +9,8 @@ import com.myprojects.SBleague.model.Team;
 import com.myprojects.SBleague.repository.TeamRepository;
 import com.myprojects.SBleague.service.SeasonService;
 import com.myprojects.SBleague.service.TeamService;
+import com.myprojects.SBleague.usermanagement.model.User;
+import com.myprojects.SBleague.usermanagement.service.UserService;
 import com.myprojects.SBleague.web.dto.MatchDto;
 import com.myprojects.SBleague.web.dto.TeamDto;
 
@@ -18,11 +20,15 @@ public class TeamServiceImpl implements TeamService {
 	// inject repositories
 	private TeamRepository teamRepository;
 	private SeasonService seasonService;
+	private UserService userService;
 
-	public TeamServiceImpl(TeamRepository teamRepository, SeasonService seasonService) {
+	public TeamServiceImpl(TeamRepository teamRepository
+			,SeasonService seasonService
+			,UserService userService) {
 		super();
 		this.teamRepository = teamRepository;
 		this.seasonService = seasonService;
+		this.userService = userService;
 	}
 
 	@Override
@@ -69,10 +75,11 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public Team saveTeam(TeamDto teamDto) {
+	public Team saveTeam(TeamDto teamDto,String userEmail) {
 		String teamName = teamDto.getName().replace(" ", "_");
-		String ownerName = teamDto.getOwner().replace(" ", "_");
-		Team team = new Team(teamName, ownerName, 0, 0, 0, 0, 0);
+		User owner = userService.findUserByEmail(userEmail);
+		Team team = new Team(teamName, owner, 0, 0, 0, 0, 0);
+		//owner.addTeam(team);
 		return teamRepository.save(team);
 	}
 
@@ -174,7 +181,7 @@ public class TeamServiceImpl implements TeamService {
 
 	private TeamDto teamToDto(Team team) {
 		TeamDto dto = new TeamDto(team.getName().replace("_", " ")
-				,team.getOwner().replace("_", " ")
+				,team.getOwner().getName().replace("_", " ")
 				,team.getMatches()
 				,team.getWins()
 				,team.getDraws()

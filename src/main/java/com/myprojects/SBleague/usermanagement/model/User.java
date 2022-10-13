@@ -13,7 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.myprojects.SBleague.model.Team;
 
 @Entity
 @Table(name = "users")
@@ -21,15 +24,16 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
 	private Long id;
 	
-	@Column(nullable = false)
+	@Column(name = "user_name",nullable = false)
 	private String name;
 
-	@Column(nullable = false, unique = true)
+	@Column(name = "user_email",nullable = false, unique = true)
 	private String email;
 	
-	@Column(nullable = false)
+	@Column(name = "user_password",nullable = false)
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
@@ -40,6 +44,9 @@ public class User {
 			)
 	private List<Role> roles = new ArrayList<>();
 
+	@OneToMany(mappedBy="owner",cascade=CascadeType.ALL)
+	private List<Team> teams = new ArrayList<>();
+	
 	// default const
 	public User() {
 		super();
@@ -93,5 +100,9 @@ public class User {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	
+	public void addTeam(Team team) {
+		this.teams.add(team);
 	}
 }

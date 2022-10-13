@@ -3,8 +3,12 @@ package com.myprojects.SBleague.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import com.myprojects.SBleague.usermanagement.model.User;
 
 @Entity
 @Table(name="teams",uniqueConstraints = @UniqueConstraint(columnNames="name"))
@@ -14,8 +18,9 @@ public class Team {
 	@Column(name="name",unique=true)
 	private String name;
 	
-	@Column(name="owner")
-	private String owner;
+	@ManyToOne
+	@JoinColumn(name="owner", nullable=false)
+	private User owner;
 
 	@Column(name="matches")
 	private int matches = 0;
@@ -36,7 +41,7 @@ public class Team {
 	public Team() {}
 	
 	// param const
-	public Team(String name, String owner, int matches, int wins, int draws, int losses, int points) {
+	public Team(String name, User owner, int matches, int wins, int draws, int losses, int points) {
 		super();
 		this.name = name;
 		this.owner = owner;
@@ -53,10 +58,10 @@ public class Team {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getOwner() {
+	public User getOwner() {
 		return owner;
 	}
-	public void setOwner(String owner) {
+	public void setOwner(User owner) {
 		this.owner = owner;
 	}
 	public int getMatches() {
@@ -94,5 +99,8 @@ public class Team {
 		return name.replace("_", " ");
 	}
 	
+	public String showOwnerName() {
+		return this.owner.getName().replace("_", " ");
+	}
 	
 }

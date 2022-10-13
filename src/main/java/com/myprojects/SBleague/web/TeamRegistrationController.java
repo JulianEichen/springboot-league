@@ -45,11 +45,13 @@ public class TeamRegistrationController {
 
 	@PostMapping
 	public String registerNewTeam(@Valid @ModelAttribute("team") TeamDto teamDto,
+			Principal principal,
 			BindingResult bindingResult) {
+		
 		if (bindingResult.hasErrors()) {
 			return "teamregistration";
 		}
-		teamService.saveTeam(teamDto);
+		teamService.saveTeam(teamDto,principal.getName());
 		return "redirect:/teamregistration?success";
 	}
 

@@ -3,6 +3,7 @@ package com.myprojects.SBleague.validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.myprojects.SBleague.model.Match;
 import com.myprojects.SBleague.repository.MatchRepository;
 import com.myprojects.SBleague.web.dto.MatchDto;
 
@@ -12,7 +13,7 @@ public class MatchDtoValidationService {
 	@Autowired
 	MatchRepository matchRepository;
 
-	public String validateMatchDto(MatchDto matchDto) {
+	public String validateMatchDtoRegistration(MatchDto matchDto) {
 		String message = "";
 
 		int matchday = matchDto.getMatchday();
@@ -27,4 +28,21 @@ public class MatchDtoValidationService {
 		return message;
 	}
 
+	public String validateMatchDtoUserUpdate(MatchDto matchDto) {
+		String message = "";
+		int inputHomePoints = matchDto.getHomePoints();
+		int inputAwayPoints = matchDto.getAwayPoints();
+		Long matchId = matchDto.getId();
+		
+		Match existingMatch = matchRepository.findById(matchId);
+		// check whether the match is fresh
+		if (!existingMatch.getResult().isVerifiedAway() && !existingMatch.getResult().isVerifiedAway()) {
+			
+		}
+		
+		
+		
+		
+		return message;
+	}
 }

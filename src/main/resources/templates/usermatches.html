@@ -50,7 +50,7 @@
 						<td><span th:if="${match.result < 0}">TBA</span> <span
 							th:unless="${match.result < 0}" th:text="${match.awayPoints}"></span>
 						</td>
-						<td><a th:href="@{/usertable/edit/{id}(id=${match.id})}"
+						<td><a th:href="@{/usermatches/edit/{id}(id=${match.id})}"
 							class="btn btn-primary">Update</a></td>
 					</tr>
 				</tbody>
