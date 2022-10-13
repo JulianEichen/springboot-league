@@ -14,35 +14,36 @@
 				<h1>Result Registration</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/resultregistration}" method="post" th:object="${match}">
-
+				<form th:action="@{/usertable/{id} (id=${match.id})}" method="post" th:object="${match}">
+					
+					
 					<div class="form-group">
 						<label class="control-label" for="matchday">Matchday</label>
-						<input id="matchday" class="form-control" th:field="*{matchday}"
-							required autofocus="autofocus">
+						<input
+							id="matchday" class="form-control" type="text" th:value="${matchdto.matchday}" th:name="matchday" th:id="matchday" readonly>
 					</div>
 
 					<div class="form-group">
-						<label class="control-label" for="homeTeam">Home Team</label> <input
-							id="homeTeam" class="form-control" th:field="*{homeTeam}"
-							required>
+						<label class="control-label" for="homeTeam">Home Team</label>
+						<input
+							id="homeTeam" class="form-control" type="text" th:value="${matchdto.homeTeam}" th:name="homeTeam" th:id="homeTeam" readonly>
 					</div>
-
+					
 					<div class="form-group">
-						<label class="control-label" for="awayTeam">Away Team</label> <input
-							id="awayTeam" class="form-control" th:field="*{awayTeam}"
+						<label class="control-label" for="homePoints">Home Points</label> <input
+							id="homePoints" class="form-control" th:field="*{homePoints}"
 							required>
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label" for="awayTeam">Home Points</label> <input
-							id="awayTeam" class="form-control" th:field="*{awayTeam}"
-							required>
+						<label class="control-label" for="awayTeam">Away Team</label>
+						<input
+							id="awayTeam" class="form-control" type="text" th:value="${matchdto.awayTeam}" th:name="awayTeam" th:id="awayTeam" readonly>
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label" for="awayTeam">Away Points</label> <input
-							id="awayTeam" class="form-control" th:field="*{awayTeam}"
+						<label class="control-label" for="awayPoints">Away Points</label> <input
+							id="awayPoints" class="form-control" th:field="*{awayPoints}"
 							required>
 					</div>
 

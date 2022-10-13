@@ -3,6 +3,7 @@ package com.myprojects.SBleague.web.dto;
 import javax.validation.constraints.NotNull;
 
 public class MatchDto {
+	
 	@NotNull
 	private int matchday;
 	@NotNull
@@ -15,14 +16,16 @@ public class MatchDto {
 	private int awayPoints;
 	
 	private int result;
+	private Long id;
 
 	// default const
 	public MatchDto() {
 	}
 
 	// param const
-	public MatchDto(int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints) {
+	public MatchDto(Long id, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints) {
 		super();
+		this.id = id;
 		this.matchday = matchday;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
@@ -31,14 +34,25 @@ public class MatchDto {
 	}
 	
 	// constructor for table
-	public MatchDto(int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints, int result) {
+	public MatchDto(Long id, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints, int result) {
 		super();
+		this.id = id;
 		this.matchday = matchday;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
 		this.homePoints = homePoints;
 		this.awayPoints = awayPoints;
 		this.result = result;
+	}
+	
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public int getMatchday() {

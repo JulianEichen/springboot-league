@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="headerfiles.html :: headerfiles">
 </head>
 <body>
@@ -34,6 +35,7 @@
 						<th>Home Team Points</th>
 						<th>Away Team</th>
 						<th>Away Team Points</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 
@@ -48,6 +50,8 @@
 						<td><span th:if="${match.result < 0}">TBA</span> <span
 							th:unless="${match.result < 0}" th:text="${match.awayPoints}"></span>
 						</td>
+						<td><a th:href="@{/usertable/edit/{id}(id=${match.id})}"
+							class="btn btn-primary">Update</a></td>
 					</tr>
 				</tbody>
 			</table>

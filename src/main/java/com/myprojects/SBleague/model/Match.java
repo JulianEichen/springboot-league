@@ -120,4 +120,18 @@ public class Match {
 		return awayTeam.replace("_", " ");
 	}
 	
+	public void updateResult() {
+		if (this.result.isVerifiedHome() || this.result.isVerifiedAway()) {
+			if(this.homePoints > this.awayPoints) {
+				this.getResult().setValue(2);
+			}else if(this.homePoints < this.awayPoints) {
+				this.getResult().setValue(1);
+			}else if(this.homePoints == this.awayPoints) {
+				this.getResult().setValue(0);
+			}
+		}else {
+			this.result.setValue(-1);
+		}
+		return;
+	}
 }

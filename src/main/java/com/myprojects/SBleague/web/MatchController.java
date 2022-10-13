@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -59,7 +60,32 @@ public class MatchController {
 	public String showRegistrationForm() {
 		return "matchregistration";
 	}
-
+	
+	@GetMapping("/usertable/edit/{id}") // {id} is called a template variable
+	public String editResultForm(@PathVariable Long id, Model model, Principal principal) {
+		model.addAttribute("matchdto", matchService.getMatchDtoById(id));
+		return "userresultedit";
+	}
+	
+	/*
+	@PostMapping("/usertable/{id}")
+	public String updateStudent(@PathVariable Long id,
+								@ModelAttribute ("student") MatchDto matchDto,
+								Model model) {
+		
+		// get student from DB by id
+		Student existingStudent = studentService.getStudentById(id);
+		existingStudent.setId(id);
+		existingStudent.setFirstName(student.getFirstName());
+		existingStudent.setLastName(student.getLastName());
+		existingStudent.setEmail(student.getEmail());
+		
+		// save update student to object
+		studentService.updateStudent(existingStudent);
+		return "redirect:/students";
+	}
+	*/
+	
 	@GetMapping("/matchupdate")
 	public String showUpdateForm() {
 		return "matchupdate";

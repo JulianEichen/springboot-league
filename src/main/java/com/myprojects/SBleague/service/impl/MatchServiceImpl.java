@@ -104,7 +104,7 @@ public class MatchServiceImpl implements MatchService {
 		// if match has been played, delete old results
 		if (existingMatch.getResult().getValue() >= 0) {
 			// delete results of existing match
-			MatchDto existingMatchDto = new MatchDto(existingMatch.getMatchday(), existingMatch.getHomeTeam(),
+			MatchDto existingMatchDto = new MatchDto(existingMatch.getId(), existingMatch.getMatchday(), existingMatch.getHomeTeam(),
 					existingMatch.getAwayTeam(), existingMatch.getHomePoints(), existingMatch.getAwayPoints());
 			teamService.deleteStatistics(existingMatchDto);
 		}
@@ -130,12 +130,25 @@ public class MatchServiceImpl implements MatchService {
 	}
 	
 	private MatchDto matchToDto(Match match) {
-		return new MatchDto(match.getMatchday()
+		return new MatchDto(match.getId()
+				,match.getMatchday()
 				,match.getHomeTeam().replace("_", " ")
 				,match.getAwayTeam().replace("_", " ")
 				,match.getHomePoints()
 				,match.getAwayPoints()
 				,match.getResult().getValue());
+	}
+
+	@Override
+	public MatchDto getMatchDtoById(Long id) {
+		Match match = matchRepository.findById(id);
+		return matchToDto(match);
+	}
+
+	@Override
+	public void userUpdatePoints() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
