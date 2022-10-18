@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.myprojects.SBleague.model.Team;
 import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.usermanagement.model.User;
 import com.myprojects.SBleague.usermanagement.service.UserService;
@@ -81,8 +80,8 @@ public class AuthController {
 	
 	@GetMapping("/userteams")
 	public String showUserTeams(Model model,Principal principal) {
-		String currentUserName = userService.findUserByEmail(principal.getName()).getName();
-		model.addAttribute("teams",teamService.getAllTeamDtoByOwner(currentUserName));
+		Long currentUserId = userService.findUserByEmail(principal.getName()).getId();
+		model.addAttribute("teams",teamService.getAllTeamDtoByOwnerId(currentUserId));
 		return "userteams";
 	}
 }

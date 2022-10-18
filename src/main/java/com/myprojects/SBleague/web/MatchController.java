@@ -107,9 +107,9 @@ public class MatchController {
 	
 	@GetMapping("usermatches")
 	public String listUserMatches(@RequestParam(value="matchday", required=false) Integer matchday, Model model, Principal principal) {
-		String userName = userService.findUserByEmail(principal.getName()).getName(); 
+		Long userId = userService.findUserByEmail(principal.getName()).getId(); 
 		
-		List<String> userTeamNames = teamService.getAllTeamDtoByOwner(userName)
+		List<String> userTeamNames = teamService.getAllTeamDtoByOwnerId(userId)
 				.stream().map(team -> team.getName())
 				.collect(Collectors.toList());
 		

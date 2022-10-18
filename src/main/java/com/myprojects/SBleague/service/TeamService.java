@@ -14,8 +14,8 @@ public interface TeamService {
 	List<Team> getAllTeamsOrdered();
 	List<TeamDto>getAllTeamDtoOrdered();
 	
-	List<Team> getAllTeamsByOwner(String owner);
-	List<TeamDto>getAllTeamDtoByOwner(String owner);
+	List<Team> getAllTeamsByOwnerId(Long ownerId);
+	List<TeamDto>getAllTeamDtoByOwnerId(Long ownerId);
 	
 	Team saveTeam(TeamDto teamDto,String userEmail);
 	

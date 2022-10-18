@@ -8,5 +8,5 @@ import com.myprojects.SBleague.model.Team;
 
 public interface TeamRepository extends JpaRepository<Team, String>{
 	
-	List<Team> findAllByOwner(String owner);
+	List<Team> findAllByOwnerId(Long ownerId);
 }

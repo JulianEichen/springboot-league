@@ -62,24 +62,23 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public List<Team> getAllTeamsByOwner(String owner) {
-		List<Team> teams = teamRepository.findAllByOwner(owner.replace(" ", "_"));
+	public List<Team> getAllTeamsByOwnerId(Long ownerId) {
+		List<Team> teams = teamRepository.findAllByOwnerId(ownerId);
 		return teams;
 	}
 
 	@Override
-	public List<TeamDto> getAllTeamDtoByOwner(String owner) {
-		List<TeamDto> dtoList = teamRepository.findAllByOwner(owner.replace(" ", "_")).stream()
-				.map(team -> teamToDto(team)).collect(Collectors.toList());
+	public List<TeamDto> getAllTeamDtoByOwnerId(Long ownerId) {
+		List<TeamDto> dtoList = teamRepository.findAllByOwnerId(ownerId).stream()
+			.map(team -> teamToDto(team)).collect(Collectors.toList());
 		return dtoList;
 	}
-
+	
 	@Override
 	public Team saveTeam(TeamDto teamDto,String userEmail) {
 		String teamName = teamDto.getName().replace(" ", "_");
 		User owner = userService.findUserByEmail(userEmail);
 		Team team = new Team(teamName, owner, 0, 0, 0, 0, 0);
-		//owner.addTeam(team);
 		return teamRepository.save(team);
 	}
 
@@ -189,4 +188,5 @@ public class TeamServiceImpl implements TeamService {
 				,team.getPoints());
 		return dto;
 	}
+
 }
