@@ -70,4 +70,8 @@ public class Result {
 		}
 	}
 	
+	public boolean isVerified() {
+		return (this.isVerifiedAway() && this.isVerifiedHome());
+	}
+	
 }

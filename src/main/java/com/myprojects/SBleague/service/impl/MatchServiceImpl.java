@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.myprojects.SBleague.model.Match;
+import com.myprojects.SBleague.model.Result;
 import com.myprojects.SBleague.repository.MatchRepository;
+import com.myprojects.SBleague.repository.ResultRepository;
 import com.myprojects.SBleague.service.MatchService;
 import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.web.dto.MatchDto;
@@ -14,14 +16,16 @@ import com.myprojects.SBleague.web.dto.MatchDto;
 @Service
 public class MatchServiceImpl implements MatchService {
 
-
 	private TeamService teamService;
 	private MatchRepository matchRepository;
+	private ResultRepository resultRepository;
 
-	public MatchServiceImpl(TeamService teamService,MatchRepository matchRepository) {
+	public MatchServiceImpl(TeamService teamService, MatchRepository matchRepository,
+			ResultRepository resultRepository) {
 		super();
 		this.teamService = teamService;
 		this.matchRepository = matchRepository;
+		this.resultRepository = resultRepository;
 	}
 
 	@Override
@@ -47,27 +51,23 @@ public class MatchServiceImpl implements MatchService {
 				.collect(Collectors.toList());
 		return filteredMatches;
 	}
-	
+
 	@Override
 	public List<MatchDto> getAllMatchDtoByDay(int matchday) {
 		List<Match> filteredMatches = matchRepository.findAll();
 		filteredMatches = filteredMatches.stream().filter(match -> match.getMatchday() == matchday)
 				.collect(Collectors.toList());
-		return filteredMatches.stream()
-				.map(match -> matchToDto(match))
-				.collect(Collectors.toList());
+		return filteredMatches.stream().map(match -> matchToDto(match)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Match> getAllMatches() {
 		return matchRepository.findAll();
 	}
-	
+
 	@Override
 	public List<MatchDto> getAllMatchDto() {
-		return matchRepository.findAll().stream()
-				.map(match -> matchToDto(match))
-				.collect(Collectors.toList());
+		return matchRepository.findAll().stream().map(match -> matchToDto(match)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -93,19 +93,17 @@ public class MatchServiceImpl implements MatchService {
 
 	@Override
 	public Match updateMatch(MatchDto matchDto) {
-		int matchday = matchDto.getMatchday();
-		String homeTeamName = matchDto.getHomeTeam().replace(' ', '_');
-		String awayTeamName = matchDto.getAwayTeam().replace(' ', '_');
-		String matchName = Integer.toString(matchday) + homeTeamName + awayTeamName;
+		Long matchId = matchDto.getId();
 
 		// get existing match
-		Match existingMatch = matchRepository.findByName(matchName);
+		Match existingMatch = matchRepository.findById(matchId);
 
 		// if match has been played, delete old results
 		if (existingMatch.getResult().getValue() >= 0) {
 			// delete results of existing match
-			MatchDto existingMatchDto = new MatchDto(existingMatch.getId(), existingMatch.getMatchday(), existingMatch.getHomeTeam(),
-					existingMatch.getAwayTeam(), existingMatch.getHomePoints(), existingMatch.getAwayPoints());
+			MatchDto existingMatchDto = new MatchDto(existingMatch.getId(), existingMatch.getMatchday(),
+					existingMatch.getHomeTeam(), existingMatch.getAwayTeam(), existingMatch.getHomePoints(),
+					existingMatch.getAwayPoints());
 			teamService.deleteStatistics(existingMatchDto);
 		}
 
@@ -120,7 +118,7 @@ public class MatchServiceImpl implements MatchService {
 		teamService.updateStatistics(matchDto);
 
 		// delete old match
-		matchRepository.deleteByName(matchName);
+		matchRepository.deleteById(matchId);
 
 		// update values
 		existingMatch.setHomePoints(matchDto.getHomePoints());
@@ -128,15 +126,11 @@ public class MatchServiceImpl implements MatchService {
 
 		return matchRepository.save(existingMatch);
 	}
-	
+
 	private MatchDto matchToDto(Match match) {
-		return new MatchDto(match.getId()
-				,match.getMatchday()
-				,match.getHomeTeam().replace("_", " ")
-				,match.getAwayTeam().replace("_", " ")
-				,match.getHomePoints()
-				,match.getAwayPoints()
-				,match.getResult().getValue());
+		return new MatchDto(match.getId(), match.getMatchday(), match.getHomeTeam().replace("_", " "),
+				match.getAwayTeam().replace("_", " "), match.getHomePoints(), match.getAwayPoints(),
+				match.getResult().getValue());
 	}
 
 	@Override
@@ -146,9 +140,38 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
-	public void userUpdatePoints() {
-		// TODO Auto-generated method stub
-		
+	public Match updateMatchUser(MatchDto matchDto, Long userId) {
+		Long matchId = matchDto.getId();
+		// get existing match
+		Match existingMatch = matchRepository.findById(matchId);
+		Result existingResult = existingMatch.getResult();
+
+		List<String> userTeams = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.toString())
+				.collect(Collectors.toList());
+
+		String userTeam = userTeams.contains(existingMatch.getHomeTeam()) ? existingMatch.getHomeTeam()
+				: userTeams.contains(existingMatch.getAwayTeam()) ? existingMatch.getAwayTeam() : "";
+
+		if (userTeams.contains(existingMatch.getHomeTeam())) {
+			if(existingResult.isVerifiedAway()) {
+				int oldAwayPoints = existingMatch.getAwayPoints();
+				int oldHomePoints = existingMatch.getHomePoints();
+				
+			}
+			existingResult.setVerifiedHome(true); // verify by home team
+			if (existingResult.isVerified()) {
+				
+			}
+		} else if (userTeams.contains(existingMatch.getAwayTeam())) {
+			existingResult.setVerifiedAway(true); // verify by away team
+			if (existingResult.isVerified()) {
+
+			}
+		} else {
+			// error
+		}
+
+		return null;
 	}
 
 }

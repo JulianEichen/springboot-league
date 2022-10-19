@@ -8,5 +8,6 @@ public interface MatchRepository extends JpaRepository<Match, String>{
 	
 	Match findByName(String name);
 	void deleteByName(String name);
+	void deleteById(Long id);
 	Match findById(Long id);
 }

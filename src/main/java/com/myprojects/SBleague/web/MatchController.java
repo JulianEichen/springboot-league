@@ -23,6 +23,7 @@ import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.usermanagement.service.UserService;
 import com.myprojects.SBleague.validation.MatchDtoValidationService;
 import com.myprojects.SBleague.web.dto.MatchDto;
+import com.myprojects.SBleague.web.dto.TeamDto;
 
 @Controller
 public class MatchController {
@@ -165,17 +166,26 @@ public class MatchController {
 
 	// show form
 	@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
-	public String editResultForm(@PathVariable Long id, Model model) {
-		model.addAttribute("match", matchService.getMatchDtoById(id));
+	public String editResultForm(@PathVariable Long matchId, Model model) {
+		model.addAttribute("match", matchService.getMatchDtoById(matchId));
 		return "usereditresult";
 	}
-	
+
 	@PostMapping("/usermatches/{id}")
-	public String updateStudent(@PathVariable Long id,
-								@ModelAttribute ("match") MatchDto match) {
-		System.out.println("updateMatch!!111!");
+	public String editResult(@PathVariable Long matchId, @ModelAttribute("match") MatchDto match, Principal principal) {
+
+		Long userId = userService.findUserByEmail(principal.getName()).getId();
+		List<String> userTeams = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.toString())
+				.collect(Collectors.toList());
+
+		String userTeam = userTeams.contains(match.getHomeTeam()) ? match.getHomeTeam()
+			: userTeams.contains(match.getAwayTeam()) ? match.getAwayTeam(): "";
 		
+		if (!userTeam.isEmpty()) {
+			matchService.updateMatch(match,userTeam);
+		} else {// error
+		}
+
 		return "redirect:/usermatches";
 	}
-
 }
