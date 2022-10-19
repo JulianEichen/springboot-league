@@ -35,12 +35,9 @@ public class MatchController {
 	private MatchService matchService;
 	private SeasonService seasonService;
 
-	public MatchController(MatchDtoValidationService matchDtoValidationService,
-			MatchService matchService,
-			SeasonService seasonService,
-			UserService userService,
-			TeamService teamService) {
-		
+	public MatchController(MatchDtoValidationService matchDtoValidationService, MatchService matchService,
+			SeasonService seasonService, UserService userService, TeamService teamService) {
+
 		this.matchDtoValidationService = matchDtoValidationService;
 		this.matchService = matchService;
 		this.seasonService = seasonService;
@@ -60,13 +57,7 @@ public class MatchController {
 	public String showRegistrationForm() {
 		return "matchregistration";
 	}
-	
-	@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
-	public String editResultForm(@PathVariable Long id, Model model, Principal principal) {
-		model.addAttribute("matchdto", matchService.getMatchDtoById(id));
-		return "userresultedit"; // move to userresultedit template
-	}
-	
+
 	@GetMapping("/matchupdate")
 	public String showUpdateForm() {
 		return "matchupdate";
@@ -76,7 +67,7 @@ public class MatchController {
 	public String showDeleteForm() {
 		return "matchdeletion";
 	}
-	
+
 	// registration controlling
 	@PostMapping("/matchregistration")
 	public String registerNewMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
@@ -86,57 +77,60 @@ public class MatchController {
 		matchService.saveMatch(matchDto);
 		return "redirect:matchregistration?success";
 	}
-	
-	// show matchdaytable with select functionality
+
+	// show matchday table with select day/all functionality
 	@GetMapping("matchdaytable")
-	public String listMatchdays(@RequestParam(value="matchday", required=false) Integer matchday, Model model) {
-		
-		if(matchday != null && matchday > 0) {
+	public String listMatchdays(@RequestParam(value = "matchday", required = false) Integer matchday, Model model) {
+
+		if (matchday != null && matchday > 0) {
 			model.addAttribute("matches", matchService.getAllMatchDtoByDay(matchday.intValue()));
-		}else if(matchday == null || matchday < 0) {
+		} else if (matchday == null || matchday < 0) {
 			model.addAttribute("matches", matchService.getAllMatchDto());
 		}
-		
-		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays()+1)
-				.mapToObj(i->i).collect(Collectors.toList());
+
+		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays() + 1)
+				.mapToObj(i -> i).collect(Collectors.toList());
 		model.addAttribute("matchdaynumbers", matchdayNumbers);
-		
-		model.addAttribute("matchday",matchday);
+
+		model.addAttribute("matchday", matchday);
 		return "matchdaytable";
 	}
-	
+
+	// handler method for the method the user specific match table
 	@GetMapping("usermatches")
-	public String listUserMatches(@RequestParam(value="matchday", required=false) Integer matchday, Model model, Principal principal) {
-		Long userId = userService.findUserByEmail(principal.getName()).getId(); 
-		
-		List<String> userTeamNames = teamService.getAllTeamDtoByOwnerId(userId)
-				.stream().map(team -> team.getName())
+	public String listUserMatches(@RequestParam(value = "matchday", required = false) Integer matchday, Model model,
+			Principal principal) {
+		Long userId = userService.findUserByEmail(principal.getName()).getId();
+
+		List<String> userTeamNames = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.getName())
 				.collect(Collectors.toList());
-		
-		if(matchday != null && matchday > 0) {
+
+		if (matchday != null && matchday > 0) {
 			List<MatchDto> matches = matchService.getAllMatchDtoByDay(matchday.intValue());
-			matches = matches.stream().filter(match -> userTeamNames.contains(match.getHomeTeam()) || userTeamNames.contains(match.getAwayTeam()))
+			matches = matches.stream().filter(
+					match -> userTeamNames.contains(match.getHomeTeam()) || userTeamNames.contains(match.getAwayTeam()))
 					.collect(Collectors.toList());
 			model.addAttribute("matches", matches);
-			
-		}else if(matchday == null || matchday < 0) {
+
+		} else if (matchday == null || matchday < 0) {
 			List<MatchDto> matches = matchService.getAllMatchDto();
-			matches = matches.stream().filter(match -> userTeamNames.contains(match.getHomeTeam()) || userTeamNames.contains(match.getAwayTeam()))
+			matches = matches.stream().filter(
+					match -> userTeamNames.contains(match.getHomeTeam()) || userTeamNames.contains(match.getAwayTeam()))
 					.collect(Collectors.toList());
 			model.addAttribute("matches", matches);
 		}
-		
-		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays()+1)
-				.mapToObj(i->i).collect(Collectors.toList());
+
+		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays() + 1)
+				.mapToObj(i -> i).collect(Collectors.toList());
 		model.addAttribute("matchdaynumbers", matchdayNumbers);
-		
-		model.addAttribute("matchday",matchday);
+
+		model.addAttribute("matchday", matchday);
 		return "usermatches";
 	}
 
+	// match deletion for admins
 	@PostMapping("/matchdeletion")
-	public String deleteMatch(@PathVariable Long id,
-			@Valid @ModelAttribute("match") MatchDto matchDto, 
+	public String deleteMatch(@PathVariable Long id, @Valid @ModelAttribute("match") MatchDto matchDto,
 			BindingResult result) {
 		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
 		if (!err.isEmpty()) {
@@ -152,6 +146,7 @@ public class MatchController {
 		return "redirect:matchdeletion?success";
 	}
 
+	// match update method for admins
 	@PostMapping("/matchupdate")
 	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
 		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
@@ -167,24 +162,20 @@ public class MatchController {
 		matchService.updateMatch(matchDto);
 		return "redirect:matchupdate?success";
 	}
+
+	// show form
+	@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
+	public String editResultForm(@PathVariable Long id, Model model) {
+		model.addAttribute("match", matchService.getMatchDtoById(id));
+		return "usereditresult";
+	}
 	
 	@PostMapping("/usermatches/{id}")
-	public String userUpdateMatch(@PathVariable Long id,@Valid @ModelAttribute("match") MatchDto matchDto, Principal principal, BindingResult result) {
-		matchDto.setId(id);
-		String userName = userService.findUserByEmail(principal.getName()).getName(); 
+	public String updateStudent(@PathVariable Long id,
+								@ModelAttribute ("match") MatchDto match) {
+		System.out.println("updateMatch!!111!");
 		
-		
-		String err = "";
-		if(!err.isEmpty()) {
-			ObjectError error = new ObjectError("globalError", err);
-			result.addError(error);
-			if(result.hasErrors()) {
-				return "usermatches";
-			}
-		}
-		
-		
-		
-		return "redirect:usermatches";
+		return "redirect:/usermatches";
 	}
+
 }
