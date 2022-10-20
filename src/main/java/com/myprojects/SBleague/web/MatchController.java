@@ -128,7 +128,6 @@ public class MatchController {
 				.mapToObj(i -> i).collect(Collectors.toList());
 		model.addAttribute("matchdaynumbers", matchdayNumbers);
 
-		
 		model.addAttribute("matchday", matchday);
 		
 		return "usermatches";
@@ -136,8 +135,8 @@ public class MatchController {
 	
 	// show form
 		@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
-		public String editResultForm(@PathVariable Long matchId, Model model) {
-			model.addAttribute("match", matchService.getMatchDtoById(matchId));
+		public String editResultForm(@PathVariable Long id, Model model) {
+			model.addAttribute("match", matchService.getMatchDtoById(id));
 			return "usereditresult";
 		}
 
@@ -178,7 +177,7 @@ public class MatchController {
 
 
 	@PostMapping("/usermatches/{id}")
-	public String editResult(@PathVariable Long matchId, @ModelAttribute("match") MatchDto match, Principal principal) {
+	public String editResult(@PathVariable Long id, @ModelAttribute("match") MatchDto match, Principal principal) {
 
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
 		
