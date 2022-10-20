@@ -23,7 +23,6 @@ import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.usermanagement.service.UserService;
 import com.myprojects.SBleague.validation.MatchDtoValidationService;
 import com.myprojects.SBleague.web.dto.MatchDto;
-import com.myprojects.SBleague.web.dto.TeamDto;
 
 @Controller
 public class MatchController {
@@ -97,15 +96,18 @@ public class MatchController {
 		return "matchdaytable";
 	}
 
-	// handler method for the method the user specific match table
+	// handler method for the user specific match table
 	@GetMapping("usermatches")
 	public String listUserMatches(@RequestParam(value = "matchday", required = false) Integer matchday, Model model,
 			Principal principal) {
+		
+		
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
-
 		List<String> userTeamNames = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.getName())
 				.collect(Collectors.toList());
 
+		
+		// filter matches by matchday
 		if (matchday != null && matchday > 0) {
 			List<MatchDto> matches = matchService.getAllMatchDtoByDay(matchday.intValue());
 			matches = matches.stream().filter(
@@ -113,21 +115,31 @@ public class MatchController {
 					.collect(Collectors.toList());
 			model.addAttribute("matches", matches);
 
-		} else if (matchday == null || matchday < 0) {
+		} else if (matchday == null || matchday < 0) { // default and ALL
 			List<MatchDto> matches = matchService.getAllMatchDto();
 			matches = matches.stream().filter(
 					match -> userTeamNames.contains(match.getHomeTeam()) || userTeamNames.contains(match.getAwayTeam()))
 					.collect(Collectors.toList());
 			model.addAttribute("matches", matches);
 		}
-
+		
+		// get all matchday numbers for the select
 		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays() + 1)
 				.mapToObj(i -> i).collect(Collectors.toList());
 		model.addAttribute("matchdaynumbers", matchdayNumbers);
 
+		
 		model.addAttribute("matchday", matchday);
+		
 		return "usermatches";
 	}
+	
+	// show form
+		@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
+		public String editResultForm(@PathVariable Long matchId, Model model) {
+			model.addAttribute("match", matchService.getMatchDtoById(matchId));
+			return "usereditresult";
+		}
 
 	// match deletion for admins
 	@PostMapping("/matchdeletion")
@@ -164,27 +176,15 @@ public class MatchController {
 		return "redirect:matchupdate?success";
 	}
 
-	// show form
-	@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
-	public String editResultForm(@PathVariable Long matchId, Model model) {
-		model.addAttribute("match", matchService.getMatchDtoById(matchId));
-		return "usereditresult";
-	}
 
 	@PostMapping("/usermatches/{id}")
 	public String editResult(@PathVariable Long matchId, @ModelAttribute("match") MatchDto match, Principal principal) {
 
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
-		List<String> userTeams = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.toString())
-				.collect(Collectors.toList());
-
-		String userTeam = userTeams.contains(match.getHomeTeam()) ? match.getHomeTeam()
-			: userTeams.contains(match.getAwayTeam()) ? match.getAwayTeam(): "";
 		
-		if (!userTeam.isEmpty()) {
-			matchService.updateMatch(match,userTeam);
-		} else {// error
-		}
+		
+		matchService.updateMatchUser(match, userId);
+
 
 		return "redirect:/usermatches";
 	}

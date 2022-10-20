@@ -36,13 +36,10 @@ public class MatchDtoValidationService {
 		
 		Match existingMatch = matchRepository.findById(matchId);
 		// check whether the match is fresh
-		if (!existingMatch.getResult().isVerifiedAway() && !existingMatch.getResult().isVerifiedAway()) {
+		if (!existingMatch.getResult().isValid()) {
 			
 		}
-		
-		
-		
-		
+
 		return message;
 	}
 }

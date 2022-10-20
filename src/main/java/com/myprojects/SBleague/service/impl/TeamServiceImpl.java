@@ -171,9 +171,7 @@ public class TeamServiceImpl implements TeamService {
 			homeTeam.setPoints(homeTeam.getPoints() + seasonService.getActivePointsPerDraw());
 			awayTeam.setPoints(awayTeam.getPoints() + seasonService.getActivePointsPerDraw());
 		}
-		// teamRepository.deleteById(homeTeamName);
-		// teamRepository.deleteById(awayTeamName);
-
+		
 		teamRepository.save(homeTeam);
 		teamRepository.save(awayTeam);
 	}

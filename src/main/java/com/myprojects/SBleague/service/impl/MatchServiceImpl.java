@@ -18,14 +18,12 @@ public class MatchServiceImpl implements MatchService {
 
 	private TeamService teamService;
 	private MatchRepository matchRepository;
-	private ResultRepository resultRepository;
 
 	public MatchServiceImpl(TeamService teamService, MatchRepository matchRepository,
 			ResultRepository resultRepository) {
 		super();
 		this.teamService = teamService;
 		this.matchRepository = matchRepository;
-		this.resultRepository = resultRepository;
 	}
 
 	@Override
@@ -146,30 +144,49 @@ public class MatchServiceImpl implements MatchService {
 		Match existingMatch = matchRepository.findById(matchId);
 		Result existingResult = existingMatch.getResult();
 
+		// we don't want users to update a valid result again
+		if (existingResult.isValid()) {
+			return existingMatch;
+		}
+
 		List<String> userTeams = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.toString())
 				.collect(Collectors.toList());
 
 		String userTeam = userTeams.contains(existingMatch.getHomeTeam()) ? existingMatch.getHomeTeam()
 				: userTeams.contains(existingMatch.getAwayTeam()) ? existingMatch.getAwayTeam() : "";
 
-		if (userTeams.contains(existingMatch.getHomeTeam())) {
-			if(existingResult.isVerifiedAway()) {
-				int oldAwayPoints = existingMatch.getAwayPoints();
-				int oldHomePoints = existingMatch.getHomePoints();
-				
+		if (userTeam.equals(existingMatch.getHomeTeam())) { // user owns home team
+			// set points in result
+			existingResult.setAwayPointsH(matchDto.getAwayPoints());
+			existingResult.setHomePointsH(matchDto.getHomePoints());
+			// update result value
+			existingResult.updateValue();
+			// update points in match
+			existingMatch.updatePoints();
+			// update stats in teams
+			if (existingResult.isValid()) {
+				teamService.updateStatistics(matchDto);
 			}
-			existingResult.setVerifiedHome(true); // verify by home team
-			if (existingResult.isVerified()) {
-				
-			}
-		} else if (userTeams.contains(existingMatch.getAwayTeam())) {
-			existingResult.setVerifiedAway(true); // verify by away team
-			if (existingResult.isVerified()) {
 
+		} else if (userTeam.equals(existingMatch.getAwayTeam())) { // user owns away team
+			// set points in result
+			existingResult.setAwayPointsA(matchDto.getAwayPoints());
+			existingResult.setHomePointsA(matchDto.getHomePoints());
+			// update result value
+			existingResult.updateValue();
+			// update points in match
+			existingMatch.updatePoints();
+			// update stats in teams
+			if (existingResult.isValid()) {
+				teamService.updateStatistics(matchDto);
 			}
+			
 		} else {
 			// error
 		}
+		
+		existingMatch.setResult(existingResult);
+		matchRepository.save(existingMatch);
 
 		return null;
 	}
