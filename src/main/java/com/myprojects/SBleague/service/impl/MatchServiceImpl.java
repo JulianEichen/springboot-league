@@ -149,13 +149,13 @@ public class MatchServiceImpl implements MatchService {
 			return existingMatch;
 		}
 
-		List<String> userTeams = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.toString())
+		List<String> userTeams = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.getName())
 				.collect(Collectors.toList());
 
-		String userTeam = userTeams.contains(existingMatch.getHomeTeam()) ? existingMatch.getHomeTeam()
-				: userTeams.contains(existingMatch.getAwayTeam()) ? existingMatch.getAwayTeam() : "";
-
-		if (userTeam.equals(existingMatch.getHomeTeam())) { // user owns home team
+		String userTeam = userTeams.contains(existingMatch.showHomeTeamName()) ? existingMatch.showHomeTeamName()
+				: userTeams.contains(existingMatch.showAwayTeamName()) ? existingMatch.showAwayTeamName() : "";
+		
+		if (userTeam.equals(existingMatch.showHomeTeamName())) { // user owns home team
 			// set points in result
 			existingResult.setAwayPointsH(matchDto.getAwayPoints());
 			existingResult.setHomePointsH(matchDto.getHomePoints());
@@ -168,7 +168,7 @@ public class MatchServiceImpl implements MatchService {
 				teamService.updateStatistics(matchDto);
 			}
 
-		} else if (userTeam.equals(existingMatch.getAwayTeam())) { // user owns away team
+		} else if (userTeam.equals(existingMatch.showAwayTeamName())) { // user owns away team
 			// set points in result
 			existingResult.setAwayPointsA(matchDto.getAwayPoints());
 			existingResult.setHomePointsA(matchDto.getHomePoints());

@@ -22,9 +22,7 @@ public class TeamServiceImpl implements TeamService {
 	private SeasonService seasonService;
 	private UserService userService;
 
-	public TeamServiceImpl(TeamRepository teamRepository
-			,SeasonService seasonService
-			,UserService userService) {
+	public TeamServiceImpl(TeamRepository teamRepository, SeasonService seasonService, UserService userService) {
 		super();
 		this.teamRepository = teamRepository;
 		this.seasonService = seasonService;
@@ -69,13 +67,13 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public List<TeamDto> getAllTeamDtoByOwnerId(Long ownerId) {
-		List<TeamDto> dtoList = teamRepository.findAllByOwnerId(ownerId).stream()
-			.map(team -> teamToDto(team)).collect(Collectors.toList());
+		List<TeamDto> dtoList = teamRepository.findAllByOwnerId(ownerId).stream().map(team -> teamToDto(team))
+				.collect(Collectors.toList());
 		return dtoList;
 	}
-	
+
 	@Override
-	public Team saveTeam(TeamDto teamDto,String userEmail) {
+	public Team saveTeam(TeamDto teamDto, String userEmail) {
 		String teamName = teamDto.getName().replace(" ", "_");
 		User owner = userService.findUserByEmail(userEmail);
 		Team team = new Team(teamName, owner, 0, 0, 0, 0, 0);
@@ -150,40 +148,44 @@ public class TeamServiceImpl implements TeamService {
 		Team awayTeam = teamRepository.findById(awayTeamName).get();
 
 		if (matchDto.getHomePoints() > matchDto.getAwayPoints()) {
-			// result statistics
+			// meta statistics
+			homeTeam.setMatches(homeTeam.getMatches() + 1);
+			awayTeam.setMatches(awayTeam.getMatches() + 1);
+			
 			homeTeam.setWins(homeTeam.getWins() + 1);
 			awayTeam.setLosses(awayTeam.getLosses() + 1);
 			// league points
 			homeTeam.setPoints(homeTeam.getPoints() + seasonService.getActivePointsPerWin());
 			awayTeam.setPoints(awayTeam.getPoints() + seasonService.getActivePointsPerLoss());
 		} else if (matchDto.getHomePoints() < matchDto.getAwayPoints()) {
-			// result statistics
+			// meta statistics
+			homeTeam.setMatches(homeTeam.getMatches() + 1);
+			awayTeam.setMatches(awayTeam.getMatches() + 1);
+			
 			homeTeam.setLosses(homeTeam.getLosses() + 1);
 			awayTeam.setWins(awayTeam.getWins() + 1);
 			// league points
 			homeTeam.setPoints(homeTeam.getPoints() + seasonService.getActivePointsPerLoss());
 			awayTeam.setPoints(awayTeam.getPoints() + seasonService.getActivePointsPerWin());
 		} else if (matchDto.getHomePoints() == matchDto.getAwayPoints()) {
-			// result statistics
+			// meta statistics
+			homeTeam.setMatches(homeTeam.getMatches() + 1);
+			awayTeam.setMatches(awayTeam.getMatches() + 1);
+			
 			homeTeam.setDraws(homeTeam.getDraws() + 1);
 			awayTeam.setDraws(awayTeam.getDraws() + 1);
 			// league points
 			homeTeam.setPoints(homeTeam.getPoints() + seasonService.getActivePointsPerDraw());
 			awayTeam.setPoints(awayTeam.getPoints() + seasonService.getActivePointsPerDraw());
 		}
-		
+
 		teamRepository.save(homeTeam);
 		teamRepository.save(awayTeam);
 	}
 
 	private TeamDto teamToDto(Team team) {
-		TeamDto dto = new TeamDto(team.getName().replace("_", " ")
-				,team.getOwner().getName().replace("_", " ")
-				,team.getMatches()
-				,team.getWins()
-				,team.getDraws()
-				,team.getLosses()
-				,team.getPoints());
+		TeamDto dto = new TeamDto(team.getName().replace("_", " "), team.getOwner().getName().replace("_", " "),
+				team.getMatches(), team.getWins(), team.getDraws(), team.getLosses(), team.getPoints());
 		return dto;
 	}
 

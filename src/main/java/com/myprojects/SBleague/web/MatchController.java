@@ -100,13 +100,11 @@ public class MatchController {
 	@GetMapping("usermatches")
 	public String listUserMatches(@RequestParam(value = "matchday", required = false) Integer matchday, Model model,
 			Principal principal) {
-		
-		
+
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
 		List<String> userTeamNames = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.getName())
 				.collect(Collectors.toList());
 
-		
 		// filter matches by matchday
 		if (matchday != null && matchday > 0) {
 			List<MatchDto> matches = matchService.getAllMatchDtoByDay(matchday.intValue());
@@ -122,23 +120,33 @@ public class MatchController {
 					.collect(Collectors.toList());
 			model.addAttribute("matches", matches);
 		}
-		
+
 		// get all matchday numbers for the select
 		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays() + 1)
 				.mapToObj(i -> i).collect(Collectors.toList());
 		model.addAttribute("matchdaynumbers", matchdayNumbers);
 
 		model.addAttribute("matchday", matchday);
-		
+
 		return "usermatches";
 	}
-	
+
 	// show form
-		@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
-		public String editResultForm(@PathVariable Long id, Model model) {
-			model.addAttribute("match", matchService.getMatchDtoById(id));
-			return "usereditresult";
-		}
+	@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
+	public String editResultForm(@PathVariable Long id, Model model) {
+		model.addAttribute("match", matchService.getMatchDtoById(id));
+		return "usereditresult";
+	}
+
+	@PostMapping("/usermatches/{id}")
+	public String editResult(@PathVariable Long id, @ModelAttribute("match") MatchDto match, Principal principal) {
+
+		Long userId = userService.findUserByEmail(principal.getName()).getId();
+
+		matchService.updateMatchUser(match, userId);
+
+		return "redirect:/usermatches";
+	}
 
 	// match deletion for admins
 	@PostMapping("/matchdeletion")
@@ -175,16 +183,4 @@ public class MatchController {
 		return "redirect:matchupdate?success";
 	}
 
-
-	@PostMapping("/usermatches/{id}")
-	public String editResult(@PathVariable Long id, @ModelAttribute("match") MatchDto match, Principal principal) {
-
-		Long userId = userService.findUserByEmail(principal.getName()).getId();
-		
-		
-		matchService.updateMatchUser(match, userId);
-
-
-		return "redirect:/usermatches";
-	}
 }
