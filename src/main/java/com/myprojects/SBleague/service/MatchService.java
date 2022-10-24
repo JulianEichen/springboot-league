@@ -12,6 +12,8 @@ public interface MatchService {
 	List<Match> getAllMatchesByDay(int matchday);
 	List<MatchDto> getAllMatchDtoByDay(int matchday);
 	
+	Match getMatchById(Long matchId);
+	
 	Match saveMatch(MatchDto matchDto);
 	
 	Match updateMatch(MatchDto matchDto);
@@ -21,5 +23,7 @@ public interface MatchService {
 	void deleteMatch(MatchDto matchDto);
 	
 	MatchDto getMatchDtoById(Long id);
+	
+	boolean isUpdatedByUserId(Long matchId, Long UserId);
 
 }

@@ -101,23 +101,32 @@ public class MatchController {
 	public String listUserMatches(@RequestParam(value = "matchday", required = false) Integer matchday, Model model,
 			Principal principal) {
 
+		// get all teams owned by the User
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
 		List<String> userTeamNames = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.getName())
 				.collect(Collectors.toList());
 
-		// filter matches by matchday
+		// get all matches of user owned teams, filtered by matchday
 		if (matchday != null && matchday > 0) {
 			List<MatchDto> matches = matchService.getAllMatchDtoByDay(matchday.intValue());
 			matches = matches.stream().filter(
 					match -> userTeamNames.contains(match.getHomeTeam()) || userTeamNames.contains(match.getAwayTeam()))
 					.collect(Collectors.toList());
+
+			// check whether matches are updated
+			matches.forEach(match -> match.setUpdatedByUser(matchService.isUpdatedByUserId(match.getId(), userId)));
+
 			model.addAttribute("matches", matches);
 
-		} else if (matchday == null || matchday < 0) { // default and ALL
+		} else if (matchday == null || matchday < 0) { // default and 'all matchdays'
 			List<MatchDto> matches = matchService.getAllMatchDto();
 			matches = matches.stream().filter(
 					match -> userTeamNames.contains(match.getHomeTeam()) || userTeamNames.contains(match.getAwayTeam()))
 					.collect(Collectors.toList());
+
+			// check whether matches are updated
+			matches.forEach(match -> match.setUpdatedByUser(matchService.isUpdatedByUserId(match.getId(), userId)));
+
 			model.addAttribute("matches", matches);
 		}
 
@@ -136,6 +145,13 @@ public class MatchController {
 	public String editResultForm(@PathVariable Long id, Model model) {
 		model.addAttribute("match", matchService.getMatchDtoById(id));
 		return "usereditresult";
+	}
+
+	// show form
+	@GetMapping("/usermatches/edited/{id}") // {id} is called a template variable
+	public String fullEditResultForm(@PathVariable Long id, Model model) {
+		model.addAttribute("match", matchService.getMatchDtoById(id));
+		return "userfullresult";
 	}
 
 	@PostMapping("/usermatches/{id}")
@@ -179,7 +195,6 @@ public class MatchController {
 			return "matchupdate";
 		}
 
-		matchService.updateMatch(matchDto);
 		return "redirect:matchupdate?success";
 	}
 

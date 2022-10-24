@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="headerfiles.html :: headerfiles">
+</head>
+<body>
+	<!-- Import navbar fragment  -->
+	<div th:replace="navbar.html :: navbar"></div>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<!--  Sub Header -->
+				<h1>Your Input</h1>
+
+				<!-- Input Form -->
+				<form th:action="@{/usermatches/{id} (id=${match.id})}"
+					method="post" th:object="${match}">
+
+					<div class="form-group">
+						<label class="control-label" for="matchId">MatchId</label> <input
+							id="matchId" class="form-control" type="text"
+							th:value="${match.id}" th:name="matchId" th:id="matchId" readonly>
+					</div>
+
+
+					<div class="form-group">
+						<label class="control-label" for="matchday">Matchday</label> <input
+							id="matchday" class="form-control" type="text"
+							th:value="${match.matchday}" th:name="matchday" th:id="matchday"
+							readonly>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="homeTeam">Home Team</label> <input
+							id="homeTeam" class="form-control" type="text"
+							th:value="${match.homeTeam}" th:name="homeTeam" th:id="homeTeam"
+							readonly>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="homePoints">Home Points</label>
+						<input id="homeTeam" class="form-control" type="text"
+							th:value="${match.homePoints}" th:name="homePoints"
+							th:id="homePoints" readonly>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="awayTeam">Away Team</label> <input
+							id="awayTeam" class="form-control" type="text"
+							th:value="${match.awayTeam}" th:name="awayTeam" th:id="awayTeam"
+							readonly>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="awayPoints">Away Points</label>
+						<input id="homeTeam" class="form-control" type="text"
+							th:value="${match.awayPoints}" th:name="awayPoints"
+							th:id="awayPoints" readonly>
+					</div>
+
+				</form>
+
+				<a th:href="@{/usermatches}" class="btn btn-primary">Ok!</a>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<div th:replace="footerfiles.html :: footerfiles"></div>
+</body>
+</html>

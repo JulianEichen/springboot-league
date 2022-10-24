@@ -50,8 +50,13 @@
 						<td><span th:if="${match.result < 0}">TBA</span> <span
 							th:unless="${match.result < 0}" th:text="${match.awayPoints}"></span>
 						</td>
-						<td><a th:href="@{/usermatches/edit/{id}(id=${match.id})}"
-							class="btn btn-primary">Update</a></td>
+						<td><span th:if="${match.updatedByUser == false}"> <a
+								th:href="@{/usermatches/edit/{id}(id=${match.id})}"
+								class="btn btn-warning">Update</a></span>
+						<span
+							th:if="${match.updatedByUser == true}"> <a
+								th:href="@{/usermatches/edited/{id}(id=${match.id})}"
+								class="btn btn-primary">Updated</a></span></td>
 					</tr>
 				</tbody>
 			</table>

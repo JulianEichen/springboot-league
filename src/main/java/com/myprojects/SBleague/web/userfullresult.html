@@ -21,7 +21,7 @@
 				<h1>Match Update</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/usermatches/{id} (id=${match.id})}" method="post" th:object="${match}">
+				<form action="/usermatches">
 						
 					<div class="form-group">
 						<label class="control-label" for="matchId">MatchId</label>
@@ -44,8 +44,7 @@
 					
 					<div class="form-group">
 						<label class="control-label" for="homePoints">Home Points</label> <input
-							id="homePoints" class="form-control" th:field="*{homePoints}"
-							required>
+							id="homePoints" class="form-control" type="text" th:value="{match.homePoints}" th:name="homePoints" th:id="homePoints" readonly>
 					</div>
 					
 					<div class="form-group">
@@ -56,17 +55,12 @@
 					
 					<div class="form-group">
 						<label class="control-label" for="awayPoints">Away Points</label> <input
-							id="awayPoints" class="form-control" th:field="*{awayPoints}"
-							required>
+							id="awayPoints" class="form-control" type="text" th:value="{match.awayPoints}" th:name="awayPoints" th:id="awayPoints" readonly>
 					</div>
 
-					<div th:if="${#fields.hasAnyErrors()}">
-						<ul>
-							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
-						</ul>
-					</div>
 
-					<button type="submit" class="btn btn-success">Submit</button>
+
+					<button type="submit" class="btn btn-success">Ok!</button>
 				</form>
 			</div>
 		</div>

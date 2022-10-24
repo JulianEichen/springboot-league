@@ -154,7 +154,7 @@ public class MatchServiceImpl implements MatchService {
 
 		String userTeam = userTeams.contains(existingMatch.showHomeTeamName()) ? existingMatch.showHomeTeamName()
 				: userTeams.contains(existingMatch.showAwayTeamName()) ? existingMatch.showAwayTeamName() : "";
-		
+
 		if (userTeam.equals(existingMatch.showHomeTeamName())) { // user owns home team
 			// set points in result
 			existingResult.setAwayPointsH(matchDto.getAwayPoints());
@@ -180,15 +180,41 @@ public class MatchServiceImpl implements MatchService {
 			if (existingResult.isValid()) {
 				teamService.updateStatistics(matchDto);
 			}
-			
+
 		} else {
 			// error
 		}
-		
+
 		existingMatch.setResult(existingResult);
 		matchRepository.save(existingMatch);
 
 		return null;
+	}
+
+	@Override
+	public Match getMatchById(Long matchId) {
+		return matchRepository.findById(matchId);
+	}
+
+	@Override
+	public boolean isUpdatedByUserId(Long matchId, Long userId) {
+		List<String> userTeams = teamService.getAllTeamsByOwnerId(userId).stream().map(team -> team.showTeamName())
+				.collect(Collectors.toList());
+		Match match = matchRepository.findById(matchId);
+
+		if (userTeams.contains(match.showHomeTeamName())) { // user owns home team
+			if (match.getResult().getAwayPointsH() >= 0 || match.getResult().getHomePointsH() >= 0) {
+				// home team owner already registered valid points values
+				return true;
+			}
+		} else if (userTeams.contains(match.showAwayTeamName())) {
+			if (match.getResult().getAwayPointsA() >= 0 || match.getResult().getHomePointsA() >= 0) {
+				return true;
+			}
+		} else {
+			// error
+		}
+		return false;
 	}
 
 }

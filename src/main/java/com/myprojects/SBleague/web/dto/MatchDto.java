@@ -3,7 +3,7 @@ package com.myprojects.SBleague.web.dto;
 import javax.validation.constraints.NotNull;
 
 public class MatchDto {
-	
+
 	@NotNull
 	private int matchday;
 	@NotNull
@@ -14,7 +14,9 @@ public class MatchDto {
 	private int homePoints;
 	@NotNull
 	private int awayPoints;
-	
+
+	private boolean updatedByUser;
+
 	private int result;
 	private Long id;
 
@@ -32,9 +34,10 @@ public class MatchDto {
 		this.homePoints = homePoints;
 		this.awayPoints = awayPoints;
 	}
-	
+
 	// constructor for table
-	public MatchDto(Long id, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints, int result) {
+	public MatchDto(Long id, int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints,
+			int result) {
 		super();
 		this.id = id;
 		this.matchday = matchday;
@@ -44,9 +47,7 @@ public class MatchDto {
 		this.awayPoints = awayPoints;
 		this.result = result;
 	}
-	
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -58,38 +59,57 @@ public class MatchDto {
 	public int getMatchday() {
 		return matchday;
 	}
+
 	public void setMatchday(int matchday) {
 		this.matchday = matchday;
 	}
+
 	public String getHomeTeam() {
 		return homeTeam;
 	}
+
 	public void setHomeTeam(String homeTeam) {
 		this.homeTeam = homeTeam;
 	}
+
 	public String getAwayTeam() {
 		return awayTeam;
 	}
+
 	public void setAwayTeam(String awayTeam) {
 		this.awayTeam = awayTeam;
 	}
+
 	public int getHomePoints() {
 		return homePoints;
 	}
+
 	public void setHomePoints(int homePoints) {
 		this.homePoints = homePoints;
 	}
+
 	public int getAwayPoints() {
 		return awayPoints;
 	}
+
 	public void setAwayPoints(int awayPoints) {
 		this.awayPoints = awayPoints;
 	}
+
 	public int getResult() {
 		return result;
 	}
+
 	public void setResult(int result) {
 		this.result = result;
 	}
-	
+
+	public boolean isUpdatedByUser() {
+		return updatedByUser;
+	}
+
+	public void setUpdatedByUser(boolean updatedByUser) {
+		this.updatedByUser = updatedByUser;
+	}
+
 }
