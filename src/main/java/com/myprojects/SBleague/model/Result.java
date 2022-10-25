@@ -109,13 +109,12 @@ public class Result {
 	}
 
 	public boolean isValid() {
-		boolean valid = false;
 		if (this.awayPointsA >= 0 && this.awayPointsH >= 0 && this.homePointsA >= 0 && this.homePointsH >= 0) {
 			if (this.awayPointsA == this.awayPointsH && this.homePointsA == this.homePointsH) {
-				valid = true;
+				return true;
 			}
 		}
-		return valid;
+		return false;
 	}
 
 	public void reset() {
@@ -135,5 +134,14 @@ public class Result {
 				this.value = 0;
 			}
 		}
+	}
+	
+	public boolean hasInputConflict() {
+		if (this.awayPointsA >= 0 && this.awayPointsH >= 0 && this.homePointsA >= 0 && this.homePointsH >= 0) {
+			if (this.awayPointsA != this.awayPointsH || this.homePointsA != this.homePointsH) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

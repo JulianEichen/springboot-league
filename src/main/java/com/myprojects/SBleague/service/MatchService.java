@@ -26,4 +26,6 @@ public interface MatchService {
 	
 	boolean isUpdatedByUserId(Long matchId, Long UserId);
 
+	MatchDto getDtoWithUserInput(Long matchId, Long userId);
+
 }

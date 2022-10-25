@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.myprojects.SBleague.model.Match;
 import com.myprojects.SBleague.model.Result;
 import com.myprojects.SBleague.repository.MatchRepository;
-import com.myprojects.SBleague.repository.ResultRepository;
 import com.myprojects.SBleague.service.MatchService;
 import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.web.dto.MatchDto;
@@ -19,8 +18,7 @@ public class MatchServiceImpl implements MatchService {
 	private TeamService teamService;
 	private MatchRepository matchRepository;
 
-	public MatchServiceImpl(TeamService teamService, MatchRepository matchRepository,
-			ResultRepository resultRepository) {
+	public MatchServiceImpl(TeamService teamService, MatchRepository matchRepository) {
 		super();
 		this.teamService = teamService;
 		this.matchRepository = matchRepository;
@@ -134,7 +132,7 @@ public class MatchServiceImpl implements MatchService {
 	@Override
 	public MatchDto getMatchDtoById(Long id) {
 		Match match = matchRepository.findById(id);
-		return matchToDto(match);
+		return this.matchToDto(match);
 	}
 
 	@Override
@@ -215,6 +213,34 @@ public class MatchServiceImpl implements MatchService {
 			// error
 		}
 		return false;
+	}
+
+	@Override
+	public MatchDto getDtoWithUserInput(Long matchId, Long userId) {
+		List<String> userTeams = teamService.getAllTeamsByOwnerId(userId).stream().map(team -> team.showTeamName())
+				.collect(Collectors.toList());
+		Match match = matchRepository.findById(matchId);
+		MatchDto matchDto = this.matchToDto(match);
+		
+		// set default values
+		matchDto.setAwayPoints(-1);
+		matchDto.setHomePoints(-1);
+		
+		if (userTeams.contains(match.showHomeTeamName())) { // user owns home team
+			if (match.getResult().getAwayPointsH() >= 0 || match.getResult().getHomePointsH() >= 0) {
+				matchDto.setAwayPoints(match.getResult().getAwayPointsH());
+				matchDto.setHomePoints(match.getResult().getHomePointsH());
+			}
+		} else if (userTeams.contains(match.showAwayTeamName())) {
+			if (match.getResult().getAwayPointsA() >= 0 || match.getResult().getHomePointsA() >= 0) {
+				matchDto.setAwayPoints(match.getResult().getAwayPointsA());
+				matchDto.setHomePoints(match.getResult().getHomePointsA());
+			} else {
+				// error
+			}
+
+		}
+		return matchDto;
 	}
 
 }

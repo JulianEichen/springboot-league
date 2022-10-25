@@ -1,6 +1,7 @@
 package com.myprojects.SBleague.web;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -149,8 +150,11 @@ public class MatchController {
 
 	// show form
 	@GetMapping("/usermatches/edited/{id}") // {id} is called a template variable
-	public String fullEditResultForm(@PathVariable Long id, Model model) {
-		model.addAttribute("match", matchService.getMatchDtoById(id));
+	public String fullEditResultForm(@PathVariable Long id, Model model, Principal principal) {
+		Long userId = userService.findUserByEmail(principal.getName()).getId();
+		MatchDto matchDto = matchService.getDtoWithUserInput(id, userId);
+
+		model.addAttribute("match", matchDto);
 		return "userfullresult";
 	}
 
@@ -196,6 +200,37 @@ public class MatchController {
 		}
 
 		return "redirect:matchupdate?success";
+	}
+
+	// show matchday table with select day/all functionality
+	@GetMapping("adminmatches")
+	public String listMatchdaysAdmin(@RequestParam(value = "matchday", required = false) Integer matchday, Model model) {
+		
+		List<MatchDto> matches = new ArrayList<>();
+		
+		if (matchday != null && matchday > 0) { // default
+			matches = matchService.getAllMatchDtoByDay(matchday.intValue());
+		} else if (matchday == null || matchday < 0) {
+			matches = matchService.getAllMatchDto();
+		}
+
+		matches.forEach(match -> {
+			match.setResultHasInputConflict(
+				matchService.getMatchById(match.getId())
+				.getResult().hasInputConflict());
+			match.setResultIsValid(
+				matchService.getMatchById(match.getId())
+						.getResult().isValid());
+			});
+		
+		// numbers for the select
+		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays() + 1)
+				.mapToObj(i -> i).collect(Collectors.toList());
+		model.addAttribute("matchdaynumbers", matchdayNumbers);
+		
+		model.addAttribute("matches", matches);
+		model.addAttribute("matchday", matchday);
+		return "adminmatches";
 	}
 
 }

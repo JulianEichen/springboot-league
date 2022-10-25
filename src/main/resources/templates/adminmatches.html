@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="headerfiles.html :: headerfiles">
+</head>
+<body>
+	<!-- Import navbar fragment  -->
+	<div th:replace="navbar.html :: navbar"></div>
+
+
+	<div class="container">
+		<div class="row">
+			<h1>The Matchdays</h1>
+		</div>
+
+		<form th:action="@{/matchdaytable}" method="get">
+			<label th:text="Matchday"> </label> <select
+				onchange="this.form.submit()" th:name="matchday">
+				<option th:value=-1>All Matches</option>
+
+				<option th:each="number : ${matchdaynumbers}" th:value="${number}"
+					th:text="${number}" th:selected="${number.equals(matchday)}">
+				</option>
+
+			</select>
+
+			<table class="table table-striped table-bordered">
+				<thead class="table-dark">
+					<tr>
+						<th>Matchday</th>
+						<th>Home Team</th>
+						<th>Home Team Points</th>
+						<th>Away Team</th>
+						<th>Away Team Points</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="match: ${matches}">
+						<td th:text="${match.matchday}"></td>
+						<td th:text="${match.homeTeam}"></td>
+						<td><span th:if="${match.result < 0}">TBA</span> <span
+							th:unless="${match.result < 0}" th:text="${match.homePoints}"></span>
+						</td>
+						<td th:text="${match.awayTeam}"></td>
+						<td><span th:if="${match.result < 0}">TBA</span> <span
+							th:unless="${match.result < 0}" th:text="${match.awayPoints}"></span>
+						</td>
+						<td>
+							<span th:if="${match.resultIsValid}">Valid</span>
+							<span th:if="${match.resultHasInputConflict}">Input Conflict</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+
+	<div th:replace="footerfiles.html :: footerfiles"></div>
+
+</body>
+</html>

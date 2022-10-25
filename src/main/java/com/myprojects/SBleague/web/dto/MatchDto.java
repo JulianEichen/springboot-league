@@ -16,6 +16,8 @@ public class MatchDto {
 	private int awayPoints;
 
 	private boolean updatedByUser;
+	private boolean resultIsValid;
+	private boolean resultHasInputConflict;
 
 	private int result;
 	private Long id;
@@ -112,4 +114,21 @@ public class MatchDto {
 		this.updatedByUser = updatedByUser;
 	}
 
+	public boolean isResultIsValid() {
+		return resultIsValid;
+	}
+
+	public void setResultIsValid(boolean resultIsValid) {
+		this.resultIsValid = resultIsValid;
+	}
+
+	public boolean isResultHasInputConflict() {
+		return resultHasInputConflict;
+	}
+
+	public void setResultHasInputConflict(boolean resultHasInputConflict) {
+		this.resultHasInputConflict = resultHasInputConflict;
+	}
+
+	
 }
