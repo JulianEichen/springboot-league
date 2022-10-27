@@ -22,6 +22,8 @@ public interface MatchService {
 	
 	void deleteMatch(MatchDto matchDto);
 	
+	void resetResult(Long id);
+	
 	MatchDto getMatchDtoById(Long id);
 	
 	boolean isUpdatedByUserId(Long matchId, Long UserId);

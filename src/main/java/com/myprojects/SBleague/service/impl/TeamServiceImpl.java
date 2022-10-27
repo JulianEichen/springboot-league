@@ -189,4 +189,9 @@ public class TeamServiceImpl implements TeamService {
 		return dto;
 	}
 
+	@Override
+	public String getOwnerNameByTeamName(String teamName) {
+		return teamRepository.findByName(teamName).getOwner().getName();
+	}
+
 }

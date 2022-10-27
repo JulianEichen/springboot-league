@@ -243,4 +243,13 @@ public class MatchServiceImpl implements MatchService {
 		return matchDto;
 	}
 
+	@Override
+	public void resetResult(Long id) {
+		Match match = matchRepository.findById(id);
+		Result result = match.getResult();
+		result.reset();
+		match.setResult(result);
+		matchRepository.save(match);
+	}
+
 }

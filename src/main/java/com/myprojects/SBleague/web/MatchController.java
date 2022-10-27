@@ -204,10 +204,11 @@ public class MatchController {
 
 	// show matchday table with select day/all functionality
 	@GetMapping("adminmatches")
-	public String listMatchdaysAdmin(@RequestParam(value = "matchday", required = false) Integer matchday, Model model) {
-		
+	public String listMatchdaysAdmin(@RequestParam(value = "matchday", required = false) Integer matchday,
+			Model model) {
+
 		List<MatchDto> matches = new ArrayList<>();
-		
+
 		if (matchday != null && matchday > 0) { // default
 			matches = matchService.getAllMatchDtoByDay(matchday.intValue());
 		} else if (matchday == null || matchday < 0) {
@@ -215,21 +216,46 @@ public class MatchController {
 		}
 
 		matches.forEach(match -> {
-			match.setResultHasInputConflict(
-				matchService.getMatchById(match.getId())
-				.getResult().hasInputConflict());
-			match.setResultIsValid(
-				matchService.getMatchById(match.getId())
-						.getResult().isValid());
-			});
-		
+			match.setResultHasInputConflict(matchService.getMatchById(match.getId()).getResult().hasInputConflict());
+			match.setResultIsValid(matchService.getMatchById(match.getId()).getResult().isValid());
+		});
+
 		// numbers for the select
 		List<Integer> matchdayNumbers = IntStream.range(1, seasonService.getActiveNumberOfMatchdays() + 1)
 				.mapToObj(i -> i).collect(Collectors.toList());
 		model.addAttribute("matchdaynumbers", matchdayNumbers);
-		
+
 		model.addAttribute("matches", matches);
 		model.addAttribute("matchday", matchday);
+		return "adminmatches";
+	}
+
+	// show form
+	@GetMapping("/adminmatches/input/{id}") // {id} is called a template variable
+	public String showUserInputAdmin(@PathVariable Long id, Model model) {
+		MatchDto matchDto = matchService.getMatchDtoById(id);
+		String homeOwner = teamService.getOwnerNameByTeamName(matchDto.getHomeTeam().replace(" ", "_"));
+		String awayOwner = teamService.getOwnerNameByTeamName(matchDto.getAwayTeam().replace(" ", "_"));
+		int homePointsH = matchService.getMatchById(id).getResult().getHomePointsH();
+		int awayPointsH = matchService.getMatchById(id).getResult().getAwayPointsH();
+		int homePointsA = matchService.getMatchById(id).getResult().getHomePointsA();
+		int awayPointsA = matchService.getMatchById(id).getResult().getAwayPointsA();
+
+		model.addAttribute("match", matchDto);
+		model.addAttribute("homeOwner", homeOwner);
+		model.addAttribute("awayOwner", awayOwner);
+		model.addAttribute("homePointsH", homePointsH);
+		model.addAttribute("awayPointsH", awayPointsH);
+		model.addAttribute("homePointsA", homePointsA);
+		model.addAttribute("awayPointsA", awayPointsA);
+
+		return "adminmatchview";
+	}
+
+	// handler method to handle activation request
+	@GetMapping("/adminmatches/input/reset/{id}")
+	public String setActive(@PathVariable Long id) {
+		matchService.resetResult(id);
 		return "adminmatches";
 	}
 

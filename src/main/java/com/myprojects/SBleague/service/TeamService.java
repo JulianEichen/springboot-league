@@ -29,4 +29,5 @@ public interface TeamService {
 
 	void updateStatistics(MatchDto matchDto);
 	
+	String getOwnerNameByTeamName(String teamName);
 }

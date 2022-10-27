@@ -77,5 +77,4 @@ public class UserServiceImpl implements UserService {
 		role.setName(roleName);
 		return roleRepository.save(role);
 	}
-
 }

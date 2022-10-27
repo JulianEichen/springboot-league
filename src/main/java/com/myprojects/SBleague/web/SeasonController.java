@@ -75,7 +75,7 @@ public class SeasonController {
 		return "redirect:seasonregistration?success";
 	}
 
-	// handler method to handle delete request
+	// handler method to handle activation request
 	@GetMapping("/seasontable/{id}")
 	public String setActive(@PathVariable Long id) {
 		seasonService.setActive(id);
