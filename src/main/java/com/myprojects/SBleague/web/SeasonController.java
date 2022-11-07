@@ -84,5 +84,5 @@ public class SeasonController {
 	}
 	
 	
-	// TODO: delte Season
+	// TODO: delete Season
 }

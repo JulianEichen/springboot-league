@@ -76,14 +76,4 @@ public class AuthController {
 		return "redirect:/userregistration?success";
 	}
 	
-	// TODO: delte
-	
-	/*
-	@GetMapping("/userteams")
-	public String showUserTeams(Model model,Principal principal) {
-		Long currentUserId = userService.findUserByEmail(principal.getName()).getId();
-		model.addAttribute("teams",teamService.getAllTeamDtoByOwnerId(currentUserId));
-		return "userteams";
-	}
-	*/
 }

@@ -82,19 +82,16 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public Team getTeamById(String Id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Team updateTeam(Team team) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void deleteTeamById(String Id) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
