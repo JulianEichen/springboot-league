@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.myprojects.SBleague.service.TeamService;
 
+/*
+ * TODO: delete
 @Controller
 @RequestMapping("/maintable")
+*/
 public class MainTableController {
 	
 	private TeamService teamService;
@@ -19,7 +22,7 @@ public class MainTableController {
 	}
 	
 	// handler method to handle list teams request and return mode and view
-	@GetMapping()
+	@GetMapping("/season/maintable")
 	public String listTeams(Model model) {
 		model.addAttribute("teams", teamService.getAllTeamDtoOrdered());
 		return "maintable"; // template for view teams is in resources/templates

@@ -21,11 +21,9 @@ import com.myprojects.SBleague.usermanagement.web.dto.UserDto;
 public class AuthController {
 
 	private UserService userService;
-	private TeamService teamService;
 
 	public AuthController(UserService userService, TeamService teamService) {
 		this.userService = userService;
-		this.teamService = teamService;
 	}
 	
 	// handler for login
@@ -78,10 +76,14 @@ public class AuthController {
 		return "redirect:/userregistration?success";
 	}
 	
+	// TODO: delte
+	
+	/*
 	@GetMapping("/userteams")
 	public String showUserTeams(Model model,Principal principal) {
 		Long currentUserId = userService.findUserByEmail(principal.getName()).getId();
 		model.addAttribute("teams",teamService.getAllTeamDtoByOwnerId(currentUserId));
 		return "userteams";
 	}
+	*/
 }

@@ -16,7 +16,7 @@
 				<h1>Your Input</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/usermatches/{id} (id=${match.id})}"
+				<form th:action="@{/season/usermatches/{id} (id=${match.id})}"
 					method="post" th:object="${match}">
 
 					<div class="form-group">
@@ -63,7 +63,7 @@
 
 				</form>
 
-				<a th:href="@{/usermatches}" class="btn btn-primary">Ok!</a>
+				<a th:href="@{/season/usermatches}" class="btn btn-primary">Ok!</a>
 			</div>
 		</div>
 	</div>

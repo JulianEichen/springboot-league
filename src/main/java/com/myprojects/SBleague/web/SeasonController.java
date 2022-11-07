@@ -22,6 +22,7 @@ public class SeasonController {
 		super();
 		this.seasonService = seasonService;
 	}
+	
 
 	// input data from form will be stored in team then indirectly stored in
 	// MatchDto-Object
@@ -31,7 +32,7 @@ public class SeasonController {
 	}
 
 	// Active Season for users
-	@GetMapping("/seasonrules")
+	@GetMapping("/season/seasonrules")
 	public String showActiveSeason(Model model) {
 
 		SeasonDto activeSeason = new SeasonDto("TBA", 0, 0, 0, 0, 0);
@@ -51,19 +52,19 @@ public class SeasonController {
 	}
 
 	// Season table
-	@GetMapping("/seasontable")
+	@GetMapping("/admin/seasontable")
 	public String listSeasons(Model model) {
 		model.addAttribute("seasons", seasonService.getAllSeasons());
 		return "seasontable";
 	}
 
 	// Registration form
-	@GetMapping("/seasonregistration")
+	@GetMapping("/admin/seasonregistration")
 	public String showRegistrationForm() {
 		return "seasonregistration";
 	}
 
-	@PostMapping("/seasonregistration")
+	@PostMapping("/admin/seasonregistration")
 	public String registerNewSeason(@ModelAttribute("season") SeasonDto seasonDto) {
 		List<Season> seasons = seasonService.getAllSeasons();
 		if (seasons.isEmpty()) {
@@ -72,14 +73,16 @@ public class SeasonController {
 			seasonDto.setActive(false);
 		}
 		seasonService.saveSeason(seasonDto);
-		return "redirect:seasonregistration?success";
+		return "redirect:/admin/seasonregistration?success";
 	}
 
 	// handler method to handle activation request
-	@GetMapping("/seasontable/{id}")
+	@GetMapping("/admin/seasontable/{id}")
 	public String setActive(@PathVariable Long id) {
 		seasonService.setActive(id);
-		return "redirect:/seasontable";
+		return "redirect:/admin/seasontable";
 	}
-
+	
+	
+	// TODO: delte Season
 }

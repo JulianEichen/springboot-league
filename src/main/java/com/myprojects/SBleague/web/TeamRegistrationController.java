@@ -16,8 +16,12 @@ import com.myprojects.SBleague.service.TeamService;
 import com.myprojects.SBleague.usermanagement.service.UserService;
 import com.myprojects.SBleague.web.dto.TeamDto;
 
+
+// TODO: delete
+/*
 @Controller
-@RequestMapping("/teamregistration")
+@RequestMapping("/user/teamregistration")
+*/
 public class TeamRegistrationController {
 
 	// injection
@@ -52,7 +56,7 @@ public class TeamRegistrationController {
 			return "teamregistration";
 		}
 		teamService.saveTeam(teamDto,principal.getName());
-		return "redirect:/teamregistration?success";
+		return "redirect:teamregistration?success";
 	}
 
 }

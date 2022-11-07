@@ -12,7 +12,7 @@
 			<h1>The Matchdays</h1>
 		</div>
 
-		<form th:action="@{/matchdaytable}" method="get">
+		<form th:action="@{/season/matchdaytable}" method="get">
 			<label th:text="Matchday"> </label> <select
 				onchange="this.form.submit()" th:name="matchday">
 				<option th:value=-1>All Matches</option>

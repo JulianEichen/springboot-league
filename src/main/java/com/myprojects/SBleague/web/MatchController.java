@@ -54,7 +54,7 @@ public class MatchController {
 	}
 
 	// Show forms
-	@GetMapping("/matchregistration")
+	@GetMapping("/admin/matchregistration")
 	public String showRegistrationForm() {
 		return "matchregistration";
 	}
@@ -70,17 +70,17 @@ public class MatchController {
 	}
 
 	// registration controlling
-	@PostMapping("/matchregistration")
+	@PostMapping("/admin/matchregistration")
 	public String registerNewMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
 		if (result.hasErrors()) {
-			return "matchregistration";
+			return "redirect:/admin/matchregistration";
 		}
 		matchService.saveMatch(matchDto);
-		return "redirect:matchregistration?success";
+		return "redirect:/admin/matchregistration?success";
 	}
 
 	// show matchday table with select day/all functionality
-	@GetMapping("matchdaytable")
+	@GetMapping("/season/matchdaytable")
 	public String listMatchdays(@RequestParam(value = "matchday", required = false) Integer matchday, Model model) {
 
 		if (matchday != null && matchday > 0) {
@@ -98,7 +98,7 @@ public class MatchController {
 	}
 
 	// handler method for the user specific match table
-	@GetMapping("usermatches")
+	@GetMapping("/season/usermatches")
 	public String listUserMatches(@RequestParam(value = "matchday", required = false) Integer matchday, Model model,
 			Principal principal) {
 
@@ -142,14 +142,14 @@ public class MatchController {
 	}
 
 	// show form
-	@GetMapping("/usermatches/edit/{id}") // {id} is called a template variable
+	@GetMapping("/season/usermatches/edit/{id}") // {id} is called a template variable
 	public String editResultForm(@PathVariable Long id, Model model) {
 		model.addAttribute("match", matchService.getMatchDtoById(id));
 		return "usereditresult";
 	}
 
-	// show form
-	@GetMapping("/usermatches/edited/{id}") // {id} is called a template variable
+	// show former input
+	@GetMapping("/season/usermatches/edited/{id}") // {id} is called a template variable
 	public String fullEditResultForm(@PathVariable Long id, Model model, Principal principal) {
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
 		MatchDto matchDto = matchService.getDtoWithUserInput(id, userId);
@@ -158,14 +158,14 @@ public class MatchController {
 		return "userfullresult";
 	}
 
-	@PostMapping("/usermatches/{id}")
+	@PostMapping("/season/usermatches/{id}")
 	public String editResult(@PathVariable Long id, @ModelAttribute("match") MatchDto match, Principal principal) {
 
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
 
 		matchService.updateMatchUser(match, userId);
 
-		return "redirect:/usermatches";
+		return "redirect:/season/usermatches";
 	}
 
 	// match deletion for admins
@@ -203,7 +203,7 @@ public class MatchController {
 	}
 
 	// show matchday table with select day/all functionality
-	@GetMapping("adminmatches")
+	@GetMapping("/admin/adminmatches")
 	public String listMatchdaysAdmin(@RequestParam(value = "matchday", required = false) Integer matchday,
 			Model model) {
 
@@ -231,7 +231,7 @@ public class MatchController {
 	}
 
 	// show form
-	@GetMapping("/adminmatches/input/{id}") // {id} is called a template variable
+	@GetMapping("/admin/adminmatches/input/{id}") // {id} is called a template variable
 	public String showUserInputAdmin(@PathVariable Long id, Model model) {
 		MatchDto matchDto = matchService.getMatchDtoById(id);
 		String homeOwner = teamService.getOwnerNameByTeamName(matchDto.getHomeTeam().replace(" ", "_"));
@@ -253,10 +253,10 @@ public class MatchController {
 	}
 
 	// handler method to handle activation request
-	@GetMapping("/adminmatches/input/reset/{id}")
+	@GetMapping("/admin/adminmatches/input/reset/{id}")
 	public String setActive(@PathVariable Long id) {
 		matchService.resetResult(id);
-		return "adminmatches";
+		return "redirect:/admin/adminmatches/input/{id}?success";
 	}
 
 }
