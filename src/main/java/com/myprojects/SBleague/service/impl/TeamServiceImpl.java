@@ -76,12 +76,14 @@ public class TeamServiceImpl implements TeamService {
 	public Team saveTeam(TeamDto teamDto, String userEmail) {
 		String teamName = teamDto.getName().replace(" ", "_");
 		User owner = userService.findUserByEmail(userEmail);
-		Team team = new Team(teamName, owner, 0, 0, 0, 0, 0);
+		Team team = new Team();
+		team.setName(teamName);
+		team.setOwner(owner);
 		return teamRepository.save(team);
 	}
 
 	@Override
-	public Team getTeamById(String Id) {
+	public Team getTeamById(Long Id) {
 		return null;
 	}
 
@@ -91,7 +93,7 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public void deleteTeamById(String Id) {
+	public void deleteTeamById(Long Id) {
 	}
 
 	@Override
@@ -100,8 +102,8 @@ public class TeamServiceImpl implements TeamService {
 		String homeTeamName = matchDto.getHomeTeam().replace(" ", "_");
 		String awayTeamName = matchDto.getAwayTeam().replace(" ", "_");
 
-		Team homeTeam = teamRepository.findById(homeTeamName).get();
-		Team awayTeam = teamRepository.findById(awayTeamName).get();
+		Team homeTeam = teamRepository.findByName(homeTeamName);
+		Team awayTeam = teamRepository.findByName(awayTeamName);
 
 		// home win
 		if (matchDto.getHomePoints() > matchDto.getAwayPoints()) {
@@ -141,8 +143,8 @@ public class TeamServiceImpl implements TeamService {
 		String homeTeamName = matchDto.getHomeTeam().replace(" ", "_");
 		String awayTeamName = matchDto.getAwayTeam().replace(" ", "_");
 
-		Team homeTeam = teamRepository.findById(homeTeamName).get();
-		Team awayTeam = teamRepository.findById(awayTeamName).get();
+		Team homeTeam = teamRepository.findByName(homeTeamName);
+		Team awayTeam = teamRepository.findByName(awayTeamName);
 
 		if (matchDto.getHomePoints() > matchDto.getAwayPoints()) {
 			// meta statistics
@@ -183,12 +185,30 @@ public class TeamServiceImpl implements TeamService {
 	private TeamDto teamToDto(Team team) {
 		TeamDto dto = new TeamDto(team.getName().replace("_", " "), team.getOwner().getName().replace("_", " "),
 				team.getMatches(), team.getWins(), team.getDraws(), team.getLosses(), team.getPoints());
+		
+		dto.setId(team.getId());
+		dto.setEnrolled(team.isEnrolled());
+		
 		return dto;
 	}
 
 	@Override
 	public String getOwnerNameByTeamName(String teamName) {
 		return teamRepository.findByName(teamName).getOwner().getName();
+	}
+
+	@Override
+	public void resetTeamById(Long id) {
+		Team team = teamRepository.findById(id).get();
+		team.reset();
+		teamRepository.save(team);
+	}
+
+	@Override
+	public void enrollmentById(Long id, boolean enrolled) {
+		Team team = teamRepository.findById(id).get();
+		team.setEnrolled(enrolled);
+		teamRepository.save(team);
 	}
 
 }

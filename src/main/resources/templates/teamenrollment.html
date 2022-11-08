@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="headerfiles.html :: headerfiles">
+</head>
+<body>
+	<!-- Import navbar fragment  -->
+	<div th:replace="navbar.html :: navbar"></div>
+
+
+	<div class="container">
+		<div class="row">
+			<h1>The Table</h1>
+		</div>
+
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>Team</th>
+					<th>Owner</th>
+					<th>Matches</th>
+					<th>Wins</th>
+					<th>Draws</th>
+					<th>Losses</th>
+					<th>Points</th>
+					<th>Enrolled</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="team: ${teams}">
+					<td th:text="${team.name}"></td>
+					<td th:text="${team.owner}"></td>
+					<td th:text="${team.matches}"></td>
+					<td th:text="${team.wins}"></td>
+					<td th:text="${team.draws}"></td>
+					<td th:text="${team.losses}"></td>
+					<td th:text="${team.points}"></td>
+					<td th:text="${team.enrolled}"></td>
+					<td><a th:href="@{/admin/teamenrollment/reset/{id}(id=${team.id})}"
+						class="btn btn-danger">Reset</a> <a
+						th:href="@{/admin/teamenrollment/enroll/{id}(id=${team.id})}"
+						class="btn btn-danger">Enroll</a>
+						<a th:href="@{/admin/teamenrollment/unenroll/{id}(id=${team.id})}"
+						class="btn btn-danger">Unenroll</a></td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div th:replace="footerfiles.html :: footerfiles"></div>
+
+</body>
+</html>

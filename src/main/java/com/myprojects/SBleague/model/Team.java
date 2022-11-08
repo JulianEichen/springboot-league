@@ -2,6 +2,8 @@ package com.myprojects.SBleague.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,10 @@ import com.myprojects.SBleague.usermanagement.model.User;
 public class Team {
 	
 	@Id
+	@Column(name = "team_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	@Column(name="name",unique=true)
 	private String name;
 	
@@ -36,6 +42,9 @@ public class Team {
 	
 	@Column(name="points")
 	private int points = 0;
+	
+	@Column(name="enrollment")
+	private boolean enrolled = false;
 
 	// default const
 	public Team() {}
@@ -51,7 +60,14 @@ public class Team {
 		this.losses = losses;
 		this.points = points;
 	}
-
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -94,7 +110,13 @@ public class Team {
 	public void setPoints(int points) {
 		this.points = points;
 	}
-	
+	public boolean isEnrolled() {
+		return enrolled;
+	}
+	public void setEnrolled(boolean enrolled) {
+		this.enrolled = enrolled;
+	}
+
 	public String showTeamName() {
 		return name.replace("_", " ");
 	}
@@ -103,4 +125,11 @@ public class Team {
 		return this.owner.getName().replace("_", " ");
 	}
 	
+	public void reset() {
+		this.matches = 0;
+		this.wins = 0;
+		this.draws = 0;
+		this.losses = 0;
+		this.points = 0;
+	}
 }

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.myprojects.SBleague.service.TeamService;
@@ -33,19 +34,22 @@ public class TeamController {
 		return new TeamDto();
 	}
 
-	// handler method to handle list teams request and return mode and view
+	// Shows all teams
+	// TODO: only teams enrolled in the active season
 	@GetMapping("/season/maintable")
 	public String listTeams(Model model) {
 		model.addAttribute("teams", teamService.getAllTeamDtoOrdered());
 		return "maintable"; // template for view teams is in resources/templates
 	}
-
+	
+	// show form for team registration for users
 	@GetMapping("/user/teamregistration")
 	public String showRegistrationForm(Model model, Principal principal) {
 		model.addAttribute("currentuser", userService.findUserByEmail(principal.getName()));
 		return "teamregistration";
 	}
 
+	// handle input for team registration
 	@PostMapping("/user/teamregistration")
 	public String registerNewTeam(@Valid @ModelAttribute("team") TeamDto teamDto, Principal principal,
 			BindingResult bindingResult) {
@@ -57,10 +61,39 @@ public class TeamController {
 		return "redirect:/user/teamregistration?success";
 	}
 
+	// show all teams of current user
 	@GetMapping("/user/userteams")
 	public String showUserTeams(Model model, Principal principal) {
 		Long currentUserId = userService.findUserByEmail(principal.getName()).getId();
 		model.addAttribute("teams", teamService.getAllTeamDtoByOwnerId(currentUserId));
 		return "userteams";
+	}
+	
+	/* Admin actions
+	 * TODO: delete team
+	 *	TODO: enroll team into season
+	 */
+	@GetMapping("/admin/teamenrollment")
+	public String showAllTeams(Model model) {
+		model.addAttribute("teams", teamService.getAllTeamDtoOrdered());
+		return "teamenrollment"; // template for view teams is in resources/templates
+	}
+	
+	@GetMapping("/admin/teamenrollment/reset/{id}")
+	public String resetTeamById(@PathVariable Long id){
+		teamService.resetTeamById(id);
+		return "redirect:/admin/teamenrollment";
+	}
+	
+	@GetMapping("/admin/teamenrollment/enroll/{id}")
+	public String enrollTeamById(@PathVariable Long id) {
+		teamService.enrollmentById(id, true);
+		return "redirect:/admin/teamenrollment";
+	}
+	
+	@GetMapping("/admin/teamenrollment/unenroll/{id}")
+	public String unenrollTeamById(@PathVariable Long id) {
+		teamService.enrollmentById(id, false);
+		return "redirect:/admin/teamenrollment";
 	}
 }

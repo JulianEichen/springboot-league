@@ -15,7 +15,7 @@ public class UniqueTeamValidator implements ConstraintValidator<UniqueTeam, Stri
 	@Override
 	public boolean isValid(String teamName, ConstraintValidatorContext context) {
 		teamName = teamName.replace(' ', '_');
-		return !teamRepository.existsById(teamName);
+		return !teamRepository.existsByName(teamName);
 	}
 
 }

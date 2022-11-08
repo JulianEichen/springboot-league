@@ -7,6 +7,8 @@ import com.myprojects.SBleague.annotations.UniqueTeam;
 
 public class TeamDto {
 	
+	private Long id;
+	
 	@UniqueTeam
 	@NotNull
 	@Size(min=3, max=50)
@@ -21,6 +23,8 @@ public class TeamDto {
 	private int draws = 0;
 	private int losses = 0;
 	private int points = 0;
+	
+	private boolean enrolled = false;
 
 	
 	// default const
@@ -45,6 +49,12 @@ public class TeamDto {
 		this.points = points;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -86,6 +96,12 @@ public class TeamDto {
 	}
 	public void setPoints(int points) {
 		this.points = points;
+	}
+	public boolean isEnrolled() {
+		return enrolled;
+	}
+	public void setEnrolled(boolean enrolled) {
+		this.enrolled = enrolled;
 	}
 	
 	

@@ -19,11 +19,14 @@ public interface TeamService {
 	
 	Team saveTeam(TeamDto teamDto,String userEmail);
 	
-	Team getTeamById(String Id);
+	Team getTeamById(Long Id);
 	
 	Team updateTeam(Team team);
 	
-	void deleteTeamById(String Id);
+	void resetTeamById(Long id);
+	void enrollmentById(Long id, boolean enrolled);
+	
+	void deleteTeamById(Long Id);
 	
 	void deleteStatistics(MatchDto matchDto);
 

@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.myprojects.SBleague.model.Team;
 
-public interface TeamRepository extends JpaRepository<Team, String>{
+public interface TeamRepository extends JpaRepository<Team, Long>{
 	
 	Team findByName(String name);
 	List<Team> findAllByOwnerId(Long ownerId);
+	boolean existsByName(String name);
 }
