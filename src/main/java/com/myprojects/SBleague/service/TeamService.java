@@ -14,6 +14,8 @@ public interface TeamService {
 	List<Team> getAllTeamsOrdered();
 	List<TeamDto>getAllTeamDtoOrdered();
 	
+	List<TeamDto>getAllActiveTeamDtoOrdered();
+	
 	List<Team> getAllTeamsByOwnerId(Long ownerId);
 	List<TeamDto>getAllTeamDtoByOwnerId(Long ownerId);
 	

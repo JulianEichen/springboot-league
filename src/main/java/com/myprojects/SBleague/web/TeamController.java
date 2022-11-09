@@ -38,7 +38,7 @@ public class TeamController {
 	// TODO: only teams enrolled in the active season
 	@GetMapping("/season/maintable")
 	public String listTeams(Model model) {
-		model.addAttribute("teams", teamService.getAllTeamDtoOrdered());
+		model.addAttribute("teams", teamService.getAllActiveTeamDtoOrdered());
 		return "maintable"; // template for view teams is in resources/templates
 	}
 	

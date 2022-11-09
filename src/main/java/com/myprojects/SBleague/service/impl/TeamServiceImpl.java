@@ -58,6 +58,16 @@ public class TeamServiceImpl implements TeamService {
 		List<TeamDto> dtoList = teams.stream().map(team -> teamToDto(team)).collect(Collectors.toList());
 		return dtoList;
 	}
+	
+	@Override
+	public List<TeamDto> getAllActiveTeamDtoOrdered() {
+		TeamChecker checker = new TeamChecker();
+		List<Team> teams = teamRepository.findAllByEnrolled(true);
+		teams.sort(checker);
+		
+		List<TeamDto> dtoList = teams.stream().map(team -> teamToDto(team)).collect(Collectors.toList());
+		return dtoList;
+	}
 
 	@Override
 	public List<Team> getAllTeamsByOwnerId(Long ownerId) {
