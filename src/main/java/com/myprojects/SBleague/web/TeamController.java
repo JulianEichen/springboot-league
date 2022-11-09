@@ -34,13 +34,14 @@ public class TeamController {
 		return new TeamDto();
 	}
 
-	// Shows all teams
-	// TODO: only teams enrolled in the active season
+	// Shows all teams enrolled into the active season
 	@GetMapping("/season/maintable")
 	public String listTeams(Model model) {
 		model.addAttribute("teams", teamService.getAllActiveTeamDtoOrdered());
 		return "maintable"; // template for view teams is in resources/templates
 	}
+	
+	// ----*----*---- User actions ----*----*----
 	
 	// show form for team registration for users
 	@GetMapping("/user/teamregistration")
@@ -69,9 +70,9 @@ public class TeamController {
 		return "userteams";
 	}
 	
-	/* Admin actions
+	/* ----*----*---- Admin actions ----*----*----
 	 * TODO: delete team
-	 *	TODO: enroll team into season
+	 * TODO: order by name
 	 */
 	@GetMapping("/admin/teamenrollment")
 	public String showAllTeams(Model model) {

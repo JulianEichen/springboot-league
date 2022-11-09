@@ -13,8 +13,8 @@
 			<h1>The Matches</h1>
 		</div>
 
-		<form >
-			
+		<form>
+
 
 			<table class="table table-striped table-bordered">
 				<thead class="table-dark">
@@ -43,11 +43,10 @@
 						<td><span th:if="${match.resultIsValid}">Valid</span> <span
 							th:if="${match.resultHasInputConflict}">Input Conflict</span></td>
 
-						<td>
-							<span > <a
+						<td><span> <a
 								th:href="@{/admin/adminmatches/input/{id}(id=${match.id})}"
-								class="btn btn-primary">View Input</a></span>
-						</td>
+								class="btn btn-primary">Details</a></span>
+							</td>
 					</tr>
 				</tbody>
 			</table>

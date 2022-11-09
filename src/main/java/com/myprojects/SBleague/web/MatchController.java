@@ -201,8 +201,10 @@ public class MatchController {
 
 		return "redirect:matchupdate?success";
 	}
-
-	// show matchday table with select day/all functionality
+	
+	// ----*----*---- Admin actions ----*----*----
+	
+	// show all matches
 	@GetMapping("/admin/adminmatches")
 	public String listMatchdaysAdmin(@RequestParam(value = "matchday", required = false) Integer matchday,
 			Model model) {
@@ -230,7 +232,7 @@ public class MatchController {
 		return "adminmatches";
 	}
 
-	// show form
+	// show user input of a specific match
 	@GetMapping("/admin/adminmatches/input/{id}") // {id} is called a template variable
 	public String showUserInputAdmin(@PathVariable Long id, Model model) {
 		MatchDto matchDto = matchService.getMatchDtoById(id);
