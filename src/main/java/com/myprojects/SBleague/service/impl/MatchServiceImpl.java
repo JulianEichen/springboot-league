@@ -239,6 +239,9 @@ public class MatchServiceImpl implements MatchService {
 	@Override
 	public void resetResult(Long id) {
 		Match match = matchRepository.findById(id);
+		if (!match.getResult().isValid()) {
+			return;
+		}
 		//Result result = match.getResult();
 		// result.reset();
 		teamService.deleteStatistics(this.matchToDto(match));
@@ -252,6 +255,11 @@ public class MatchServiceImpl implements MatchService {
 		return new MatchDto(match.getId(), match.getMatchday(), match.getHomeTeam().replace("_", " "),
 				match.getAwayTeam().replace("_", " "), match.getHomePoints(), match.getAwayPoints(),
 				match.getResult().getValue());
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		matchRepository.delete(matchRepository.findById(id));
 	}
 
 }

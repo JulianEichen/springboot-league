@@ -21,6 +21,7 @@ public interface MatchService {
 	Match updateMatchUser(MatchDto matchDto, Long userId);
 	
 	void deleteMatch(MatchDto matchDto);
+	void deleteById(Long id);
 	
 	void resetResult(Long id);
 	

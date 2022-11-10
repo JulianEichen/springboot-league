@@ -53,30 +53,9 @@ public class MatchController {
 		return new MatchDto();
 	}
 
-	// Show forms
-	@GetMapping("/admin/matchregistration")
-	public String showRegistrationForm() {
-		return "matchregistration";
-	}
-
 	@GetMapping("/matchupdate")
 	public String showUpdateForm() {
 		return "matchupdate";
-	}
-
-	@GetMapping("/matchdeletion")
-	public String showDeleteForm() {
-		return "matchdeletion";
-	}
-
-	// registration controlling
-	@PostMapping("/admin/matchregistration")
-	public String registerNewMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
-		if (result.hasErrors()) {
-			return "redirect:/admin/matchregistration";
-		}
-		matchService.saveMatch(matchDto);
-		return "redirect:/admin/matchregistration?success";
 	}
 
 	// show matchday table with select day/all functionality
@@ -185,6 +164,22 @@ public class MatchController {
 	}
 
 	// ----*----*---- Admin actions ----*----*----
+	
+	// match registration form
+	@GetMapping("/admin/matchregistration")
+	public String showRegistrationForm() {
+		return "matchregistration";
+	}
+
+	// registration controlling
+	@PostMapping("/admin/matchregistration")
+	public String registerNewMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
+		if (result.hasErrors()) {
+			return "redirect:/admin/matchregistration";
+		}
+		matchService.saveMatch(matchDto);
+		return "redirect:/admin/matchregistration?success";
+	}
 
 	// show all matches
 	@GetMapping("/admin/adminmatches")
@@ -244,21 +239,13 @@ public class MatchController {
 	}
 
 	// match deletion for admins
-	@PostMapping("/admin/adminmatches/delete/{id}")
-	public String deleteMatch(@PathVariable Long id, @Valid @ModelAttribute("match") MatchDto matchDto,
-			BindingResult result) {
-		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
-		if (!err.isEmpty()) {
-			ObjectError error = new ObjectError("globalError", err);
-			result.addError(error);
-		}
+	@GetMapping("/admin/adminmatches/input/delete/{id}")
+	public String deleteMatch(@PathVariable Long id) {
 
-		if (result.hasErrors()) {
-			return "matchdeletion";
-		}
+		matchService.resetResult(id);
+		matchService.deleteById(id);
 
-		matchService.deleteMatch(matchDto);
-		return "redirect:matchdeletion?success";
+		return "redirect:/admin/adminmatches";
 	}
 
 }
