@@ -11,7 +11,7 @@
 			<div class="col-md-6 col-md-offset-3">
 				<!-- success message -->
 				<div th:if="${param.success}">
-					<div class="alert alert-info">You've successfully updated a
+					<div class="alert alert-info">You've successfully updated the
 						match!</div>
 				</div>
 
@@ -50,7 +50,8 @@
 							Points</label> <input id="awayPoints" class="form-control"
 							th:field="*{awayPoints}" required>
 					</div>
-
+					
+					
 					<div th:if="${#fields.hasAnyErrors()}">
 						<ul>
 							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />

@@ -130,5 +130,4 @@ public class MatchDto {
 		this.resultHasInputConflict = resultHasInputConflict;
 	}
 
-	
 }

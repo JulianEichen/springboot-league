@@ -88,42 +88,6 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
-	public Match updateMatch(MatchDto matchDto) {
-		Long matchId = matchDto.getId();
-
-		// get existing match
-		Match existingMatch = matchRepository.findById(matchId);
-
-		// if match has been played, delete old results
-		if (existingMatch.getResult().getValue() >= 0) {
-			// delete results of existing match
-			MatchDto existingMatchDto = new MatchDto(existingMatch.getId(), existingMatch.getMatchday(),
-					existingMatch.getHomeTeam(), existingMatch.getAwayTeam(), existingMatch.getHomePoints(),
-					existingMatch.getAwayPoints());
-			teamService.deleteStatistics(existingMatchDto);
-		}
-
-		// write new statistics
-		if (matchDto.getHomePoints() > matchDto.getAwayPoints()) {
-			existingMatch.getResult().setValue(2);
-		} else if (matchDto.getHomePoints() > matchDto.getAwayPoints()) {
-			existingMatch.getResult().setValue(0);
-		} else if (matchDto.getHomePoints() == matchDto.getAwayPoints()) {
-			existingMatch.getResult().setValue(1);
-		}
-		teamService.updateStatistics(matchDto);
-
-		// delete old match
-		matchRepository.deleteById(matchId);
-
-		// update values
-		existingMatch.setHomePoints(matchDto.getHomePoints());
-		existingMatch.setAwayPoints(matchDto.getAwayPoints());
-
-		return matchRepository.save(existingMatch);
-	}
-
-	@Override
 	public MatchDto getMatchDtoById(Long id) {
 		Match match = matchRepository.findById(id);
 		return this.matchToDto(match);
@@ -140,7 +104,7 @@ public class MatchServiceImpl implements MatchService {
 		if (existingResult.isValid()) {
 			return existingMatch;
 		}
-		
+
 		// identify which team is owned by the user
 		List<String> userTeams = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.getName())
 				.collect(Collectors.toList());
@@ -176,10 +140,38 @@ public class MatchServiceImpl implements MatchService {
 
 		existingMatch.setResult(existingResult);
 		existingMatch.updatePoints();
-		
+
 		matchRepository.save(existingMatch);
 
 		return null;
+	}
+
+	@Override
+	public Match updateMatchAdmin(MatchDto matchDto) {
+		Long matchId = matchDto.getId();
+		// get existing match
+		Match existingMatch = matchRepository.findById(matchId);
+		Result existingResult = existingMatch.getResult();
+
+		// reverse old resulting league stats
+		if (existingResult.isValid()) { // if result is valid, it lead to modified stas
+			teamService.deleteStatistics(matchDto);
+		}
+		
+		// update the result
+		existingResult.setAwayPointsH(matchDto.getAwayPoints());
+		existingResult.setHomePointsH(matchDto.getHomePoints());
+		existingResult.setAwayPointsA(matchDto.getAwayPoints());
+		existingResult.setHomePointsA(matchDto.getAwayPoints());
+		// update result value
+		existingResult.updateValue();
+		// update league stats
+		existingMatch.setResult(existingResult);
+		existingMatch.updatePoints();
+		
+		teamService.updateStatistics(matchDto);
+		
+		return matchRepository.save(existingMatch);
 	}
 
 	@Override
@@ -214,11 +206,11 @@ public class MatchServiceImpl implements MatchService {
 				.collect(Collectors.toList());
 		Match match = matchRepository.findById(matchId);
 		MatchDto matchDto = this.matchToDto(match);
-		
+
 		// set default values
 		matchDto.setAwayPoints(-1);
 		matchDto.setHomePoints(-1);
-		
+
 		if (userTeams.contains(match.showHomeTeamName())) { // user owns home team
 			if (match.getResult().getAwayPointsH() >= 0 || match.getResult().getHomePointsH() >= 0) {
 				matchDto.setAwayPoints(match.getResult().getAwayPointsH());
@@ -242,15 +234,11 @@ public class MatchServiceImpl implements MatchService {
 		if (!match.getResult().isValid()) {
 			return;
 		}
-		//Result result = match.getResult();
-		// result.reset();
 		teamService.deleteStatistics(this.matchToDto(match));
 		match.reset();
-		// teamService.updateStatistics(this.matchToDto(match));
-		//System.out.println(result.getValue());
 		matchRepository.save(match);
 	}
-	
+
 	private MatchDto matchToDto(Match match) {
 		return new MatchDto(match.getId(), match.getMatchday(), match.getHomeTeam().replace("_", " "),
 				match.getAwayTeam().replace("_", " "), match.getHomePoints(), match.getAwayPoints(),

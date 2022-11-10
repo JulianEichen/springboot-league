@@ -53,11 +53,6 @@ public class MatchController {
 		return new MatchDto();
 	}
 
-	@GetMapping("/matchupdate")
-	public String showUpdateForm() {
-		return "matchupdate";
-	}
-
 	// show matchday table with select day/all functionality
 	@GetMapping("/season/matchdaytable")
 	public String listMatchdays(@RequestParam(value = "matchday", required = false) Integer matchday, Model model) {
@@ -147,24 +142,8 @@ public class MatchController {
 		return "redirect:/season/usermatches";
 	}
 
-	// match update method for admins
-	@PostMapping("/matchupdate")
-	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
-		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
-		if (!err.isEmpty()) {
-			ObjectError error = new ObjectError("globalError", err);
-			result.addError(error);
-		}
-
-		if (result.hasErrors()) {
-			return "matchupdate";
-		}
-
-		return "redirect:matchupdate?success";
-	}
-
 	// ----*----*---- Admin actions ----*----*----
-	
+
 	// match registration form
 	@GetMapping("/admin/matchregistration")
 	public String showRegistrationForm() {
@@ -246,6 +225,27 @@ public class MatchController {
 		matchService.deleteById(id);
 
 		return "redirect:/admin/adminmatches";
+	}
+
+	@GetMapping("/admin/adminmatches/input/update/{id}")
+	public String showUpdateForm(@PathVariable Long id, Model model) {
+		return "matchupdate";
+	}
+
+	// match update method for admins
+	@PostMapping("/matchupdate")
+	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
+		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
+		if (!err.isEmpty()) {
+			ObjectError error = new ObjectError("globalError", err);
+			result.addError(error);
+		}
+
+		if (result.hasErrors()) {
+			return "matchupdate";
+		}
+		matchService.updateMatchAdmin(matchDto);
+		return "redirect:matchupdate?success";
 	}
 
 }
