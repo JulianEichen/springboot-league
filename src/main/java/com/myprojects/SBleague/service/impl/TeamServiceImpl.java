@@ -106,9 +106,10 @@ public class TeamServiceImpl implements TeamService {
 	public void deleteTeamById(Long Id) {
 	}
 
+	// delete league statistics that resulted from a match of corresponding teams
 	@Override
 	public void deleteStatistics(MatchDto matchDto) {
-
+		System.out.println("delete stats");
 		String homeTeamName = matchDto.getHomeTeam().replace(" ", "_");
 		String awayTeamName = matchDto.getAwayTeam().replace(" ", "_");
 
@@ -117,6 +118,9 @@ public class TeamServiceImpl implements TeamService {
 
 		// home win
 		if (matchDto.getHomePoints() > matchDto.getAwayPoints()) {
+			System.out.println("home win");
+			homeTeam.setMatches(homeTeam.getMatches() - 1);
+			awayTeam.setMatches(awayTeam.getMatches() - 1);
 			// result statistics
 			homeTeam.setWins(homeTeam.getWins() - 1);
 			awayTeam.setLosses(awayTeam.getLosses() - 1);
@@ -125,6 +129,9 @@ public class TeamServiceImpl implements TeamService {
 			awayTeam.setPoints(awayTeam.getPoints() - seasonService.getActivePointsPerLoss());
 			// home loss
 		} else if (matchDto.getHomePoints() < matchDto.getAwayPoints()) {
+			System.out.println("home loss");
+			homeTeam.setMatches(homeTeam.getMatches() - 1);
+			awayTeam.setMatches(awayTeam.getMatches() - 1);
 			// result statistics
 			homeTeam.setLosses(homeTeam.getLosses() - 1);
 			awayTeam.setWins(awayTeam.getWins() - 1);
@@ -133,6 +140,9 @@ public class TeamServiceImpl implements TeamService {
 			awayTeam.setPoints(awayTeam.getPoints() - seasonService.getActivePointsPerWin());
 			// draw
 		} else if (matchDto.getHomePoints() == matchDto.getAwayPoints()) {
+			System.out.println("draw");
+			homeTeam.setMatches(homeTeam.getMatches() - 1);
+			awayTeam.setMatches(awayTeam.getMatches() - 1);
 			// result statistics
 			homeTeam.setDraws(homeTeam.getDraws() - 1);
 			awayTeam.setDraws(awayTeam.getDraws() - 1);
@@ -141,13 +151,11 @@ public class TeamServiceImpl implements TeamService {
 			awayTeam.setPoints(awayTeam.getPoints() - seasonService.getActivePointsPerDraw());
 		}
 
-		// teamRepository.deleteById(homeTeamName);
-		// teamRepository.deleteById(awayTeamName);
-
 		teamRepository.save(homeTeam);
 		teamRepository.save(awayTeam);
 	}
 
+	// update league statistics that resulted from a match between corresponding team
 	@Override
 	public void updateStatistics(MatchDto matchDto) {
 		String homeTeamName = matchDto.getHomeTeam().replace(" ", "_");

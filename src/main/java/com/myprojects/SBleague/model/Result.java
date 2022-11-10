@@ -122,6 +122,7 @@ public class Result {
 		this.awayPointsH = -1;
 		this.homePointsA = -1;
 		this.homePointsH = -1;
+		this.value = -1;
 	}
 
 	public void updateValue() {

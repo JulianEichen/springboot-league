@@ -168,24 +168,6 @@ public class MatchController {
 		return "redirect:/season/usermatches";
 	}
 
-	// match deletion for admins
-	@PostMapping("/matchdeletion")
-	public String deleteMatch(@PathVariable Long id, @Valid @ModelAttribute("match") MatchDto matchDto,
-			BindingResult result) {
-		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
-		if (!err.isEmpty()) {
-			ObjectError error = new ObjectError("globalError", err);
-			result.addError(error);
-		}
-
-		if (result.hasErrors()) {
-			return "matchdeletion";
-		}
-
-		matchService.deleteMatch(matchDto);
-		return "redirect:matchdeletion?success";
-	}
-
 	// match update method for admins
 	@PostMapping("/matchupdate")
 	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
@@ -201,9 +183,9 @@ public class MatchController {
 
 		return "redirect:matchupdate?success";
 	}
-	
+
 	// ----*----*---- Admin actions ----*----*----
-	
+
 	// show all matches
 	@GetMapping("/admin/adminmatches")
 	public String listMatchdaysAdmin(@RequestParam(value = "matchday", required = false) Integer matchday,
@@ -259,6 +241,24 @@ public class MatchController {
 	public String setActive(@PathVariable Long id) {
 		matchService.resetResult(id);
 		return "redirect:/admin/adminmatches/input/{id}?success";
+	}
+
+	// match deletion for admins
+	@PostMapping("/admin/adminmatches/delete/{id}")
+	public String deleteMatch(@PathVariable Long id, @Valid @ModelAttribute("match") MatchDto matchDto,
+			BindingResult result) {
+		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
+		if (!err.isEmpty()) {
+			ObjectError error = new ObjectError("globalError", err);
+			result.addError(error);
+		}
+
+		if (result.hasErrors()) {
+			return "matchdeletion";
+		}
+
+		matchService.deleteMatch(matchDto);
+		return "redirect:matchdeletion?success";
 	}
 
 }

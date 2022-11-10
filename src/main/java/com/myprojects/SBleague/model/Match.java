@@ -40,10 +40,10 @@ public class Match {
 	private String awayTeam;
 
 	@Column(name = "homePoints")
-	private int homePoints;
+	private int homePoints = -1;
 
 	@Column(name = "awayPoints")
-	private int awayPoints;
+	private int awayPoints = -1;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "result_id", referencedColumnName = "result_id")
@@ -137,10 +137,19 @@ public class Match {
 	}
 
 	public void updatePoints() {
+		System.out.println("match.updatePoints");
 		if(this.result.isValid()) {
+			System.out.println("resulut.isvalid=true");
 			this.awayPoints = this.result.getAwayPointsA();
-			this.homePoints = this.result.getAwayPointsH();
+			this.homePoints = this.result.getHomePointsH();
+		}else {
+			System.out.println("resulut.isvalid=false");
 		}
 	}
 	
+	public void reset() {
+		this.homePoints = -1;
+		this.awayPoints = -1;
+		this.result.reset();
+	}
 }

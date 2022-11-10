@@ -123,12 +123,6 @@ public class MatchServiceImpl implements MatchService {
 		return matchRepository.save(existingMatch);
 	}
 
-	private MatchDto matchToDto(Match match) {
-		return new MatchDto(match.getId(), match.getMatchday(), match.getHomeTeam().replace("_", " "),
-				match.getAwayTeam().replace("_", " "), match.getHomePoints(), match.getAwayPoints(),
-				match.getResult().getValue());
-	}
-
 	@Override
 	public MatchDto getMatchDtoById(Long id) {
 		Match match = matchRepository.findById(id);
@@ -146,7 +140,8 @@ public class MatchServiceImpl implements MatchService {
 		if (existingResult.isValid()) {
 			return existingMatch;
 		}
-
+		
+		// identify which team is owned by the user
 		List<String> userTeams = teamService.getAllTeamDtoByOwnerId(userId).stream().map(team -> team.getName())
 				.collect(Collectors.toList());
 
@@ -159,8 +154,6 @@ public class MatchServiceImpl implements MatchService {
 			existingResult.setHomePointsH(matchDto.getHomePoints());
 			// update result value
 			existingResult.updateValue();
-			// update points in match
-			existingMatch.updatePoints();
 			// update stats in teams
 			if (existingResult.isValid()) {
 				teamService.updateStatistics(matchDto);
@@ -172,8 +165,6 @@ public class MatchServiceImpl implements MatchService {
 			existingResult.setHomePointsA(matchDto.getHomePoints());
 			// update result value
 			existingResult.updateValue();
-			// update points in match
-			existingMatch.updatePoints();
 			// update stats in teams
 			if (existingResult.isValid()) {
 				teamService.updateStatistics(matchDto);
@@ -184,6 +175,8 @@ public class MatchServiceImpl implements MatchService {
 		}
 
 		existingMatch.setResult(existingResult);
+		existingMatch.updatePoints();
+		
 		matchRepository.save(existingMatch);
 
 		return null;
@@ -246,10 +239,19 @@ public class MatchServiceImpl implements MatchService {
 	@Override
 	public void resetResult(Long id) {
 		Match match = matchRepository.findById(id);
-		Result result = match.getResult();
-		result.reset();
-		match.setResult(result);
+		//Result result = match.getResult();
+		// result.reset();
+		teamService.deleteStatistics(this.matchToDto(match));
+		match.reset();
+		// teamService.updateStatistics(this.matchToDto(match));
+		//System.out.println(result.getValue());
 		matchRepository.save(match);
+	}
+	
+	private MatchDto matchToDto(Match match) {
+		return new MatchDto(match.getId(), match.getMatchday(), match.getHomeTeam().replace("_", " "),
+				match.getAwayTeam().replace("_", " "), match.getHomePoints(), match.getAwayPoints(),
+				match.getResult().getValue());
 	}
 
 }
