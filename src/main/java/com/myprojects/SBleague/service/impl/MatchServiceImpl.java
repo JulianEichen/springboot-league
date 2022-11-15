@@ -162,7 +162,7 @@ public class MatchServiceImpl implements MatchService {
 		existingResult.setAwayPointsH(matchDto.getAwayPoints());
 		existingResult.setHomePointsH(matchDto.getHomePoints());
 		existingResult.setAwayPointsA(matchDto.getAwayPoints());
-		existingResult.setHomePointsA(matchDto.getAwayPoints());
+		existingResult.setHomePointsA(matchDto.getHomePoints());
 		// update result value
 		existingResult.updateValue();
 		// update league stats
@@ -231,6 +231,7 @@ public class MatchServiceImpl implements MatchService {
 	@Override
 	public void resetResult(Long id) {
 		Match match = matchRepository.findById(id);
+
 		if (!match.getResult().isValid()) {
 			return;
 		}

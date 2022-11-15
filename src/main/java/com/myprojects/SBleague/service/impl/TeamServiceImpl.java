@@ -212,7 +212,11 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public String getOwnerNameByTeamName(String teamName) {
-		return teamRepository.findByName(teamName).getOwner().getName();
+		Team team = teamRepository.findByName(teamName);
+		if (team != null) {
+			return team.getOwner().getName();
+		}
+		return "Owner doesn't exist";
 	}
 
 	@Override

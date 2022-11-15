@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +28,7 @@ import com.myprojects.SBleague.web.dto.MatchDto;
 public class MatchController {
 
 	// injection
-	private MatchDtoValidationService matchDtoValidationService;
+	// private MatchDtoValidationService matchDtoValidationService;
 
 	private TeamService teamService;
 	private UserService userService;
@@ -39,7 +38,7 @@ public class MatchController {
 	public MatchController(MatchDtoValidationService matchDtoValidationService, MatchService matchService,
 			SeasonService seasonService, UserService userService, TeamService teamService) {
 
-		this.matchDtoValidationService = matchDtoValidationService;
+		// this.matchDtoValidationService = matchDtoValidationService;
 		this.matchService = matchService;
 		this.seasonService = seasonService;
 		this.userService = userService;
@@ -226,9 +225,10 @@ public class MatchController {
 
 		return "redirect:/admin/adminmatches?delete";
 	}
-
+	
+	// show the edit form
 	@GetMapping("/admin/adminmatches/details/edit/{id}")
-	public String showUpdateForm(@PathVariable Long id, Model model) {
+	public String showEditForm(@PathVariable Long id, Model model) {
 		MatchDto matchDto = matchService.getMatchDtoById(id);
 
 		model.addAttribute("match", matchDto);
@@ -236,6 +236,7 @@ public class MatchController {
 		return "admineditmatch";
 	}
 
+	// handle edit input
 	@PostMapping("/admin/adminmatches/details/edit/{id}")
 	public String updateMatch(@PathVariable Long id, @ModelAttribute("match") MatchDto matchDto) {
 
@@ -243,27 +244,5 @@ public class MatchController {
 
 		return "redirect:/admin/adminmatches?edit";
 	}
-
-	/*
-	 * // match update method for admins
-	 * 
-	 * @PostMapping("/matchupdate") public String
-	 * updateMatch(@ModelAttribute("match") MatchDto matchDto) {
-	 * 
-	 * public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto,
-	 * BindingResult result) {
-	 * 
-	 * String err =
-	 * matchDtoValidationService.validateMatchDtoRegistration(matchDto); if
-	 * (!err.isEmpty()) { ObjectError error = new ObjectError("globalError", err);
-	 * result.addError(error); }
-	 * 
-	 * if (result.hasErrors()) { return "matchupdate"; }
-	 * 
-	 * Long id = matchDto.getId(); System.out.println("id " + id);
-	 * matchService.updateMatchAdmin(matchDto);
-	 * 
-	 * return "redirect:/admin/adminmatches/input/update/{id}?success"; }
-	 */
 
 }
