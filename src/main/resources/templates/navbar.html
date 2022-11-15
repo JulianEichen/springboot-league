@@ -53,9 +53,7 @@
 						<li><a class="dropdown-item" href="/user/teamregistration">Register
 								Team</a></li>
 						<li><a class="dropdown-item" href="/user/userteams">Teams</a></li>
-						<li><a class="dropdown-item" href="/user/userprofile">Profile</a></li>
-						<li><a class="dropdown-item" href="/user/userupdate">Edit
-								Details</a></li>
+						
 					</ul></li>
 
 				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown"><a
@@ -63,8 +61,7 @@
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Admin Actions</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="/admin/seasontable">Seasons
-								Table</a></li>
+						<li><a class="dropdown-item" href="/admin/seasontable">All Season Rule Sets</a></li>
 						<li><a class="dropdown-item" href="/admin/seasonregistration">Register
 								Seasons</a></li>
 						<li><a class="dropdown-item" href="/admin/teamenrollment">Enroll Teams</a>
@@ -72,10 +69,7 @@
 								Matches</a></li>
 						<li><a class="dropdown-item" href="/admin/matchregistration">Register
 								Matches</a></li>
-						<li><a class="dropdown-item" href="/admin/matchupdate">Update
-								Matches</a></li>
-						<li><a class="dropdown-item" href="/admin/matchdeletion">Delete
-								Matches</a></li>
+	
 					</ul></li>
 
 

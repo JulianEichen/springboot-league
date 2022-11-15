@@ -9,15 +9,17 @@
 
 
 	<div class="container">
-		<h1>Welcome to the League App, please use the Navbar for now!</h1>
-	</div>
+		<h1>Welcome to the League!</h1>
+	
 
-	<div sec:authorize="isAuthenticated()">This content is only shown
-		to authenticated users.</div>
-	<div sec:authorize="hasRole('ROLE_ADMIN')">This content is only
-		shown to administrators.</div>
-	<div sec:authorize="hasRole('ROLE_USER')">This content is only
-		shown to users.</div>
+
+		<div sec:authorize="not(isAuthenticated())">Please use the
+			navigation bar above to login.</div>
+		<div sec:authorize="hasRole('ROLE_USER')">You have normal user rights.</div>
+		<div sec:authorize="hasRole('ROLE_ADMIN')">You are logged in with an admin account.</div>
+		<div sec:authorize="isAuthenticated()">Please use the
+			navigation bar above.</div>
+	</div>
 
 	<div th:replace="footerfiles.html :: footerfiles"></div>
 </body>
