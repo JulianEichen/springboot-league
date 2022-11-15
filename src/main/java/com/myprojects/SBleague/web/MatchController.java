@@ -117,29 +117,29 @@ public class MatchController {
 
 	// show form
 	@GetMapping("/season/usermatches/edit/{id}") // {id} is called a template variable
-	public String editResultForm(@PathVariable Long id, Model model) {
+	public String showUserEditMatchForm(@PathVariable Long id, Model model) {
 		model.addAttribute("match", matchService.getMatchDtoById(id));
-		return "usereditresult";
+		return "usereditmatch";
 	}
 
-	// show former input
-	@GetMapping("/season/usermatches/edited/{id}") // {id} is called a template variable
-	public String fullEditResultForm(@PathVariable Long id, Model model, Principal principal) {
-		Long userId = userService.findUserByEmail(principal.getName()).getId();
-		MatchDto matchDto = matchService.getDtoWithUserInput(id, userId);
-
-		model.addAttribute("match", matchDto);
-		return "userfullresult";
-	}
-
-	@PostMapping("/season/usermatches/{id}")
-	public String editResult(@PathVariable Long id, @ModelAttribute("match") MatchDto match, Principal principal) {
+	@PostMapping("/season/usermatches/edit/{id}")
+	public String userEditMatch(@PathVariable Long id, @ModelAttribute("match") MatchDto match, Principal principal) {
 
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
 
 		matchService.updateMatchUser(match, userId);
 
-		return "redirect:/season/usermatches";
+		return "redirect:/season/usermatches?success";
+	}
+
+	// show former input
+	@GetMapping("/season/usermatches/input/{id}") // {id} is called a template variable
+	public String showMatchInput(@PathVariable Long id, Model model, Principal principal) {
+		Long userId = userService.findUserByEmail(principal.getName()).getId();
+		MatchDto matchDto = matchService.getDtoWithUserInput(id, userId);
+
+		model.addAttribute("match", matchDto);
+		return "userinput";
 	}
 
 	// ----*----*---- Admin actions ----*----*----
@@ -207,45 +207,63 @@ public class MatchController {
 		model.addAttribute("homePointsA", homePointsA);
 		model.addAttribute("awayPointsA", awayPointsA);
 
-		return "adminmatchview";
+		return "adminmatchdetails";
 	}
 
 	// handler method to handle activation request
-	@GetMapping("/admin/adminmatches/input/reset/{id}")
+	@GetMapping("/admin/adminmatches/details/reset/{id}")
 	public String setActive(@PathVariable Long id) {
 		matchService.resetResult(id);
-		return "redirect:/admin/adminmatches/input/{id}?success";
+		return "redirect:/admin/adminmatches?reset";
 	}
 
 	// match deletion for admins
-	@GetMapping("/admin/adminmatches/input/delete/{id}")
+	@GetMapping("/admin/adminmatches/details/delete/{id}")
 	public String deleteMatch(@PathVariable Long id) {
 
 		matchService.resetResult(id);
 		matchService.deleteById(id);
 
-		return "redirect:/admin/adminmatches";
+		return "redirect:/admin/adminmatches?delete";
 	}
 
-	@GetMapping("/admin/adminmatches/input/update/{id}")
+	@GetMapping("/admin/adminmatches/details/edit/{id}")
 	public String showUpdateForm(@PathVariable Long id, Model model) {
-		return "matchupdate";
+		MatchDto matchDto = matchService.getMatchDtoById(id);
+
+		model.addAttribute("match", matchDto);
+
+		return "admineditmatch";
 	}
 
-	// match update method for admins
-	@PostMapping("/matchupdate")
-	public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto, BindingResult result) {
-		String err = matchDtoValidationService.validateMatchDtoRegistration(matchDto);
-		if (!err.isEmpty()) {
-			ObjectError error = new ObjectError("globalError", err);
-			result.addError(error);
-		}
+	@PostMapping("/admin/adminmatches/details/edit/{id}")
+	public String updateMatch(@PathVariable Long id, @ModelAttribute("match") MatchDto matchDto) {
 
-		if (result.hasErrors()) {
-			return "matchupdate";
-		}
 		matchService.updateMatchAdmin(matchDto);
-		return "redirect:matchupdate?success";
+
+		return "redirect:/admin/adminmatches?edit";
 	}
+
+	/*
+	 * // match update method for admins
+	 * 
+	 * @PostMapping("/matchupdate") public String
+	 * updateMatch(@ModelAttribute("match") MatchDto matchDto) {
+	 * 
+	 * public String updateMatch(@Valid @ModelAttribute("match") MatchDto matchDto,
+	 * BindingResult result) {
+	 * 
+	 * String err =
+	 * matchDtoValidationService.validateMatchDtoRegistration(matchDto); if
+	 * (!err.isEmpty()) { ObjectError error = new ObjectError("globalError", err);
+	 * result.addError(error); }
+	 * 
+	 * if (result.hasErrors()) { return "matchupdate"; }
+	 * 
+	 * Long id = matchDto.getId(); System.out.println("id " + id);
+	 * matchService.updateMatchAdmin(matchDto);
+	 * 
+	 * return "redirect:/admin/adminmatches/input/update/{id}?success"; }
+	 */
 
 }

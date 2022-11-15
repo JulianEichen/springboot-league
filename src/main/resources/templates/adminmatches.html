@@ -10,6 +10,28 @@
 
 	<div class="container">
 		<div class="row">
+			<!-- success message -->
+
+			<div th:if="${param.reset}">
+				<br>
+				<div class="alert alert-info">You've successfully reseted a
+					match!</div>
+			</div>
+
+			<!-- success message -->
+			<div th:if="${param.delete}">
+				<br>
+				<div class="alert alert-info">You've successfully deleted a
+					match!</div>
+			</div>
+
+			<!-- success message -->
+			<div th:if="${param.edit}">
+				<br>
+				<div class="alert alert-info">You've successfully edited a
+					match!</div>
+			</div>
+
 			<h1>The Matches</h1>
 		</div>
 
@@ -45,8 +67,7 @@
 
 						<td><span> <a
 								th:href="@{/admin/adminmatches/input/{id}(id=${match.id})}"
-								class="btn btn-primary">Details</a></span>
-							</td>
+								class="btn btn-primary">Details</a></span></td>
 					</tr>
 				</tbody>
 			</table>

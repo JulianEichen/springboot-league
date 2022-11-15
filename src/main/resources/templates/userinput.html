@@ -11,12 +11,16 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-
+				<!-- success message -->
+				<div th:if="${param.success}">
+					<div class="alert alert-info">You have successfully updated
+						the match!</div>
+				</div>
 				<!--  Sub Header -->
 				<h1>Your Input</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/season/usermatches/{id} (id=${match.id})}"
+				<form th:action="@{/season/usermatches/edit/{id} (id=${match.id})}"
 					method="post" th:object="${match}">
 
 					<div class="form-group">

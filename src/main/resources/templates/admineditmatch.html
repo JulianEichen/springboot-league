@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="headerfiles.html :: headerfiles">
 </head>
 <body>
@@ -11,15 +12,21 @@
 			<div class="col-md-6 col-md-offset-3">
 				<!-- success message -->
 				<div th:if="${param.success}">
-					<div class="alert alert-info">You've successfully updated the
-						match!</div>
+					<div class="alert alert-info">You have successfully updated
+						the match!</div>
 				</div>
 
 				<!--  Sub Header -->
 				<h1>Match Update</h1>
 
 				<!-- Input Form -->
-				<form th:action="@{/matchupdate}" method="post" th:object="${match}">
+				<form th:action="@{/admin/adminmatches/details/edit/{id} (id=${match.id})}" method="post" th:object="${match}">
+
+					<div class="form-group">
+						<label class="control-label" for="matchId">MatchId</label> <input
+							id="matchId" class="form-control" type="text"
+							th:value="${match.id}" th:name="matchId" th:id="matchId" readonly>
+					</div>
 
 					<div class="form-group">
 						<label class="control-label" for="matchday">Matchday</label> <input
@@ -50,8 +57,8 @@
 							Points</label> <input id="awayPoints" class="form-control"
 							th:field="*{awayPoints}" required>
 					</div>
-					
-					
+
+
 					<div th:if="${#fields.hasAnyErrors()}">
 						<ul>
 							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
@@ -63,7 +70,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div th:replace="footerfiles.html :: footerfiles"></div>
 </body>
 </html>
