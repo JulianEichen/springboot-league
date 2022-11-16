@@ -1,6 +1,5 @@
 package com.myprojects.SBleague.usermanagement.web;
 
-import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -30,15 +29,6 @@ public class AuthController {
 	@GetMapping("/login")
 	public String login() {
 		return "login";
-	}
-
-	// handler for login
-	@GetMapping("/userprofile")
-	public String showUserProfile(Model model,Principal principal) {
-		UserDto currentUser = new UserDto();
-		
-		String userName = principal.getName();
-		return "userprofile";
 	}
 
 	// handler for user table
