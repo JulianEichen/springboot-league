@@ -21,4 +21,10 @@ On top of this 'business logic', I wanted to have a user management system with 
 ## Database
 I used a MySQL database. With the following tables and relations. The relations were added as needed.
 
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_users.png?raw=true)
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_matches.png?raw=true)
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_seasons.png?raw=true)
+
 ## Usage
