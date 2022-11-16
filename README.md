@@ -18,4 +18,7 @@ The actions and resposibilites of admins would include:
 
 On top of this 'business logic', I wanted to have a user management system with registration, login, logout and different roles. And below a database to handle whatever persistent data would arise.
 
+## Database
+I used a MySQL database. With the following tables and relations. The relations were added as needed.
+
 ## Usage
