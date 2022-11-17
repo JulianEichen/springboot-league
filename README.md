@@ -34,3 +34,15 @@ I used a MySQL database. With the following tables and relations. The relations 
 'seasons' contain whatever rulesets the admin defines. 
 
 ## Usage
+
+### Navigation
+
+Navigation happens primarily through the navigation bar, which can take two major shapes.
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/navbar_out.png?raw=true)
+
+ A logged out user only has the options to register or login.
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/navbar_in.png?raw=true)
+
+While logged in, every user has the 'Season' drop down menu, wich leads to season standings, matchdays, the users matches and finally the season rules. The 'User' menu leads to team registration and a listing of the users teams.  Additionally admin users get an 'Admin Actions' menu including season, team and match management options, explained further below.
