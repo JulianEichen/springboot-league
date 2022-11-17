@@ -38,12 +38,13 @@
 					<td th:text="${team.losses}"></td>
 					<td th:text="${team.points}"></td>
 					<td th:text="${team.enrolled}"></td>
-					<td><a th:href="@{/admin/teamenrollment/reset/{id}(id=${team.id})}"
-						class="btn btn-danger">Reset</a> <a
+					<td><a
 						th:href="@{/admin/teamenrollment/enroll/{id}(id=${team.id})}"
-						class="btn btn-danger">Enroll</a>
-						<a th:href="@{/admin/teamenrollment/unenroll/{id}(id=${team.id})}"
-						class="btn btn-danger">Unenroll</a></td>
+						class="btn btn-success">Enroll</a> <a
+						th:href="@{/admin/teamenrollment/unenroll/{id}(id=${team.id})}"
+						class="btn btn-success">Unenroll</a> <a
+						th:href="@{/admin/teamenrollment/reset/{id}(id=${team.id})}"
+						class="btn btn-danger">Reset</a></td>
 
 				</tr>
 			</tbody>
