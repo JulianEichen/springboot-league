@@ -10,6 +10,8 @@
 		class="navbar navbar-expand-md bg-dark navbar-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/index">Home</a>
+
+
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNav" aria-controls="navbarNav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -36,8 +38,7 @@
 						role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Season</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="/season/maintable">The
-									Table</a></li>
+							<li><a class="dropdown-item" href="/season/maintable">Standings</a></li>
 							<li><a class="dropdown-item" href="/season/matchdaytable">Matchday
 									Table</a></li>
 							<li><a class="dropdown-item" href="/season/usermatches">My
@@ -92,22 +93,24 @@
 
 	<nav th:fragment="landingnavbar"
 		class="navbar navbar-expand-md bg-dark navbar-dark">
-		<a class="navbar-brand" href="index">Home</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div class="container-fluid">
+			<a class="navbar-brand" href="index">Home</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav">
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav">
 
-				<li class="nav-item"><a class="nav-link"
-					href="/userregistration">Register</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="/userregistration">Register</a></li>
 
-				<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+					<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
 
-			</ul>
+				</ul>
+			</div>
 		</div>
 	</nav>
 
