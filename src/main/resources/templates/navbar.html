@@ -8,80 +8,85 @@
 
 	<nav th:fragment="navbar"
 		class="navbar navbar-expand-md bg-dark navbar-dark">
-		<a class="navbar-brand" href="/index">Home</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/index">Home</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-		<!-- Authenticated -->
+			<!-- Authenticated -->
 
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav">
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav">
 
-				<!-- Not Authenticated -->
+					<!-- Not Authenticated -->
 
-				<li sec:authorize="!isAuthenticated()" class="nav-item"><a
-					class="nav-link" href="userregistration">Register</a></li>
+					<li sec:authorize="!isAuthenticated()" class="nav-item"><a
+						class="nav-link" href="/userregistration">Register</a></li>
 
-				<li sec:authorize="!isAuthenticated()" class="nav-item"><a
-					class="nav-link" href="login">Login</a></li>
+					<li sec:authorize="!isAuthenticated()" class="nav-item"><a
+						class="nav-link" href="/login">Login</a></li>
 
-				<!-- Authenticated -->
+					<!-- Authenticated -->
 
-				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown1"
-					role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Season</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="/season/maintable">The Table</a></li>
-						<li><a class="dropdown-item" href="/season/matchdaytable">Matchday
-								Table</a></li>
-						<li><a class="dropdown-item" href="/season/usermatches">My
-								Matches</a></li>
-						<li><a class="dropdown-item" href="/season/seasonrules">Season
-								Rules</a></li>
-					</ul></li>
-
-
-				<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown2"
-					role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						User</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="/user/teamregistration">Register
-								Team</a></li>
-						<li><a class="dropdown-item" href="/user/userteams">Teams</a></li>
-						
-					</ul></li>
-
-				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown3"
-					role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Admin Actions</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="/admin/seasontable">All Season Rule Sets</a></li>
-						<li><a class="dropdown-item" href="/admin/seasonregistration">Register
-								Seasons</a></li>
-						<li><a class="dropdown-item" href="/admin/teamenrollment">Enroll Teams</a>
-						<li><a class="dropdown-item" href="/admin/adminmatches">All
-								Matches</a></li>
-						<li><a class="dropdown-item" href="/admin/matchregistration">Register
-								Matches</a></li>
-	
-					</ul></li>
+					<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" id="navbarDropdown1"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Season</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="/season/maintable">The
+									Table</a></li>
+							<li><a class="dropdown-item" href="/season/matchdaytable">Matchday
+									Table</a></li>
+							<li><a class="dropdown-item" href="/season/usermatches">My
+									Matches</a></li>
+							<li><a class="dropdown-item" href="/season/seasonrules">Season
+									Rules</a></li>
+						</ul></li>
 
 
-			</ul>
+					<li sec:authorize="isAuthenticated()" class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" id="navbarDropdown2"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							User</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="/user/teamregistration">Register
+									Team</a></li>
+							<li><a class="dropdown-item" href="/user/userteams">Teams</a></li>
 
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li sec:authorize="isAuthenticated()" class="nav-item"><a
-						th:href="@{/logout}">Logout</a></li>
+						</ul></li>
+
+					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" id="navbarDropdown3"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Admin Actions</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="/admin/seasontable">All
+									Season Rule Sets</a></li>
+							<li><a class="dropdown-item"
+								href="/admin/seasonregistration">Register Seasons</a></li>
+							<li><a class="dropdown-item" href="/admin/teamenrollment">Enroll
+									Teams</a>
+							<li><a class="dropdown-item" href="/admin/adminmatches">All
+									Matches</a></li>
+							<li><a class="dropdown-item" href="/admin/matchregistration">Register
+									Matches</a></li>
+
+						</ul></li>
+
+
 				</ul>
-			</div>
 
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li sec:authorize="isAuthenticated()" class="nav-item"><a
+							th:href="@{/logout}">Logout</a></li>
+					</ul>
+				</div>
+
+			</div>
 		</div>
 	</nav>
 
