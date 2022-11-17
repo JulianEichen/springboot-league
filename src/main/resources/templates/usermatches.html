@@ -13,7 +13,7 @@
 			<h1>My Matches</h1>
 		</div>
 
-		<form th:action="@{/season/usermatches}" method="get">
+		<form th:action="@{/user/usermatches}" method="get">
 			<label th:text="Matchday"> </label> <select
 				onchange="this.form.submit()" th:name="matchday">
 				<option th:value=-1>All Matches</option>
@@ -52,11 +52,11 @@
 							th:unless="${match.result < 0}" th:text="${match.awayPoints}"></span>
 						</td>
 						<td><span th:if="${match.updatedByUser == false}"> <a
-								th:href="@{/season/usermatches/edit/{id}(id=${match.id})}"
+								th:href="@{/user/usermatches/edit/{id}(id=${match.id})}"
 								class="btn btn-warning">Update</a></span>
 						<span
 							th:if="${match.updatedByUser == true}"> <a
-								th:href="@{/season/usermatches/input/{id}(id=${match.id})}"
+								th:href="@{/user/usermatches/input/{id}(id=${match.id})}"
 								class="btn btn-primary">View Input</a></span></td>
 					</tr>
 				</tbody>

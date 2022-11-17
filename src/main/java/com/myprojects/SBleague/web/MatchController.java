@@ -70,8 +70,10 @@ public class MatchController {
 		return "matchdaytable";
 	}
 
+	// ----*----*---- User actions ----*----*----
+	
 	// handler method for the user specific match table
-	@GetMapping("/season/usermatches")
+	@GetMapping("/user/usermatches")
 	public String listUserMatches(@RequestParam(value = "matchday", required = false) Integer matchday, Model model,
 			Principal principal) {
 
@@ -115,24 +117,24 @@ public class MatchController {
 	}
 
 	// show form
-	@GetMapping("/season/usermatches/edit/{id}") // {id} is called a template variable
+	@GetMapping("/user/usermatches/edit/{id}") // {id} is called a template variable
 	public String showUserEditMatchForm(@PathVariable Long id, Model model) {
 		model.addAttribute("match", matchService.getMatchDtoById(id));
 		return "usereditmatch";
 	}
 
-	@PostMapping("/season/usermatches/edit/{id}")
+	@PostMapping("/user/usermatches/edit/{id}")
 	public String userEditMatch(@PathVariable Long id, @ModelAttribute("match") MatchDto match, Principal principal) {
 
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
 
 		matchService.updateMatchUser(match, userId);
 
-		return "redirect:/season/usermatches?success";
+		return "redirect:/user/usermatches?success";
 	}
 
 	// show former input
-	@GetMapping("/season/usermatches/input/{id}") // {id} is called a template variable
+	@GetMapping("/user/usermatches/input/{id}") // {id} is called a template variable
 	public String showMatchInput(@PathVariable Long id, Model model, Principal principal) {
 		Long userId = userService.findUserByEmail(principal.getName()).getId();
 		MatchDto matchDto = matchService.getDtoWithUserInput(id, userId);
