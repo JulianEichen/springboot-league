@@ -23,8 +23,14 @@ I used a MySQL database. With the following tables and relations. The relations 
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_users.png?raw=true)
 
+'users' and 'roles' offer very basic user management and security functionality and 'teams' is the backbone of the user related business logic. A user can own several teams, which track the relevant league and match statistics.
+
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_matches.png?raw=true)
 
+'matches' track the meetings and the related outcome of teams. 'results' were made into their own class, because an angreement functionality was needed. A result will only be further processed into league statistics, if it contains consensual input. 
+
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_seasons.png?raw=true)
+
+'seasons' contain whatever rulesets the admin defines. 
 
 ## Usage
