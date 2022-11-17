@@ -45,4 +45,14 @@ Navigation happens primarily through the navigation bar, which can take two majo
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/navbar_in.png?raw=true)
 
-While logged in, every user has the 'Season' drop down menu, wich leads to season standings, matchdays, the users matches and finally the season rules. The 'User' menu leads to team registration and a listing of the users teams.  Additionally admin users get an 'Admin Actions' menu including season, team and match management options, explained further below.
+While logged in, every user has the 'Season' drop down menu, wich leads to season standings, matchdays and the active season rules. The 'User' menu leads to match management, team registration and a listing of the users teams.  Additionally admin users get an 'Admin Actions' menu including season, team and match management options, explained further below.
+
+### Season
+
+The 'Season' menu options should be self explanatory and do not ask for any user input or interaction.
+
+### User
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/user_matches.png?raw=true)
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/user_matchupdate.png?raw=true)
