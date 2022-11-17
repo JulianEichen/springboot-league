@@ -53,6 +53,14 @@ The 'Season' menu options should be self explanatory and do not ask for any user
 
 ### User
 
+Under 'Register Team', the user cen register a unique team, which then needs to be enrolled by an admin. The user can see all his teams and their related statistics under 'Teams'.
+
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/user_matches.png?raw=true)
 
+'My Matches' shows all matches and their outcomes with teams owned by the user. If the user has not input a result yet, he can chose to do so clicking the 'Update' button, which leads to the following form:
+
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/user_matchupdate.png?raw=true)
+
+This form can only be submitted once! If both user input the same result, it gets further processed into league statistics for the team. If they input different results, the outcome stays 'TBA' and an admin has to reset the match or put in a result. 
+
+### Admin Actions
