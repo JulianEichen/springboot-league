@@ -77,10 +77,19 @@ With 'Register Season' and admin can register the season rulesets, which are sho
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_teams.png?raw=true)
 
+Once a team is registered by a user, the admin must set its 'enrolled' status to TRUE to have it show up under the current season standings. Setting the status to FALSE will not remove its related statistics from the league and simply change its visibility in the related table.
+If a season is over, the admin can reset the statistics of a team for a new one.
+
 #### 'All Matches' & 'Register Matches'
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_matches.png?raw=true)
 
+This table lists all registered matches. It shows the matches results, whether they are 'TBA (to be announced/awaiting user input)' or if there is a conflict between the inputs of the users.
+
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_matches_details.png?raw=true)
 
+'Details' shows the inputs of both users of a given match. 'Reset' resets the matches result statistics and also any derived league points, without deleting the match. 'Delete' completely delets it and any derived league points. 
+
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_matches_update.png?raw=true)
+
+'Update' allows the admin to manually change the result, if there is a problem with the users or change other details, if there is faulty input on the admins side. 
