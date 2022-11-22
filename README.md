@@ -53,11 +53,11 @@ The 'Season' menu options should be self explanatory and do not ask for any user
 
 ### User
 
-#### Register Team & Teams
+#### 'Register Team' & 'Teams'
 
 Under 'Register Team', the user cen register a unique team, which then needs to be enrolled by an admin. The user can see all his teams and their related statistics under 'Teams'.
 
-#### My Matches
+#### 'My Matches'
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/user_matches.png?raw=true)
 
@@ -69,8 +69,18 @@ This form can only be submitted once! If both users input the same result, it ge
 
 ### Admin Actions
 
-#### All Season Rule Sets & Register Season
+#### 'All Season Rule Sets' & 'Register Season'
 
-#### Enroll Teams
+With 'Register Season' and admin can register the season rulesets, which are shown under 'All Season Rule Sets'. The admin must set one ruleset to 'active', which then defines how the outcomes of matches are processed into league points etc..
 
-#### All Matchs & Register Matches
+#### 'Enroll Teams'
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_teams.png?raw=true)
+
+#### 'All Matches' & 'Register Matches'
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_matches.png?raw=true)
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_matches_details.png?raw=true)
+
+![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_matches_update.png?raw=true)
