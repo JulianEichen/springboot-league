@@ -17,15 +17,17 @@
 
 
 
-				<div class="d-flex align-items-center justify-content-center">
-					<div sec:authorize="not(isAuthenticated())">Please use the
-						navigation bar above to login.</div>
-					<div sec:authorize="hasRole('ROLE_USER')">You have normal
-						user rights.</div>
-					<div sec:authorize="hasRole('ROLE_ADMIN')">You are logged in
-						with an admin account.</div>
-					<div sec:authorize="isAuthenticated()">Please use the
-						navigation bar above.</div>
+				<!--  <div class="d-flex align-items-center justify-content-center">-->
+				<div class="d-flex flex-column align-items-center">
+					<p sec:authorize="not(isAuthenticated())">Please use the
+						navigation bar above to login.</p>
+					<p sec:authorize="hasRole('ROLE_USER')">
+						You have normal user rights.<br>
+					</p>
+					<p sec:authorize="hasRole('ROLE_ADMIN')">You are logged in with
+						an admin account.</p>
+					<p sec:authorize="isAuthenticated()">Please use the navigation
+						bar above.</p>
 				</div>
 			</div>
 		</div>
