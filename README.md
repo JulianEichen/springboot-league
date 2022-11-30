@@ -1,8 +1,8 @@
 # springboot-league
 
 ## Purpose
-The root purpose was to have first try at a proper Java web app, without an externally predefined task.
-The idea for the app was to buil a league management system to manage the results of matches between a set of teams.
+The root purpose was to have a first try at a proper Java web app, without an externally predefined task.
+The idea was to build a league management system to manage the results of matches between a set of teams.
 
 The user actions and resposibilites would include:
 - registration of teams
