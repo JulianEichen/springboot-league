@@ -1,4 +1,4 @@
-package com.myprojects.SBleague.usermanagement.service.impl;
+package com.myprojects.SBleague.service.impl;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -10,9 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.myprojects.SBleague.usermanagement.model.Role;
-import com.myprojects.SBleague.usermanagement.model.User;
-import com.myprojects.SBleague.usermanagement.repository.UserRepository;
+import com.myprojects.SBleague.model.Role;
+import com.myprojects.SBleague.model.User;
+import com.myprojects.SBleague.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{

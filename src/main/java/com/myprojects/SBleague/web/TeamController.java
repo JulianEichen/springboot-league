@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.myprojects.SBleague.service.TeamService;
-import com.myprojects.SBleague.usermanagement.service.UserService;
+import com.myprojects.SBleague.service.UserService;
 import com.myprojects.SBleague.web.dto.TeamDto;
 
 @Controller

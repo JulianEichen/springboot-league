@@ -1,8 +1,8 @@
-package com.myprojects.SBleague.usermanagement.repository;
+package com.myprojects.SBleague.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.myprojects.SBleague.usermanagement.model.Role;
+import com.myprojects.SBleague.model.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{
 	

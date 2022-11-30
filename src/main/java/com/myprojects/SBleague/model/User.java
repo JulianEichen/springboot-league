@@ -1,4 +1,4 @@
-package com.myprojects.SBleague.usermanagement.model;
+package com.myprojects.SBleague.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.myprojects.SBleague.model.Team;
 
 @Entity
 @Table(name = "users")

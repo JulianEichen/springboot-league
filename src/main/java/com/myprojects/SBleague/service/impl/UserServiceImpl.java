@@ -1,4 +1,4 @@
-package com.myprojects.SBleague.usermanagement.service.impl;
+package com.myprojects.SBleague.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.myprojects.SBleague.usermanagement.model.Role;
-import com.myprojects.SBleague.usermanagement.model.User;
-import com.myprojects.SBleague.usermanagement.repository.RoleRepository;
-import com.myprojects.SBleague.usermanagement.repository.UserRepository;
-import com.myprojects.SBleague.usermanagement.service.UserService;
-import com.myprojects.SBleague.usermanagement.web.dto.UserDto;
+import com.myprojects.SBleague.model.Role;
+import com.myprojects.SBleague.model.User;
+import com.myprojects.SBleague.repository.RoleRepository;
+import com.myprojects.SBleague.repository.UserRepository;
+import com.myprojects.SBleague.service.UserService;
+import com.myprojects.SBleague.web.dto.UserDto;
 
 @Service
 public class UserServiceImpl implements UserService {

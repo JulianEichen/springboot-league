@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.myprojects.SBleague.service.MatchService;
 import com.myprojects.SBleague.service.SeasonService;
 import com.myprojects.SBleague.service.TeamService;
-import com.myprojects.SBleague.usermanagement.service.UserService;
+import com.myprojects.SBleague.service.UserService;
 import com.myprojects.SBleague.validation.MatchDtoValidationService;
 import com.myprojects.SBleague.web.dto.MatchDto;
 

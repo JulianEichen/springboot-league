@@ -1,4 +1,4 @@
-package com.myprojects.SBleague.usermanagement.model;
+package com.myprojects.SBleague.model;
 
 import java.util.ArrayList;
 import java.util.List;

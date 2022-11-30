@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.myprojects.SBleague.model.Team;
+import com.myprojects.SBleague.model.User;
 import com.myprojects.SBleague.repository.TeamRepository;
 import com.myprojects.SBleague.service.SeasonService;
 import com.myprojects.SBleague.service.TeamService;
-import com.myprojects.SBleague.usermanagement.model.User;
-import com.myprojects.SBleague.usermanagement.service.UserService;
+import com.myprojects.SBleague.service.UserService;
 import com.myprojects.SBleague.web.dto.MatchDto;
 import com.myprojects.SBleague.web.dto.TeamDto;
 

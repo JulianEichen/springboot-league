@@ -10,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.myprojects.SBleague.usermanagement.model.User;
-
 @Entity
 @Table(name="teams",uniqueConstraints = @UniqueConstraint(columnNames="name"))
 public class Team {

@@ -1,4 +1,4 @@
-package com.myprojects.SBleague.usermanagement.web.dto;
+package com.myprojects.SBleague.web.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

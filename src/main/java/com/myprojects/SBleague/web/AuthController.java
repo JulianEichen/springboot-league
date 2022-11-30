@@ -1,4 +1,4 @@
-package com.myprojects.SBleague.usermanagement.web;
+package com.myprojects.SBleague.web;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.myprojects.SBleague.model.User;
 import com.myprojects.SBleague.service.TeamService;
-import com.myprojects.SBleague.usermanagement.model.User;
-import com.myprojects.SBleague.usermanagement.service.UserService;
-import com.myprojects.SBleague.usermanagement.web.dto.UserDto;
+import com.myprojects.SBleague.service.UserService;
+import com.myprojects.SBleague.web.dto.UserDto;
 
 @Controller
 public class AuthController {
