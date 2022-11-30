@@ -6,17 +6,25 @@ The idea for the app was to buil a league management system to manage the result
 
 The user actions and resposibilites would include:
 - registration of teams
-- look up their league standings
-- look up their matches
-- input the results of their matches
+- looking up their league standings
+- looking up their matches
+- input of their results
 
 The actions and resposibilites of admins would include:
 - registration of season rulesets, concerning the reward of win/draw/loss
 - management of teams enrolled in a season
 - registration of matches between teams
-- supervision input results 
+- supervising input results 
 
-On top of this 'business logic', I wanted to have a user management system with registration, login, logout and different roles. And below a database to handle whatever persistent data would arise.
+On top of this 'business logic', I wanted to have a basic user management system with registration, login, logout and different roles. And below a database to handle whatever persistent data would arise.
+
+## Spring Starter Dependencies
+- Spring Web
+- Srping Boot DevTools
+- Spring Data JPA
+- Spring Security
+- MySQL Driver
+- Thymeleaf
 
 ## Database
 I used a MySQL database. With the following tables and relations. The relations were added as needed.
