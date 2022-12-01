@@ -20,13 +20,6 @@ On top of this 'business logic', I wanted to have a basic user management system
 
 ## Understanding The App
 
-### Structure
-
-I tried to stick to the layered spring architecture with the following layers:
-
-- Presentation: The Thymeleaf template engine is used to create simple forms and tables to communicate information with the user and the bootstrap framework to refine the visuals. Data exchange with the backend is handled by several controllers, related to the most important models, the authentication and landing page.
-- Business: Conists of several services, related several models. On the one hand the conversion of input data into model objects, passing them onto the persistence layer and whatever side effects their persistence management might create. For example the deletion of a match will require the nullification of its resulted league points.
-
 ### Spring Starter Dependencies
 - Spring Web
 - Srping Boot DevTools
@@ -34,6 +27,15 @@ I tried to stick to the layered spring architecture with the following layers:
 - Spring Security
 - MySQL Driver
 - Thymeleaf
+
+### Structure
+
+I tried to stick to the layered spring architecture with the following layers:
+
+- Presentation: The Thymeleaf template engine is used to create simple forms and tables to communicate information with the user and the bootstrap framework to refine the visuals. Data exchange with the backend is handled by several controllers, related to the most important models, the authentication and landing page.
+- Business: Conists of several services related to specific models. Handles the conversion of input data into model objects, passing them onto the persistence layer and whatever side effects both might create. For example the deletion of a match will require the nullification of its resulted league points.
+- Persistence: Contains two subsets of models. Match (and it's Result), Season, Team are needed to for the league management itself. And User and Role are needed to handle different users and split them into admin(s) and normal users. For each model it also contains an extended JpaReposity to handle data access.
+- Database: see below.
 
 ### Database
 I used a MySQL database. With the following tables and relations. The relations were added as needed.
