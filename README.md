@@ -25,7 +25,7 @@ On top of this 'business logic', I wanted to have a basic user management system
 I tried to stick to the layered spring architecture with the following layers:
 
 - Presentation: The Thymeleaf template engine is used to create simple forms and tables to communicate information with the user and the bootstrap framework to refine the visuals. Data exchange with the backend is handled by several controllers, related to the most important models, the authentication and landing page.
-- Business: 
+- Business: Conists of several services, related several models. On the one hand the conversion of input data into model objects, passing them onto the persistence layer and whatever side effects their persistence management might create. For example the deletion of a match will require the nullification of its resulted league points.
 
 ### Spring Starter Dependencies
 - Spring Web
