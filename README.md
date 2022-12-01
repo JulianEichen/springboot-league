@@ -123,3 +123,7 @@ This table lists all registered matches. It shows the matches results, whether t
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_matches_update.png?raw=true)
 
 'Update' allows the admin to manually change the result, if there is a problem with the users or change other details, if there is faulty input on the admins side. 
+
+## License
+
+The springboot-league sample application is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
