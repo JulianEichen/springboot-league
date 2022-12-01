@@ -2,7 +2,7 @@ package com.myprojects.SBleague.web.dto;
 
 import javax.validation.constraints.NotNull;
 
-public class MatchRegistrationDTO {
+public class MatchRegistrationDto {
 	@NotNull
 	private int matchday;
 	@NotNull
@@ -15,10 +15,10 @@ public class MatchRegistrationDTO {
 	private int awayPoints;
 	
 	// default const
-	public MatchRegistrationDTO() {}
+	public MatchRegistrationDto() {}
 	
 	// param const
-	public MatchRegistrationDTO(int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints) {
+	public MatchRegistrationDto(int matchday, String homeTeam, String awayTeam, int homePoints, int awayPoints) {
 		super();
 		this.matchday = matchday;
 		this.homeTeam = homeTeam;
