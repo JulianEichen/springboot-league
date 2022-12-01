@@ -20,6 +20,13 @@ On top of this 'business logic', I wanted to have a basic user management system
 
 ## Understanding The App
 
+### Structure
+
+I tried to stick to the layered spring architecture with the following layers:
+
+- Presentation: The Thymeleaf template engine is used to create simple forms and tables to communicate information with the user and the bootstrap framework to refine the visuals. Data exchange with the backend is handled by several controllers, related to the most important models, the authentication and landing page.
+- Business: 
+
 ### Spring Starter Dependencies
 - Spring Web
 - Srping Boot DevTools
