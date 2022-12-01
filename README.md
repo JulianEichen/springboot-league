@@ -18,7 +18,9 @@ The actions and resposibilites of admins would include:
 
 On top of this 'business logic', I wanted to have a basic user management system with registration, login, logout and different roles. And below a database to handle whatever persistent data would arise.
 
-## Spring Starter Dependencies
+## Understanding The App
+
+### Spring Starter Dependencies
 - Spring Web
 - Srping Boot DevTools
 - Spring Data JPA
@@ -26,7 +28,7 @@ On top of this 'business logic', I wanted to have a basic user management system
 - MySQL Driver
 - Thymeleaf
 
-## Database
+### Database
 I used a MySQL database. With the following tables and relations. The relations were added as needed.
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_users.png?raw=true)
@@ -42,6 +44,17 @@ I used a MySQL database. With the following tables and relations. The relations 
 'seasons' contain whatever rulesets the admin defines. 
 
 ## Usage
+
+### Running The App Locally
+Springboot-League is built with Maven and uses a MySQL database. Before building and running the app from the command line, you need to create a MySQL database called 'leaguedb' or adjust the datasource properties in the 'application.properties' file. Assuming the use of windows you can then use the following commands:
+
+```
+git clone https://github.com/JulianEichen/springboot-league
+mvnw clean package
+java -jar target/springboot-league-0.0.1-SNAPSHOT.jar
+```
+
+And finally access the app through [http://localhost:8080/](http://localhost:8080/).
 
 ### Navigation
 
