@@ -2,7 +2,7 @@
 
 ## Purpose
 The root purpose was to have a first try at a proper Java web app, without an externally predefined task.
-The idea was to build a league management system to manage the results of matches between a set of teams.
+The idea was to build a league management system to track the results of matches between a set of teams.
 
 The user actions and resposibilites would include:
 - registration of teams
@@ -11,18 +11,18 @@ The user actions and resposibilites would include:
 - input of their results
 
 The actions and resposibilites of admins would include:
-- registration of season rulesets, concerning the reward of win/draw/loss
+- registration of season rulesets
 - management of teams enrolled in a season
 - registration of matches between teams
 - supervising input results 
 
-On top of this 'business logic', I wanted to have a basic user management system with registration, login, logout and different roles. And below a database to handle whatever persistent data would arise.
+On top of this 'business logic' I wanted to have a basic user management system, with registration, login, logout and different roles. Carried from below by a database to handle whatever persistent data would arise.
 
 ## Understanding The App
 
 ### Spring Starter Dependencies
 - Spring Web
-- Srping Boot DevTools
+- Spring Boot DevTools
 - Spring Data JPA
 - Spring Security
 - MySQL Driver
@@ -38,7 +38,7 @@ I tried to stick to the layered spring architecture with the following layers:
 - Database: see below.
 
 ### Database
-I used a MySQL database. With the following tables and relations. The relations were added as needed.
+I used a MySQL database with the following tables and relations, which were added as needed.
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_users.png?raw=true)
 
@@ -46,7 +46,7 @@ I used a MySQL database. With the following tables and relations. The relations 
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_matches.png?raw=true)
 
-'matches' track the meetings and the related outcome of teams. 'results' were made into their own class, because an angreement functionality was needed. A result will only be further processed into league statistics, if it contains consensual input. 
+'matches' track the meetings and the related outcome of teams. 'results' were made into their own class, because a consensus functionality was needed. A result will only be further processed into league statistics, if it contains concurrent input. 
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/db_seasons.png?raw=true)
 
@@ -85,7 +85,7 @@ The 'Season' menu options should be self explanatory and do not ask for any user
 
 #### 'Register Team' & 'Teams'
 
-Under 'Register Team', the user cen register a unique team, which then needs to be enrolled by an admin. The user can see all his teams and their related statistics under 'Teams'.
+Under 'Register Team', the user can register a unique team, which then needs to be enrolled by an admin. The user can see all his teams and their related statistics under 'Teams'.
 
 #### 'My Matches'
 
@@ -101,13 +101,13 @@ This form can only be submitted once! If both users input the same result, it ge
 
 #### 'All Season Rule Sets' & 'Register Season'
 
-With 'Register Season' and admin can register the season rulesets, which are shown under 'All Season Rule Sets'. The admin must set one ruleset to 'active', which then defines how the outcomes of matches are processed into league points etc..
+With 'Register Season', an admin can register the season rulesets, which are shown under 'All Season Rule Sets'. The admin must set one ruleset to 'active', which then defines how the outcomes of matches are processed into league points etc..
 
 #### 'Enroll Teams'
 
 ![alt text](https://github.com/JulianEichen/springboot-league/blob/main/pictures/admin_teams.png?raw=true)
 
-Once a team is registered by a user, the admin must set its 'enrolled' status to TRUE to have it show up under the current season standings. Setting the status to FALSE will not remove its related statistics from the league and simply change its visibility in the related table.
+Once a team is registered by a user, the admin must set its 'enrolled' status to TRUE to have it show up under the current season standings. Setting the status to FALSE will not remove its related statistics from the league, but change its visibility in the related table.
 If a season is over, the admin can reset the statistics of a team for a new one.
 
 #### 'All Matches' & 'Register Matches'
